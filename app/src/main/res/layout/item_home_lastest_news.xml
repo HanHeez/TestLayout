@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/bg_press_item"
+    android:clickable="true"
+    android:layout_height="100dp"
+    >
+
+    <TextView
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="120dp"
+        android:textSize="18dp"
+
+        android:id="@+id/txtTitleNews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Những đồ uống giúp mẹ bầu giảm ốm nghén"
+        android:textColor="@color/text_main" />
+
+    <TextView
+        android:layout_margin="10dp"
+        android:id="@+id/txtTagNews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_round_home_tag"
+        android:padding="5dp"
+        android:text="Sức khỏe"
+        android:textColor="@color/white"
+        android:textSize="13dp" />
+
+    <ImageView
+        android:layout_centerVertical="true"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:layout_alignParentRight="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/placeholder_hotgirl" />
+    <View
+        android:id="@+id/divider"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_1px"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_0_5" />
+</RelativeLayout>

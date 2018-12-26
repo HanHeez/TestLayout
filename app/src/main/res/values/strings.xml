@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">TestLayout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string-array name="group_tab_layout">
+        <item>Ngày 1</item>
+        <item>Ngày 2</item>
+        <item>Ngày 3</item>
+        <item>Ngày 4</item>
+        <item>Ngày 5</item>
+        <item>Ngày 6</item>
+        <item>Ngày 7</item>
+        <item>Ngày 8</item>
+        <item>Ngày 9</item>
+        <item>Ngày 10</item>
+        <item>Ngày 11</item>
+    </string-array>
+</resources>

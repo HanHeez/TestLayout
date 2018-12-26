@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_round_home_baby_week"
+    tools:context=".ui.fragment.BabyWeekFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:textSize="18dp"
+        android:layout_marginTop="3dp"
+        android:id="@+id/txtBabyBornDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="Ngày 3 - 11 - 2018"
+        android:textColor="@color/white" />
+
+    <RelativeLayout
+        android:id="@+id/rlBabyImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/txtBabyBornDate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/home_yunqi_bubble" />
+
+        <ImageView
+            android:id="@+id/imgBaby"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/week_header_19" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/rlBabyImage"
+        android:id="@+id/lnBabyDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+            <TextView
+                android:textSize="15dp"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đếm ngược" />
+
+            <TextView
+                android:id="@+id/txtDateBabyGrow"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="270 ngày"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:textSize="15dp"
+                android:text="Kích thước"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+            <TextView
+                android:id="@+id/txtBabyHeight"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="20mm"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:textSize="15dp"
+                android:text="Cân nặng"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+               />
+
+            <TextView
+                android:id="@+id/txtBabyWeight"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="0.7g"
+                android:textSize="18dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlBabySaid"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/lnBabyDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:id="@+id/txtTitle"
+            android:gravity="center"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:background="@drawable/bg_round_home_baby_title"
+            android:textColor="@color/bg_home_week_color"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Baby muốn nói!"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:layout_toRightOf="@id/txtTitle"
+            android:id="@+id/txtBabySaid"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/white"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:text="Con muôn đẹp dịu dàng như mẹ, lại muốn mạnh mẽ như ba nữa đó mẹ!, lại muốn mạnh mẽ như ba nữa đó mẹ!, lại muốn mạnh mẽ như ba nữa đó mẹ!"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_below="@id/rlBabySaid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+        <TextView
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:id="@+id/txtTitleDoctor"
+            android:gravity="center"
+            android:background="@drawable/bg_round_home_baby_title"
+            android:textColor="@color/bg_home_week_color"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Lời khuyên bác sĩ"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_centerVertical="true"
+            android:textSize="15dp"
+            android:layout_toRightOf="@id/txtTitleDoctor"
+            android:id="@+id/txtDoctorSaid"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:textColor="@color/white"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:text="Thời gian này bạn nên quan tâm chăm sóc cho bé. Thời gian này bạn nên quan tâm chăm sóc cho bé. Thời gian này bạn nên quan tâm chăm sóc cho bé."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+
+</RelativeLayout>
