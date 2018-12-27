@@ -341,43 +341,33 @@
                 android:background="@color/white">
 
                 <LinearLayout
+                    android:layout_margin="@dimen/length_10"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <ImageView
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:src="@drawable/tools_ic_muise_timing_hover"
+                        android:layout_width="@dimen/length_25"
+                        android:layout_height="@dimen/length_25" />
                     <TextView
+                        android:layout_marginLeft="@dimen/length_3"
+                        android:textSize="@dimen/length_15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="Giảm giá trong 10 giờ"
+                        android:text="Cập nhật giá lúc 10 giờ"
                         android:textColor="@color/text_sub" />
                 </LinearLayout>
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvShopNews"
+                android:id="@+id/rvShopHome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rvShop"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

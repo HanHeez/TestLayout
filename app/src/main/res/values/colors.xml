@@ -13,6 +13,7 @@
     <color name="text_product_name_shop_home">#D84275</color>
     <color name="text_product_description_shop_home">#A19E9F</color>
     <color name="bg_shop_discount_circle">#FF2264</color>
+    <color name="bg_shop_home_tag">#FB5D92</color>
 
     <!--User background color-->
     <color name="bg_user_gradient_start_color">#ff8d84</color>
