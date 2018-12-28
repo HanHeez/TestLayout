@@ -14,27 +14,27 @@ import com.gtv.hanhee.testlayout.utils.ImageUtils;
 
 import java.util.List;
 
-public class ShopHomeAdapter extends BaseQuickAdapter<Product, BaseViewHolder> {
+public class ShopHomeRowAdapter extends BaseQuickAdapter<Product, BaseViewHolder> {
 
     public List<Product> list;
     private Activity activity;
     OnItemRvClickListener onItemRvClickListener;
 
-    public ShopHomeAdapter(Activity activity, List<Product> data, OnItemRvClickListener onItemRvClickListener    ) {
+    public ShopHomeRowAdapter(Activity activity, List<Product> data, OnItemRvClickListener onItemRvClickListener    ) {
         super(R.layout.item_row_shop_home, data);
         this. onItemRvClickListener = onItemRvClickListener;
         this.list = data;
         this.activity = activity;
     }
 
-    TextView txtName, txtDescription, txtTag, txtPrice, txtDiscountPrice, txtQuantity;
+    TextView txtName, txtShortDescription, txtTag, txtPrice, txtDiscountPrice, txtQuantity;
     ImageView imgProduct;
 
     @Override
     protected void convert(BaseViewHolder holder, Product item) {
 //        Config View -----------------------
         txtName = holder.getView(R.id.txtName);
-        txtDescription = holder.getView(R.id.txtDescription);
+        txtShortDescription = holder.getView(R.id.txtShortDescription);
         txtTag = holder.getView(R.id.txtTag);
         txtPrice = holder.getView(R.id.txtPrice);
         txtDiscountPrice = holder.getView(R.id.txtDiscountPrice);
@@ -44,15 +44,16 @@ public class ShopHomeAdapter extends BaseQuickAdapter<Product, BaseViewHolder> {
 //        Setting Data ------------------------
 
         txtName.setText(item.getName());
-        if (item.getDescription().length()>0) {
-            txtDescription.setText(item.getDescription());
+        if (item.getShortDescription().length()>0) {
+            txtShortDescription.setText(item.getShortDescription());
         } else {
-            txtDescription.setVisibility(View.GONE);
+            txtShortDescription.setVisibility(View.GONE);
         }
         txtPrice.setText(item.getPrice()+"");
         txtDiscountPrice.setText(item.getDiscountPrice()+"");
         txtQuantity.setText(String.format(activity.getString(R.string.shop_quantity), item.getQuantity()));
-        ImageUtils.loadImageByGlide(activity,  item.getImage(), imgProduct);
+        txtQuantity.setVisibility(View.GONE);
+        ImageUtils.loadImageByGlideWithResize(activity,  item.getAvatar(), imgProduct, 350, 350);
     }
 }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.gtv.hanhee.testlayout.base.BaseActivity;
 import com.gtv.hanhee.testlayout.R;
+import com.gtv.hanhee.testlayout.ui.fragment.ShopCategoryFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopHomeFragment;
 
 public class MainActivity extends BaseActivity {
@@ -27,7 +28,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void configViews() {
 
-            fragment = new ShopHomeFragment();
+            fragment = new ShopCategoryFragment();
             Bundle args = new Bundle();         ;
             fragment.setArguments(args);
             getSupportFragmentManager().beginTransaction()

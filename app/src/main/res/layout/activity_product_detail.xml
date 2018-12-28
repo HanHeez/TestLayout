@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!--Banner-->
+            <com.youth.banner.Banner
+                android:visibility="gone"
+                android:id="@+id/bannerImage"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_300"
+                app:image_scale_type="center_crop"
+                app:indicator_height="@dimen/length_5"
+                app:indicator_width="@dimen/length_5" />
+
+            <!--Middle Descript-->
+            <RelativeLayout
+                android:id="@+id/rlProductDetail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_80"
+                android:layout_margin="@dimen/length_8"
+                android:paddingBottom="@dimen/length_3">
+                <!--Name-->
+                <RelativeLayout
+                    android:id="@+id/rlName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/length_4">
+
+                    <TextView
+                        android:id="@+id/txtTag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/bg_round_product_detail_tag"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/length_4"
+                        android:paddingTop="@dimen/length_2"
+                        android:paddingRight="@dimen/length_4"
+                        android:paddingBottom="@dimen/length_2"
+                        android:text="Giảm giá"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/length_8" />
+
+                    <TextView
+                        android:id="@+id/txtProductName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/length_5"
+                        android:layout_marginRight="@dimen/length_10"
+                        android:layout_toRightOf="@id/txtTag"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="Áo cho bé"
+                        android:textColor="@color/text_main"
+                        android:textSize="@dimen/length_13" />
+                </RelativeLayout>
+
+                <!--Discount date-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rlName">
+
+                    <TextView
+                        android:id="@+id/txtProductTag1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlName"
+                        android:layout_marginTop="@dimen/length_2"
+                        android:layout_marginRight="@dimen/length_5"
+                        android:layout_toRightOf="@id/txtProductPriceNo2"
+                        android:background="@drawable/bg_round_shop_product_discount_time"
+                        android:paddingLeft="@dimen/length_5"
+                        android:paddingTop="@dimen/length_2"
+                        android:paddingRight="@dimen/length_5"
+                        android:paddingBottom="@dimen/length_2"
+                        android:text="Trẻ em"
+                        android:textColor="@color/text_product_name_shop_home"
+                        android:textSize="@dimen/length_8" />
+
+                    <TextView
+                        android:id="@+id/txtProductTag2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlName"
+                        android:layout_marginTop="@dimen/length_2"
+                        android:layout_toRightOf="@id/txtProductPriceNo2"
+                        android:background="@drawable/bg_round_shop_product_discount_time"
+                        android:paddingLeft="@dimen/length_5"
+                        android:paddingTop="@dimen/length_2"
+                        android:paddingRight="@dimen/length_5"
+                        android:paddingBottom="@dimen/length_2"
+                        android:text="Số lượng có hạn"
+                        android:textColor="@color/text_product_name_shop_home"
+                        android:textSize="@dimen/length_8" />
+                </LinearLayout>
+
+                <!--Price-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="horizontal">
+
+                    <!--Discount Price-->
+                    <LinearLayout
+                        android:id="@+id/rlDiscountPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/txtd2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginBottom="-1dp"
+                            android:gravity="bottom"
+                            android:paddingBottom="@dimen/length_1"
+                            android:text="đ"
+                            android:textColor="@color/bg_shop_home_tag"
+                            android:textSize="@dimen/length_14" />
+
+                        <TextView
+                            android:id="@+id/txtDiscountPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="@dimen/length_1"
+                            android:layout_marginBottom="-1dp"
+                            android:layout_toRightOf="@id/txtd2"
+                            android:gravity="bottom"
+                            android:includeFontPadding="false"
+                            android:text="190.000"
+                            android:textColor="@color/bg_shop_home_tag"
+                            android:textSize="@dimen/length_19" />
+                    </LinearLayout>
+
+                    <!--Price-->
+
+                    <LinearLayout
+                        android:id="@+id/rlPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:layout_marginLeft="@dimen/length_4"
+                        android:background="@drawable/bg_strike_through"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/txtd1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:text="đ"
+                            android:textColor="@color/text_sub"
+                            android:textSize="@dimen/length_10" />
+
+                        <TextView
+                            android:id="@+id/txtPrice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentBottom="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/length_1"
+                            android:layout_toRightOf="@id/txtd1"
+                            android:text="200.000"
+                            android:textColor="@color/text_sub"
+                            android:textSize="@dimen/length_10" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!--Discount Time coundown-->
+
+                <TextView
+                    android:id="@+id/txtDiscountTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:text="Còn 4 ngày 17:00:45"
+                    android:textColor="@color/text_sub"
+                    android:textSize="@dimen/length_10" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_8"
+                android:background="@color/bg_shop_main_color" />
+
+            <!--Middle Shop Descript-->
+            <RelativeLayout
+                android:id="@+id/rlShopDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/length_8"
+                android:paddingBottom="@dimen/length_3">
+                <!--Name-->
+                <RelativeLayout
+                    android:id="@+id/rlShopName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/length_4">
+
+                    <ImageView
+                        android:id="@+id/imgShop"
+                        android:layout_width="@dimen/length_40"
+                        android:layout_height="@dimen/length_40"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/hot_girl2" />
+
+                    <LinearLayout
+                        android:layout_marginLeft="@dimen/length_4"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/imgShop"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtShopName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/length_5"
+                            android:layout_marginRight="@dimen/length_10"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Shop Hanhee"
+                            android:textColor="@color/text_main"
+                            android:textSize="@dimen/length_13" />
+
+                        <TextView
+                            android:id="@+id/txtShopDeliver"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/length_5"
+                            android:layout_marginRight="@dimen/length_10"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="DeliverNow"
+                            android:textColor="@color/text_shop_deliver"
+                            android:textSize="@dimen/length_13" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <!--Discount Time coundown-->
+                <TextView
+                    android:id="@+id/txtViewShopProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/length_2"
+                    android:background="@drawable/bg_round_view_shop_product"
+                    android:paddingLeft="@dimen/length_5"
+                    android:paddingTop="@dimen/length_2"
+                    android:paddingRight="@dimen/length_5"
+                    android:paddingBottom="@dimen/length_2"
+                    android:text="Xem sản phẩm"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/text_product_name_shop_home"
+                    android:textSize="@dimen/length_10" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_8"
+                android:background="@color/bg_shop_main_color" />
+
+            <!--Recommend Title-->
+            <LinearLayout
+                android:background="@color/white"
+                android:padding="@dimen/length_7"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:src="@drawable/icon_recommend_tab"
+                    android:layout_width="@dimen/length_18"
+                    android:layout_height="@dimen/length_18" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/length_3"
+                    android:text="Đề xuất cho bạn"
+                    android:textColor="@color/text_sub"
+                    android:textSize="@dimen/length_14" />
+            </LinearLayout>
+
+            <!--Product Recommend-->
+
+            <com.gtv.hanhee.testlayout.ui.customview.CustomBanner
+                android:id="@+id/bannerRecommend"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_200"
+                app:image_scale_type="center_crop"
+                app:indicator_height="@dimen/length_5"
+                app:indicator_width="@dimen/length_5" >
+
+            </com.gtv.hanhee.testlayout.ui.customview.CustomBanner>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <!--Custom Toolbar-->
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_35"
+        android:layout_alignParentTop="true"
+        android:background="@color/transparent_50">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/length_20"
+            android:layout_height="@dimen/length_20"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/length_10"
+            android:background="@drawable/bg_transparent_product_detail"
+            android:clickable="true"
+            android:paddingLeft="@dimen/length_6"
+            android:paddingRight="@dimen/length_3"
+            android:src="@drawable/nav_btn_back" />
+
+
+        <ImageView
+            android:id="@+id/btnSetting"
+            android:layout_width="@dimen/length_20"
+            android:layout_height="@dimen/length_20"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/length_10"
+            android:background="@drawable/bg_transparent_product_detail"
+            android:clickable="true"
+            android:padding="@dimen/length_7"
+            android:src="@drawable/nav_btn_more" />
+    </RelativeLayout>
+    <!--End Custom Toolbar-->
+</RelativeLayout>

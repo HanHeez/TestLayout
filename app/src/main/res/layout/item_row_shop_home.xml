@@ -92,7 +92,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/txtDescription"
+            android:id="@+id/txtShortDescription"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_marginRight="@dimen/length_10"

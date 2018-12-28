@@ -7,6 +7,8 @@
     <color name="bg_home_week_back_color">#F9CAE1</color>
     <color name="bg_home_search_color">#EEEEEE</color>
     <color name="bg_home_remind_color">#F5F5F5</color>
+    <color name="bg_product_detail_tag">#BC1515</color>
+    <color name="text_shop_deliver">#FF0036</color>
 
     <!--Shop-->
     <color name="bg_shop_main_color">#F6F6F6</color>
@@ -14,6 +16,7 @@
     <color name="text_product_description_shop_home">#A19E9F</color>
     <color name="bg_shop_discount_circle">#FF2264</color>
     <color name="bg_shop_home_tag">#FB5D92</color>
+    <color name="bg_shop_subcategory">#EFEFEF</color>
 
     <!--User background color-->
     <color name="bg_user_gradient_start_color">#ff8d84</color>

@@ -50,7 +50,6 @@ public class ImageUtils {
 
     public static void loadImageByGlideWithResize(Context mContext, String imageUrl, ImageView imageView, int width, int height) {
         RequestOptions requestOptions = new RequestOptions();
-
         requestOptions.centerCrop();
 
         if (imageUrl.contains("http")) {
@@ -70,7 +69,6 @@ public class ImageUtils {
 
     public static void loadImageInsideFragmentByGlide(Fragment fragment, String imageUrl, ImageView imageView) {
         RequestOptions requestOptions = new RequestOptions();
-
         requestOptions.centerCrop();
 
         if (imageUrl.contains("http")) {
@@ -100,6 +98,26 @@ public class ImageUtils {
             Glide.with(mContext)
                     .setDefaultRequestOptions(requestOptions)
                     .load(Constants.API_ENDPOINT2 + imageUrl)
+                    .into(imageView);
+        }
+    }
+
+    public static void loadCircleImageByGlideResize(Context mContext, String imageUrl, CircleImageView imageView, int width, int height) {
+        RequestOptions requestOptions = new RequestOptions();
+
+        requestOptions.centerCrop();
+
+        if (imageUrl.contains("http")) {
+            Glide.with(mContext)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(imageUrl)
+                    .apply(new RequestOptions().override(width, height))
+                    .into(imageView);
+        } else {
+            Glide.with(mContext)
+                    .setDefaultRequestOptions(requestOptions)
+                    .load(Constants.API_ENDPOINT2 + imageUrl)
+                    .apply(new RequestOptions().override(width, height))
                     .into(imageView);
         }
     }
