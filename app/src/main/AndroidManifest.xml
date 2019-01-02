@@ -32,7 +32,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.ProductDetailActivity"></activity>
+        <activity android:name=".ui.activity.ProductDetailActivity" />
+        <activity android:name=".ui.activity.CartActivity" />
+        <activity android:name=".ui.activity.ShopActivity"></activity>
     </application>
 
 </manifest>

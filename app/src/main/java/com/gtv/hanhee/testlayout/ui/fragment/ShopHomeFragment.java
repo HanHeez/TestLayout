@@ -18,7 +18,6 @@ import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeGridAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeRowAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.ShopHomeContract;
-import com.gtv.hanhee.testlayout.ui.customview.CustomBanner;
 import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
 import com.gtv.hanhee.testlayout.ui.customview.GlideImageLoader;
 import com.gtv.hanhee.testlayout.ui.presenter.ShopHomePresenter;
@@ -63,6 +62,14 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     public void attachView() {
         activityComponent().inject(this);
         shopHomePresenter.attachView(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (shopHomePresenter != null) {
+            shopHomePresenter.detachView();
+        }
     }
 
     @Override

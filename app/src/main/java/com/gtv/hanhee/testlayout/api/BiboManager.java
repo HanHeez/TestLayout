@@ -2,9 +2,11 @@ package com.gtv.hanhee.testlayout.api;
 
 import com.gtv.hanhee.testlayout.dagger2.PreferencesHelper;
 import com.gtv.hanhee.testlayout.model.BannerDetail;
+import com.gtv.hanhee.testlayout.model.Category;
 import com.gtv.hanhee.testlayout.model.CategoryService;
 import com.gtv.hanhee.testlayout.model.PostNews;
 import com.gtv.hanhee.testlayout.model.Product;
+import com.gtv.hanhee.testlayout.model.Shop;
 import com.gtv.hanhee.testlayout.model.SubCategory;
 
 
@@ -50,12 +52,12 @@ public class BiboManager {
         productList.add(new Product("Sữa ông thọ", "4", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
         productList.add(new Product("Đào tươi", "5", 40000,  30000, "", 0, 278, "https://media.healthplus.vn/Images/Uploaded/Share/2016/06/17/FB_IMG_1465116764246_1.jpg"));
         productList.add(new Product("Bánh đậu xanh", "6", 40000,  30000, "Bánh Việt Nam Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam ", 60, 278, "https://thucthan.com/media/2018/02/cach-lam-banh-gato/cach-lam-banh-gato.jpg"));
-        productList.add(new Product("Sữa ông thọ", "1", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
-        productList.add(new Product("Đào tươi", "2", 40000,  30000, "Đào nhập khẩu Trung Quốc", 0, 278, "https://media.healthplus.vn/Images/Uploaded/Share/2016/06/17/FB_IMG_1465116764246_1.jpg"));
-        productList.add(new Product("Bánh đậu xanh", "3", 40000,  30000, "Bánh Việt Nam Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam ", 60, 278, "https://thucthan.com/media/2018/02/cach-lam-banh-gato/cach-lam-banh-gato.jpg"));
-        productList.add(new Product("Sữa ông thọ", "4", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
-        productList.add(new Product("Đào tươi", "5", 40000,  30000, "Đào nhập khẩu Trung Quốc", 0, 278, "https://media.healthplus.vn/Images/Uploaded/Share/2016/06/17/FB_IMG_1465116764246_1.jpg"));
-        productList.add(new Product("Bánh đậu xanh", "6", 40000,  30000, "Bánh Việt Nam Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam ", 60, 278, "https://thucthan.com/media/2018/02/cach-lam-banh-gato/cach-lam-banh-gato.jpg"));
+        productList.add(new Product("Sữa ông thọ", "7", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
+        productList.add(new Product("Đào tươi", "8", 40000,  30000, "Đào nhập khẩu Trung Quốc", 0, 278, "https://media.healthplus.vn/Images/Uploaded/Share/2016/06/17/FB_IMG_1465116764246_1.jpg"));
+        productList.add(new Product("Bánh đậu xanh", "9", 40000,  30000, "Bánh Việt Nam Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam ", 60, 278, "https://thucthan.com/media/2018/02/cach-lam-banh-gato/cach-lam-banh-gato.jpg"));
+        productList.add(new Product("Sữa ông thọ", "10", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
+        productList.add(new Product("Đào tươi", "11", 40000,  30000, "Đào nhập khẩu Trung Quốc", 0, 278, "https://media.healthplus.vn/Images/Uploaded/Share/2016/06/17/FB_IMG_1465116764246_1.jpg"));
+        productList.add(new Product("Bánh đậu xanh", "12", 40000,  30000, "Bánh Việt Nam Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam ", 60, 278, "https://thucthan.com/media/2018/02/cach-lam-banh-gato/cach-lam-banh-gato.jpg"));
         return Observable.just(productList);
     }
 
@@ -77,11 +79,16 @@ public class BiboManager {
         images.add("http://thuvienanhdep.net/wp-content/uploads/2015/10/nhung-hinh-anh-hot-girl-dang-yeu-voi-chiec-ao-so-mi-ket-hop-chan-vay-61.jpg");
         images.add("https://thoitrangtre.biz/wp-content/uploads/2014/08/bo-vest-cong-so-giao-vien-2014-12.jpg");
         images.add("https://i.a4vn.com/2018/10/2/hot-girl-van-phong-mac-do-cong-so-sexy-goi-cam-den-khong-ngo-26cbc2.jpg");
-        Product product = new Product("Sữa ông thọ", "1", 200000,  180000, "Sữa 100% nguyên chất đấy a e ơi", "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg", true, images);
+        List<Category> categoryList = new ArrayList<>();
+        categoryList.add(new Category("1", "Quần áo", "quàn áo đẹp"));
+        categoryList.add(new Category("2", "Thời trang", "quàn áo đẹp"));
+        categoryList.add(new Category("3", "Phụ kiện", "quàn áo đẹp"));
+        Shop shop = new Shop("1", "Shop HanHee TĐLQ", "https://img.webtretho.com/forum/images/wtt_v2/lamdep.png","Shop luôn bán giá đúng","T-MALL");
+        Product product = new Product("Sữa ông thọ", "2", 160000,  70000000, "Sữa 100% nguyên chất đấy a e ơi", "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg", true, images, categoryList, shop);
          return Observable.just(product);
     }
 
-    public Observable<List<Product>> getRecommendProductList(String accessToken, String id) {
+    public Observable<List<Product>> getRecommendProductList(String accessToken, String id, int skip, int limit) {
 
         List<Product> recommendProductList = new ArrayList<>();
         recommendProductList.add(new Product("Sữa ông thọ", "1", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
@@ -90,8 +97,23 @@ public class BiboManager {
         recommendProductList.add(new Product("Sữa ông thọ", "4", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
         recommendProductList.add(new Product("Đào tươi", "5", 40000,  30000, "", 0, 278, "https://media.healthplus.vn/Images/Uploaded/Share/2016/06/17/FB_IMG_1465116764246_1.jpg"));
         recommendProductList.add(new Product("Bánh đậu xanh", "6", 40000,  30000, "Bánh Việt Nam Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam ", 60, 278, "https://thucthan.com/media/2018/02/cach-lam-banh-gato/cach-lam-banh-gato.jpg"));
-        recommendProductList.add(new Product("Sữa ông thọ", "1", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
-        return Observable.just(recommendProductList);
+        recommendProductList.add(new Product("Sữa ông thọ", "7", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
+        recommendProductList.add(new Product("Sữa ông thọ", "8", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
+        recommendProductList.add(new Product("Đào tươi", "9", 40000,  30000, "Đào nhập khẩu Trung Quốc Đào nhập khẩu Trung Quốc Đào nhập khẩu Trung Quốc Đào nhập khẩu Trung Quốc", 0, 278, "https://media.healthplus.vn/Images/Uploaded/Share/2016/06/17/FB_IMG_1465116764246_1.jpg"));
+        recommendProductList.add(new Product("Bánh đậu xanh", "10", 40000,  30000, "Bánh Việt Nam Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam ", 60, 278, "https://thucthan.com/media/2018/02/cach-lam-banh-gato/cach-lam-banh-gato.jpg"));
+        recommendProductList.add(new Product("Sữa ông thọ", "11", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
+        recommendProductList.add(new Product("Đào tươi", "12", 40000,  30000, "", 0, 278, "https://media.healthplus.vn/Images/Uploaded/Share/2016/06/17/FB_IMG_1465116764246_1.jpg"));
+        recommendProductList.add(new Product("Bánh đậu xanh", "13", 40000,  30000, "Bánh Việt Nam Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam  Bánh Việt Nam ", 60, 278, "https://thucthan.com/media/2018/02/cach-lam-banh-gato/cach-lam-banh-gato.jpg"));
+        recommendProductList.add(new Product("Sữa ông thọ", "14", 200000,  180000, "Sữa 100% nguyên chất", 50, 25678, "https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
+
+        List<Product> returnList = new ArrayList<>();
+        int countLimit = 0;
+        for (int i=skip; i<recommendProductList.size();i ++) {
+            returnList.add(recommendProductList.get(i));
+            countLimit++;
+            if (countLimit==limit) return Observable.just(returnList);
+        }
+        return Observable.just(returnList);
     }
 //
 //    public Observable<Message> sendEmail(String email) {

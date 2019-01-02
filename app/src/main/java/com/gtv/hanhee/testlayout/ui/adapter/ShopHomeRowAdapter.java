@@ -11,6 +11,7 @@ import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.utils.ImageUtils;
+import com.gtv.hanhee.testlayout.utils.StringUtils;
 
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class ShopHomeRowAdapter extends BaseQuickAdapter<Product, BaseViewHolder
         } else {
             txtShortDescription.setVisibility(View.GONE);
         }
-        txtPrice.setText(item.getPrice()+"");
-        txtDiscountPrice.setText(item.getDiscountPrice()+"");
+        txtPrice.setText(StringUtils.formatPrice(item.getPrice()+""));
+        txtDiscountPrice.setText(StringUtils.formatPrice(item.getDiscountPrice()+""));
         txtQuantity.setText(String.format(activity.getString(R.string.shop_quantity), item.getQuantity()));
         txtQuantity.setVisibility(View.GONE);
         ImageUtils.loadImageByGlideWithResize(activity,  item.getAvatar(), imgProduct, 350, 350);

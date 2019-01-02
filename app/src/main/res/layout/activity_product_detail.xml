@@ -6,327 +6,339 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_marginBottom="@dimen/length_45"
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true">
+        android:layout_height="match_parent"
+        android:background="@color/bg_shop_main_color">
 
-        <LinearLayout
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:fillViewport="true">
 
-            <!--Banner-->
-            <com.youth.banner.Banner
-                android:visibility="gone"
-                android:id="@+id/bannerImage"
+            <LinearLayout
+                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/length_300"
-                app:image_scale_type="center_crop"
-                app:indicator_height="@dimen/length_5"
-                app:indicator_width="@dimen/length_5" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-            <!--Middle Descript-->
-            <RelativeLayout
-                android:id="@+id/rlProductDetail"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/length_80"
-                android:layout_margin="@dimen/length_8"
-                android:paddingBottom="@dimen/length_3">
-                <!--Name-->
+                <!--Banner-->
+                <com.youth.banner.Banner
+                    android:id="@+id/bannerImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_300"
+                    android:visibility="visible"
+                    app:image_scale_type="center_crop"
+                    app:indicator_height="@dimen/length_5"
+                    app:indicator_width="@dimen/length_5" />
+
+                <!--Middle Descript-->
                 <RelativeLayout
-                    android:id="@+id/rlName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/length_4">
-
-                    <TextView
-                        android:id="@+id/txtTag"
+                    android:id="@+id/rlProductDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_80"
+                    android:layout_margin="@dimen/length_8"
+                    android:paddingBottom="@dimen/length_3">
+                    <!--Name-->
+                    <RelativeLayout
+                        android:id="@+id/rlName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/bg_round_product_detail_tag"
-                        android:gravity="center"
-                        android:paddingLeft="@dimen/length_4"
-                        android:paddingTop="@dimen/length_2"
-                        android:paddingRight="@dimen/length_4"
-                        android:paddingBottom="@dimen/length_2"
-                        android:text="Giảm giá"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/length_8" />
-
-                    <TextView
-                        android:id="@+id/txtProductName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/length_5"
-                        android:layout_marginRight="@dimen/length_10"
-                        android:layout_toRightOf="@id/txtTag"
-                        android:ellipsize="end"
-                        android:maxLines="1"
-                        android:text="Áo cho bé"
-                        android:textColor="@color/text_main"
-                        android:textSize="@dimen/length_13" />
-                </RelativeLayout>
-
-                <!--Discount date-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/rlName">
-
-                    <TextView
-                        android:id="@+id/txtProductTag1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rlName"
-                        android:layout_marginTop="@dimen/length_2"
-                        android:layout_marginRight="@dimen/length_5"
-                        android:layout_toRightOf="@id/txtProductPriceNo2"
-                        android:background="@drawable/bg_round_shop_product_discount_time"
-                        android:paddingLeft="@dimen/length_5"
-                        android:paddingTop="@dimen/length_2"
-                        android:paddingRight="@dimen/length_5"
-                        android:paddingBottom="@dimen/length_2"
-                        android:text="Trẻ em"
-                        android:textColor="@color/text_product_name_shop_home"
-                        android:textSize="@dimen/length_8" />
-
-                    <TextView
-                        android:id="@+id/txtProductTag2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/rlName"
-                        android:layout_marginTop="@dimen/length_2"
-                        android:layout_toRightOf="@id/txtProductPriceNo2"
-                        android:background="@drawable/bg_round_shop_product_discount_time"
-                        android:paddingLeft="@dimen/length_5"
-                        android:paddingTop="@dimen/length_2"
-                        android:paddingRight="@dimen/length_5"
-                        android:paddingBottom="@dimen/length_2"
-                        android:text="Số lượng có hạn"
-                        android:textColor="@color/text_product_name_shop_home"
-                        android:textSize="@dimen/length_8" />
-                </LinearLayout>
-
-                <!--Price-->
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:orientation="horizontal">
-
-                    <!--Discount Price-->
-                    <LinearLayout
-                        android:id="@+id/rlDiscountPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical">
+                        android:layout_marginBottom="@dimen/length_4">
 
                         <TextView
-                            android:id="@+id/txtd2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginBottom="-1dp"
-                            android:gravity="bottom"
-                            android:paddingBottom="@dimen/length_1"
-                            android:text="đ"
-                            android:textColor="@color/bg_shop_home_tag"
-                            android:textSize="@dimen/length_14" />
-
-                        <TextView
-                            android:id="@+id/txtDiscountPrice"
+                            android:id="@+id/txtTag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
                             android:layout_centerVertical="true"
-                            android:layout_gravity="bottom"
-                            android:layout_marginLeft="@dimen/length_1"
-                            android:layout_marginBottom="-1dp"
-                            android:layout_toRightOf="@id/txtd2"
-                            android:gravity="bottom"
-                            android:includeFontPadding="false"
-                            android:text="190.000"
-                            android:textColor="@color/bg_shop_home_tag"
-                            android:textSize="@dimen/length_19" />
+                            android:background="@drawable/bg_round_product_detail_tag"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/length_4"
+                            android:paddingTop="@dimen/length_2"
+                            android:paddingRight="@dimen/length_4"
+                            android:paddingBottom="@dimen/length_2"
+                            android:text="Giảm giá"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/length_8" />
+
+                        <TextView
+                            android:id="@+id/txtProductName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/length_5"
+                            android:layout_marginRight="@dimen/length_10"
+                            android:layout_toRightOf="@id/txtTag"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Áo cho bé"
+                            android:textColor="@color/text_main"
+                            android:textSize="@dimen/length_16" />
+                    </RelativeLayout>
+
+                    <!--Discount date-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rlName">
+
+                        <TextView
+                            android:id="@+id/txtTag2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/rlName"
+                            android:layout_marginTop="@dimen/length_2"
+                            android:layout_marginRight="@dimen/length_5"
+                            android:layout_toRightOf="@id/txtProductPriceNo2"
+                            android:background="@drawable/bg_round_shop_product_discount_time"
+                            android:paddingLeft="@dimen/length_5"
+                            android:paddingTop="@dimen/length_2"
+                            android:paddingRight="@dimen/length_5"
+                            android:paddingBottom="@dimen/length_2"
+                            android:text="Trẻ em"
+                            android:textColor="@color/text_product_name_shop_home"
+                            android:textSize="@dimen/length_8" />
+
+                        <TextView
+                            android:id="@+id/txtTag3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/rlName"
+                            android:layout_marginTop="@dimen/length_2"
+                            android:layout_toRightOf="@id/txtProductPriceNo2"
+                            android:background="@drawable/bg_round_shop_product_discount_time"
+                            android:paddingLeft="@dimen/length_5"
+                            android:paddingTop="@dimen/length_2"
+                            android:paddingRight="@dimen/length_5"
+                            android:paddingBottom="@dimen/length_2"
+                            android:text="Số lượng có hạn"
+                            android:textColor="@color/text_product_name_shop_home"
+                            android:textSize="@dimen/length_8" />
                     </LinearLayout>
 
                     <!--Price-->
-
                     <LinearLayout
-                        android:id="@+id/rlPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:layout_marginLeft="@dimen/length_4"
-                        android:background="@drawable/bg_strike_through"
-                        android:gravity="center_vertical">
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/txtd1"
+                        <!--Discount Price-->
+                        <LinearLayout
+                            android:id="@+id/rlDiscountPrice"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerVertical="true"
-                            android:gravity="center"
-                            android:text="đ"
-                            android:textColor="@color/text_sub"
-                            android:textSize="@dimen/length_10" />
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical">
 
-                        <TextView
-                            android:id="@+id/txtPrice"
+                            <TextView
+                                android:id="@+id/txtd2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginBottom="-1dp"
+                                android:gravity="bottom"
+                                android:paddingBottom="@dimen/length_1"
+                                android:text="đ"
+                                android:textColor="@color/bg_shop_home_tag"
+                                android:textSize="@dimen/length_14" />
+
+                            <TextView
+                                android:id="@+id/txtDiscountPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerVertical="true"
+                                android:layout_gravity="bottom"
+                                android:layout_marginLeft="@dimen/length_1"
+                                android:layout_marginBottom="-1dp"
+                                android:layout_toRightOf="@id/txtd2"
+                                android:gravity="bottom"
+                                android:includeFontPadding="false"
+                                android:text="190.000"
+                                android:textColor="@color/bg_shop_home_tag"
+                                android:textSize="@dimen/length_19" />
+                        </LinearLayout>
+
+                        <!--Price-->
+
+                        <LinearLayout
+                            android:id="@+id/rlPrice"
                             android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/length_1"
-                            android:layout_toRightOf="@id/txtd1"
-                            android:text="200.000"
-                            android:textColor="@color/text_sub"
-                            android:textSize="@dimen/length_10" />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:layout_marginLeft="@dimen/length_4"
+                            android:background="@drawable/bg_strike_through"
+                            android:gravity="center_vertical">
+
+                            <TextView
+                                android:id="@+id/txtd1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerVertical="true"
+                                android:gravity="center"
+                                android:text="đ"
+                                android:textColor="@color/text_sub"
+                                android:textSize="@dimen/length_10" />
+
+                            <TextView
+                                android:id="@+id/txtPrice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentBottom="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/length_1"
+                                android:layout_toRightOf="@id/txtd1"
+                                android:text="200.000"
+                                android:textColor="@color/text_sub"
+                                android:textSize="@dimen/length_10" />
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
 
-                <!--Discount Time coundown-->
+                    <!--Discount Time coundown-->
 
-                <TextView
-                    android:id="@+id/txtDiscountTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:text="Còn 4 ngày 17:00:45"
-                    android:textColor="@color/text_sub"
-                    android:textSize="@dimen/length_10" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/length_8"
-                android:background="@color/bg_shop_main_color" />
-
-            <!--Middle Shop Descript-->
-            <RelativeLayout
-                android:id="@+id/rlShopDetail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/length_8"
-                android:paddingBottom="@dimen/length_3">
-                <!--Name-->
-                <RelativeLayout
-                    android:id="@+id/rlShopName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/length_4">
-
-                    <ImageView
-                        android:id="@+id/imgShop"
-                        android:layout_width="@dimen/length_40"
-                        android:layout_height="@dimen/length_40"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/hot_girl2" />
-
-                    <LinearLayout
-                        android:layout_marginLeft="@dimen/length_4"
-                        android:layout_centerInParent="true"
+                    <TextView
+                        android:id="@+id/txtDiscountTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@id/imgShop"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/txtShopName"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/length_5"
-                            android:layout_marginRight="@dimen/length_10"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="Shop Hanhee"
-                            android:textColor="@color/text_main"
-                            android:textSize="@dimen/length_13" />
-
-                        <TextView
-                            android:id="@+id/txtShopDeliver"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="@dimen/length_5"
-                            android:layout_marginRight="@dimen/length_10"
-                            android:ellipsize="end"
-                            android:maxLines="1"
-                            android:text="DeliverNow"
-                            android:textColor="@color/text_shop_deliver"
-                            android:textSize="@dimen/length_13" />
-                    </LinearLayout>
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
+                        android:text="Còn 4 ngày 17:00:45"
+                        android:textColor="@color/text_sub"
+                        android:textSize="@dimen/length_10" />
                 </RelativeLayout>
 
-                <!--Discount Time coundown-->
-                <TextView
-                    android:id="@+id/txtViewShopProduct"
-                    android:layout_width="wrap_content"
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_8"
+                    android:background="@color/bg_shop_main_color" />
+
+                <!--Middle Shop Descript-->
+                <RelativeLayout
+                    android:id="@+id/rlShopDetail"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/length_2"
-                    android:background="@drawable/bg_round_view_shop_product"
-                    android:paddingLeft="@dimen/length_5"
-                    android:paddingTop="@dimen/length_2"
-                    android:paddingRight="@dimen/length_5"
-                    android:paddingBottom="@dimen/length_2"
-                    android:text="Xem sản phẩm"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:textColor="@color/text_product_name_shop_home"
-                    android:textSize="@dimen/length_10" />
-            </RelativeLayout>
+                    android:layout_margin="@dimen/length_8"
+                    android:paddingBottom="@dimen/length_3">
+                    <!--Name-->
+                    <RelativeLayout
+                        android:id="@+id/rlShopName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/length_4">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/length_8"
-                android:background="@color/bg_shop_main_color" />
+                        <ImageView
+                            android:id="@+id/imgShop"
+                            android:layout_width="@dimen/length_40"
+                            android:layout_height="@dimen/length_40"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/hot_girl2" />
 
-            <!--Recommend Title-->
-            <LinearLayout
-                android:background="@color/white"
-                android:padding="@dimen/length_7"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:src="@drawable/icon_recommend_tab"
-                    android:layout_width="@dimen/length_18"
-                    android:layout_height="@dimen/length_18" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="@dimen/length_4"
+                            android:layout_toRightOf="@id/imgShop"
+                            android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                            <TextView
+                                android:id="@+id/txtShopName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/length_5"
+                                android:layout_marginRight="@dimen/length_10"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="Shop Hanhee"
+                                android:textColor="@color/text_main"
+                                android:textSize="@dimen/length_13" />
+
+                            <TextView
+                                android:id="@+id/txtShipper"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="@dimen/length_5"
+                                android:layout_marginRight="@dimen/length_10"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:text="DeliverNow"
+                                android:textColor="@color/text_shop_deliver"
+                                android:textSize="@dimen/length_13" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <!--Discount Time coundown-->
+                    <TextView
+                        android:id="@+id/btnViewShopProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="@dimen/length_2"
+                        android:background="@drawable/bg_round_view_shop_product"
+                        android:paddingLeft="@dimen/length_5"
+                        android:paddingTop="@dimen/length_2"
+                        android:paddingRight="@dimen/length_5"
+                        android:paddingBottom="@dimen/length_2"
+                        android:text="Xem sản phẩm"
+                        android:textColor="@color/text_product_name_shop_home"
+                        android:textSize="@dimen/length_10" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_8"
+                    android:background="@color/bg_shop_main_color" />
+
+                <!--Recommend Title-->
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/length_3"
-                    android:text="Đề xuất cho bạn"
-                    android:textColor="@color/text_sub"
-                    android:textSize="@dimen/length_14" />
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/length_7">
+
+                    <ImageView
+                        android:layout_width="@dimen/length_18"
+                        android:layout_height="@dimen/length_18"
+                        android:src="@drawable/icon_recommend_tab" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/length_3"
+                        android:text="Đề xuất cho bạn"
+                        android:textColor="@color/text_sub"
+                        android:textSize="@dimen/length_14" />
+                </LinearLayout>
+
+                <!--Product Recommend-->
+
+                <com.gtv.hanhee.testlayout.ui.customview.ProductRecommendBanner
+                    android:id="@+id/bannerRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_280"
+                    app:canLoop="true"
+                    app:indicatorAlign="center"
+                    app:indicatorPaddingLeft="10dp"
+                    app:open_mz_mode="false" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_8"
+                    android:background="@color/bg_shop_main_color" />
             </LinearLayout>
 
-            <!--Product Recommend-->
-
-            <com.gtv.hanhee.testlayout.ui.customview.CustomBanner
-                android:id="@+id/bannerRecommend"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/length_200"
-                app:image_scale_type="center_crop"
-                app:indicator_height="@dimen/length_5"
-                app:indicator_width="@dimen/length_5" >
-
-            </com.gtv.hanhee.testlayout.ui.customview.CustomBanner>
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <!--Custom Toolbar-->
     <RelativeLayout
@@ -362,4 +374,114 @@
             android:src="@drawable/nav_btn_more" />
     </RelativeLayout>
     <!--End Custom Toolbar-->
+
+    <!--Custom Bottom Bar-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/rlBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_45"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+        <!--HOme-->
+        <LinearLayout
+            android:id="@+id/btnHome"
+            android:clickable="true"
+            android:background="@drawable/bg_press_item"
+            android:paddingLeft="@dimen/length_9"
+            android:paddingRight="@dimen/length_9"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/length_3"
+                android:src="@drawable/ic_home_footer"
+                android:layout_width="@dimen/length_16"
+                android:layout_height="@dimen/length_16" />
+            <TextView
+                android:textColor="@color/text_main"
+                android:gravity="center"
+                android:text="Trang chủ"
+                android:textSize="@dimen/length_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <!--Favorite-->
+        <LinearLayout
+            android:id="@+id/btnFavourite"
+            android:clickable="true"
+            android:background="@drawable/bg_press_item"
+            android:paddingLeft="@dimen/length_9"
+            android:paddingRight="@dimen/length_9"
+            android:gravity="center"
+
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/length_3"
+                android:src="@drawable/all_bottom_favorite"
+                android:layout_width="@dimen/length_16"
+                android:layout_height="@dimen/length_16" />
+            <TextView
+                android:textColor="@color/text_main"
+                android:gravity="center"
+                android:text="Yêu thích"
+                android:textSize="@dimen/length_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!--Buy-->
+        <LinearLayout
+            android:id="@+id/btnBuyNow"
+            android:paddingLeft="@dimen/length_10"
+            android:paddingRight="@dimen/length_10"
+            android:gravity="center"
+            android:background="@color/buy_now"
+
+            android:orientation="vertical"
+            android:layout_width="@dimen/length_120"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/txtPriceBuyNow"
+                android:textColor="@color/white"
+                android:text="đ1235678950.000"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/length_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="Mua ngay"
+                android:textColor="@color/white"
+                android:textSize="@dimen/length_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!--Add to cart-->
+        <LinearLayout
+            android:id="@+id/btnAddToCart"
+            android:background="@color/bg_shop_discount_circle"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_margin="@dimen/length_5"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="Thêm vào giỏ hàng"
+                android:textSize="@dimen/length_14"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

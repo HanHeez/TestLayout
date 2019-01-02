@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_marginBottom="@dimen/length_55"
+        android:layout_marginTop="@dimen/length_45"
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_shop_main_color">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+                <!--Recommend Title-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/length_7">
+
+                    <ImageView
+                        android:layout_width="@dimen/length_18"
+                        android:layout_height="@dimen/length_18"
+                        android:src="@drawable/icon_recommend_tab" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/length_3"
+                        android:text="Có thể bạn cũng thích"
+                        android:textColor="@color/text_btn"
+                        android:textSize="@dimen/length_14" />
+                </LinearLayout>
+
+                <!--Recommend Recycler View -->
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    <!--Custom Toolbar-->
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:elevation="@dimen/length_0"
+        android:layout_height="@dimen/length_45">
+
+        <ImageView
+            android:clickable="true"
+            android:background="@drawable/bg_press_item"
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/nav_back_width"
+            android:layout_height="match_parent"
+            android:padding="@dimen/length_10"
+            android:src="@drawable/nav_btn_back_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textSize="@dimen/textsize_17"
+            android:text="Giỏ hàng"
+            android:textColor="@color/text_main" />
+
+        <TextView
+            android:paddingRight="@dimen/length_15"
+            android:paddingLeft="@dimen/length_15"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:textSize="@dimen/textsize_17"
+            android:text="Xóa"
+            android:textColor="@color/text_main" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/length_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/grey300" />
+    </RelativeLayout>
+    <!--End Custom Toolbar-->
+
+    <!--Custom Bottom Bar-->
+    <LinearLayout
+        android:elevation="@dimen/length_2"
+        android:orientation="horizontal"
+        android:id="@+id/rlBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_55"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white">
+        <!--HOme-->
+        <LinearLayout
+            android:id="@+id/btnHome"
+            android:clickable="true"
+            android:background="@drawable/bg_press_item"
+            android:paddingLeft="@dimen/length_9"
+            android:paddingRight="@dimen/length_9"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <CheckBox
+                android:button="@drawable/cb_cart"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/length_16"
+                android:layout_height="@dimen/length_16" />
+            <TextView
+                android:layout_marginLeft="@dimen/length_4"
+                android:textColor="@color/text_main"
+                android:gravity="center"
+                android:text="Tất cả"
+                android:textSize="@dimen/length_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <!--Buy-->
+        <RelativeLayout
+            android:gravity="center_vertical"
+            android:id="@+id/btnBuyNow"
+            android:paddingLeft="@dimen/length_10"
+            android:paddingRight="@dimen/length_10"
+            android:background="@color/white"
+            android:layout_width="@dimen/length_200"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textColor="@color/text_main"
+                android:text="Tổng tiền: "
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginTop="@dimen/length_2"
+                android:layout_toLeftOf="@id/txtTotal"
+                android:textSize="@dimen/length_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txtTotal"
+                android:text="đ329.000"
+                android:layout_marginBottom="@dimen/length_2"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/text_shop_deliver"
+                android:textSize="@dimen/length_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+
+                android:layout_toLeftOf="@id/txtSaveDeliver"
+                android:layout_below="@id/txtTotal"
+                android:text="Tiết kiệm phí vận chuyển: "
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/length_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/txtSaveDeliver"
+                android:layout_below="@id/txtTotal"
+                android:text="đ29.000"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/length_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <!--Add to cart-->
+        <LinearLayout
+            android:id="@+id/btnAddToCart"
+            android:background="@color/buy_now"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_margin="@dimen/length_5"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="Thanh toán"
+                android:textSize="@dimen/length_16"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

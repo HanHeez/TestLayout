@@ -14,6 +14,6 @@ public interface ProductDetailContract {
 
     interface Presenter<T> extends BaseContract.BasePresenter<T> {
         void getProduct(String accessToken, String id);
-        void getRecommendProductList(String accessToken, String id);
+        void getRecommendProductList(String accessToken, String id, int skip, int limit);
     }
 }

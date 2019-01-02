@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:padding="@dimen/length_10"
+    android:layout_height="wrap_content">
+
+    <CheckBox
+        android:id="@+id/cbShop"
+        android:layout_centerVertical="true"
+        android:button="@drawable/cb_cart"
+        android:layout_gravity="center"
+        android:layout_marginRight="@dimen/length_8"
+        android:layout_width="@dimen/length_16"
+        android:layout_height="@dimen/length_16" />
+    <TextView
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/cbShop"
+        android:id="@+id/txtShopName"
+        android:textSize="@dimen/length_15"
+        android:textColor="@color/text_main"
+        android:text="Shop Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_marginLeft="@dimen/length_5"
+        android:rotation="180"
+        android:src="@drawable/nav_btn_back_black"
+        android:layout_toRightOf="@id/txtShopName"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/length_17"
+        android:layout_height="@dimen/length_17" />
+</RelativeLayout>

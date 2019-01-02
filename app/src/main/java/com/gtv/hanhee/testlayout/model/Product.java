@@ -1,19 +1,59 @@
 package com.gtv.hanhee.testlayout.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
+import java.io.Serializable;
 import java.util.List;
 
-public class Product {
-    private String name;
+@Entity(tableName = "products")
+public class Product implements Serializable {
+    @PrimaryKey
+    @NonNull
     private String id;
+    private String name;
     private long price;
+    @ColumnInfo(name="discount_price")
     private long discountPrice;
     private String description;
+    @ColumnInfo(name="short_description")
     private String shortDescription;
+    @ColumnInfo(name="discount_percent")
     private int discountPercent;
     private long quantity;
+    @ColumnInfo(name="order_amount")
+    private int orderAmount;
+    @ColumnInfo(name="order_total_price")
+    private int orderTotalPrice;
     private String avatar;
+    @ColumnInfo(name="is_free_ship")
     private boolean isFreeShip;
-    private List<String> thumbnails;
+    @Embedded
+    private Shop shop;
+    @Ignore
+    List<String> thumbnails;
+    @Ignore
+    private List<Category> subCategory;
+
+    public int getOrderAmount() {
+        return orderAmount;
+    }
+
+    public void setOrderAmount(int orderAmount) {
+        this.orderAmount = orderAmount;
+    }
+
+    public int getOrderTotalPrice() {
+        return orderTotalPrice;
+    }
+
+    public void setOrderTotalPrice(int orderTotalPrice) {
+        this.orderTotalPrice = orderTotalPrice;
+    }
 
     public String getAvatar() {
         return avatar;
@@ -47,6 +87,24 @@ public class Product {
         this.shortDescription = shortDescription;
     }
 
+
+    public Product(@NonNull String id, String name, long price, long discountPrice, String description, String shortDescription, int discountPercent, long quantity, int orderAmount, int orderTotalPrice, String avatar, boolean isFreeShip, Shop shop) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.discountPrice = discountPrice;
+        this.description = description;
+        this.shortDescription = shortDescription;
+        this.discountPercent = discountPercent;
+        this.quantity = quantity;
+        this.orderAmount = orderAmount;
+        this.orderTotalPrice = orderTotalPrice;
+        this.avatar = avatar;
+        this.isFreeShip = isFreeShip;
+        this.shop = shop;
+    }
+
+    @Ignore
     public Product(String name, String id, long price, long discountPrice, String shortDescription, int discountPercent, long quantity, String avatar) {
         this.name = name;
         this.id = id;
@@ -57,7 +115,7 @@ public class Product {
         this.quantity = quantity;
         this.avatar = avatar;
     }
-
+    @Ignore
     public Product(String name, String id, long price, long discountPrice, String description, String shortDescription, int discountPercent, long quantity, String avatar, boolean isFreeShip, List<String> thumbnails) {
         this.name = name;
         this.id = id;
@@ -70,6 +128,38 @@ public class Product {
         this.avatar = avatar;
         this.isFreeShip = isFreeShip;
         this.thumbnails = thumbnails;
+    }
+    @Ignore
+    public Product(String name, String id, long price, long discountPrice, String description, String shortDescription, int discountPercent, long quantity, String avatar, boolean isFreeShip, List<String> thumbnails, List<Category> subCategory, Shop shop) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.discountPrice = discountPrice;
+        this.description = description;
+        this.shortDescription = shortDescription;
+        this.discountPercent = discountPercent;
+        this.quantity = quantity;
+        this.avatar = avatar;
+        this.isFreeShip = isFreeShip;
+        this.thumbnails = thumbnails;
+        this.subCategory = subCategory;
+        this.shop = shop;
+    }
+
+    public List<Category> getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(List<Category> subCategory) {
+        this.subCategory = subCategory;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     public String getName() {

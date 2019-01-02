@@ -1,13 +1,19 @@
 package com.gtv.hanhee.testlayout.base;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.gtv.hanhee.testlayout.dagger2.component.ApplicationComponent;
+
+
 import com.gtv.hanhee.testlayout.dagger2.component.DaggerApplicationComponent;
 import com.gtv.hanhee.testlayout.dagger2.module.ApplicationModule;
+import com.gtv.hanhee.testlayout.model.dao.ProductDao;
+import com.gtv.hanhee.testlayout.model.database.AppDatabase;
 import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.squareup.leakcanary.LeakCanary;
+
 
 
 /**
@@ -16,14 +22,19 @@ import com.squareup.leakcanary.LeakCanary;
 public class MyApplication extends Application {
 
     private ApplicationComponent mApplicationComponent;
+    private AppDatabase db;
+    public static ProductDao mProductDao;
 
     @Override
     public void onCreate() {
         super.onCreate();
         LeakCanary.install(this);
+
         initComponent();
         initPrefs();
-
+        db = Room.databaseBuilder(getApplicationContext(),
+                AppDatabase.class, "product-store").build();
+        mProductDao = db.productDao();
     }
 
     private void initComponent() {

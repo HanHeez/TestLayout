@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/length_108"
+    android:background="@drawable/bg_press_item"
+    android:clickable="true"
+    android:paddingLeft="@dimen/length_8"
+    android:paddingTop="@dimen/length_4"
+    android:paddingRight="@dimen/length_8">
+
+    <CheckBox
+        android:id="@+id/cbProduct"
+        android:layout_centerVertical="true"
+        android:button="@drawable/cb_cart"
+        android:layout_gravity="center"
+        android:layout_marginRight="@dimen/length_8"
+        android:layout_width="@dimen/length_16"
+        android:layout_height="@dimen/length_16" />
+
+    <RelativeLayout
+        android:layout_toRightOf="@id/cbProduct"
+        android:id="@+id/rlImageProduct"
+        android:layout_width="@dimen/length_90"
+        android:layout_height="@dimen/length_100"
+        android:layout_marginRight="@dimen/length_4"
+        android:layout_marginBottom="@dimen/length_4">
+
+
+        <android.support.v7.widget.CardView
+
+            android:id="@+id/cvProduct"
+            android:layout_width="@dimen/length_90"
+            android:layout_height="@dimen/length_100"
+            app:cardCornerRadius="@dimen/length_3"
+            app:cardElevation="@dimen/length_0">
+
+            <ImageView
+                android:scaleType="centerCrop"
+                android:id="@+id/imgProduct"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/hot_girl2" />
+
+        </android.support.v7.widget.CardView>
+
+        <TextView
+            android:layout_width="@dimen/length_25"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/length_5"
+            android:background="@drawable/bg_round_shop_product_options"
+            android:gravity="center"
+            android:padding="@dimen/length_1"
+            android:text="HOT"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length_8"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/length_4"
+        android:layout_toRightOf="@id/rlImageProduct">
+
+        <RelativeLayout
+            android:id="@+id/rlName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!--Tag-->
+            <TextView
+                android:id="@+id/txtTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:background="@drawable/bg_round_shop_product_tag"
+                android:gravity="center"
+                android:paddingLeft="@dimen/length_4"
+                android:paddingTop="@dimen/length_2"
+                android:paddingRight="@dimen/length_4"
+                android:paddingBottom="@dimen/length_2"
+                android:text="Ưu đãi"
+                android:textColor="@color/bg_shop_home_tag"
+                android:textSize="@dimen/length_8"
+                android:visibility="gone" />
+
+            <!--Name-->
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="@dimen/length_10"
+                android:layout_toRightOf="@id/txtTag"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Áo cho bé"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/length_13" />
+        </RelativeLayout>
+
+        <!--Description-->
+        <TextView
+            android:id="@+id/txtShortDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rlName"
+            android:layout_marginRight="@dimen/length_10"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Áo siêu đẹp"
+            android:textSize="@dimen/length_11" />
+
+
+        <!--Price-->
+        <LinearLayout
+            android:id="@+id/rlPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rlDiscountPrice"
+
+            android:background="@drawable/bg_strike_through"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/txtd1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:text="đ"
+                android:textColor="@color/text_sub"
+                android:textSize="@dimen/length_11" />
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/length_1"
+                android:layout_toRightOf="@id/txtd1"
+                android:gravity="bottom"
+                android:text="200.000"
+                android:textColor="@color/text_sub"
+                android:textSize="@dimen/length_11" />
+
+        </LinearLayout>
+
+        <!--Discount Percent-->
+        <TextView
+            android:id="@+id/txtDiscountPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/rlDiscountPrice"
+            android:layout_marginLeft="@dimen/length_5"
+            android:layout_toRightOf="@id/rlPrice"
+            android:text="-50%"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_11"
+            android:visibility="visible" />
+
+        <!--Discount Price-->
+        <LinearLayout
+            android:id="@+id/rlDiscountPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/length_7"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/txtd2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:gravity="bottom"
+                android:paddingBottom="@dimen/length_1"
+                android:text="đ"
+                android:textColor="@color/bg_shop_home_tag"
+                android:textSize="@dimen/length_11" />
+
+            <TextView
+                android:id="@+id/txtDiscountPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="@dimen/length_1"
+                android:layout_toRightOf="@id/txtd2"
+                android:gravity="bottom"
+                android:text="190.000"
+                android:textColor="@color/bg_shop_home_tag"
+                android:textSize="@dimen/length_15" />
+        </LinearLayout>
+
+        <!--Amount Linearlayout -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/length_27"
+            android:layout_alignParentRight="true"
+           android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/length_7"
+            android:layout_marginRight="@dimen/length_10"
+            android:background="@drawable/bg_border_cart_increase_decrease_item"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal">
+
+            <!--Decrease-->
+            <LinearLayout
+                android:id="@+id/btnDecrease"
+                android:layout_width="@dimen/length_35"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_border_cart_increase_decrease_item"
+                android:gravity="center">
+
+                <View
+                    android:id="@+id/txtDecrease"
+                    android:layout_width="@dimen/length_10"
+                    android:layout_height="@dimen/length_2"
+                    android:layout_marginTop="@dimen/length_1"
+                    android:background="@color/text_sub"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <!--Amount-->
+            <EditText
+                android:id="@+id/edtAmount"
+                android:layout_width="@dimen/length_45"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"
+                android:maxLength="2"
+                android:inputType="number"
+                android:text="5"
+                android:textSize="@dimen/length_16" />
+
+            <!--Decrease -->
+            <TextView
+                android:id="@+id/btnIncrease"
+                android:layout_width="@dimen/length_35"
+                android:layout_height="match_parent"
+                android:background="@drawable/bg_border_cart_increase_decrease_item"
+                android:gravity="center"
+                android:text="+"
+                android:textSize="@dimen/length_20" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/length_7"
+            android:text="Còn 25k sản phẩm"
+            android:textSize="@dimen/length_11"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_1px" />
+    </RelativeLayout>
+
+
+</RelativeLayout>

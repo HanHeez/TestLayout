@@ -27,7 +27,6 @@ public class MainActivity extends BaseActivity {
     Fragment fragment;
     @Override
     protected void configViews() {
-
             fragment = new ShopCategoryFragment();
             Bundle args = new Bundle();         ;
             fragment.setArguments(args);

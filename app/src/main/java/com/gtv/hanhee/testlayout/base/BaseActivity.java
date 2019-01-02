@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.api.Constants;
 import com.gtv.hanhee.testlayout.dagger2.component.ActivityComponent;
+
 import com.gtv.hanhee.testlayout.dagger2.component.DaggerActivityComponent;
 import com.gtv.hanhee.testlayout.dagger2.module.ActivityModule;
 import com.gtv.hanhee.testlayout.ui.customview.LoadingDialog;

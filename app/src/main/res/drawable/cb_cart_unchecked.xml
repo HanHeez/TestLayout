@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/tata_icon_vote_unchecked"
+        android:width="@dimen/length_16"
+        android:height="@dimen/length_16"
+        />
+</layer-list>

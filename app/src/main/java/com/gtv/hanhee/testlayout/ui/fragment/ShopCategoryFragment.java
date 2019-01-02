@@ -66,12 +66,21 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
         return R.layout.fragment_shop_category;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (shopCategoryPresenter != null) {
+            shopCategoryPresenter.detachView();
+        }
+    }
 
     @Override
     public void attachView() {
         activityComponent().inject(this);
         shopCategoryPresenter.attachView(this);
     }
+
+
 
     @Override
     public void initDatas() {

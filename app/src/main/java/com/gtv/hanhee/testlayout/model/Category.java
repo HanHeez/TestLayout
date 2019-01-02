@@ -1,11 +1,22 @@
 package com.gtv.hanhee.testlayout.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Category {
+import java.io.Serializable;
+
+
+public class Category implements Serializable {
+    @ColumnInfo(name="category_id")
     private String id;
+    @ColumnInfo(name="category_name")
     private String name;
+    @ColumnInfo(name="category_description")
     private String description;
 
     public String getId() {
@@ -32,9 +43,13 @@ public class Category {
         this.description = description;
     }
 
+    @Ignore
     public Category(String id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public Category() {
     }
 }

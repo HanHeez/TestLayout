@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.api.Constants;
 import com.gtv.hanhee.testlayout.dagger2.component.ActivityComponent;
+
 import com.gtv.hanhee.testlayout.dagger2.component.DaggerActivityComponent;
 import com.gtv.hanhee.testlayout.dagger2.module.ActivityModule;
 import com.gtv.hanhee.testlayout.ui.customview.LoadingDialog;
@@ -82,6 +83,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initDataGetFromArgument(savedInstanceState);
         unbinder = ButterKnife.bind(this, view);
         token = Constants.TOKEN_ID;
         initStatusBar();
@@ -89,6 +91,10 @@ public abstract class BaseFragment extends Fragment {
         initDatas();
         configViews();
 
+
+    }
+
+    protected void initDataGetFromArgument(Bundle savedInstanceState) {
 
     }
 
