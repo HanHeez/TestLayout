@@ -8,6 +8,8 @@
     <color name="bg_home_search_color">#EEEEEE</color>
     <color name="bg_home_remind_color">#F5F5F5</color>
     <color name="bg_product_detail_tag">#BC1515</color>
+    <color name="bg_shop_detail_follow">#D0021B</color>
+    <color name="bg_shop_detail_follow_users">#DD2727</color>
     <color name="text_shop_deliver">#FF0036</color>
     <color name="add_to_cart">#CF3152</color>
     <color name="buy_now">#FF5794</color>

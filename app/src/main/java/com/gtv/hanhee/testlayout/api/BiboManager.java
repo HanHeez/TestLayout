@@ -18,6 +18,9 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Query;
 
 public class BiboManager {
 
@@ -70,8 +73,10 @@ public class BiboManager {
         subCategoryList.add(new SubCategory("4", "Sữa đặc",   "Category Description","https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
         subCategoryList.add(new SubCategory("4", "Sữa đặc",   "Category Description","https://media-ak.static-adayroi.com/sys_master/h9b/hdc/10214994542622.jpg"));
 
+//        return service.getListSubCategory(accessToken, categoryId);
         return Observable.just(subCategoryList);
     }
+
 
     public Observable<Product> getProduct(String accessToken, String id) {
         List<String> images = new ArrayList<>();
@@ -114,6 +119,14 @@ public class BiboManager {
             if (countLimit==limit) return Observable.just(returnList);
         }
         return Observable.just(returnList);
+    }
+
+    public Observable<Product> getListProductByCategory(String accessToken, String categoryId) {
+        return service.getListProductByCategory(accessToken, categoryId);
+    }
+
+    public Observable<Product> getListProductBySubCategory(String accessToken, String subCategoryId) {
+        return service.getListProductBySubCategory(accessToken, subCategoryId);
     }
 //
 //    public Observable<Message> sendEmail(String email) {

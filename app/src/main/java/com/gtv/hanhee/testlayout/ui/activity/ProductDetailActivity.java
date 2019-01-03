@@ -192,7 +192,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @OnClick(R.id.btnViewShopProduct)
     public void viewShopProduct() {
-
+        ShopActivity.startActivity(this, product.getShop().getId());
     }
 
     @OnClick(R.id.btnAddToCart)

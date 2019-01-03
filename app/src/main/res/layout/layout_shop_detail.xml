@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/length_40"
+    android:layout_height="@dimen/length_100">
+
+    <ImageView
+        android:id="@+id/imgBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"
+        android:scaleType="center"
+        android:src="@drawable/bg_test" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparent_50"
+        android:scaleType="center" />
+
+    <ImageView
+        android:id="@+id/imgShop"
+        android:layout_width="@dimen/length_60"
+        android:layout_height="@dimen/length_60"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/hot_girl2" />
+
+    <ImageView
+        android:id="@+id/btnSetting"
+        android:layout_width="@dimen/length_25"
+        android:layout_height="@dimen/length_25"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/length_10"
+        android:background="@drawable/bg_transparent_product_detail"
+        android:clickable="true"
+        android:padding="@dimen/length_7"
+        android:src="@drawable/nav_btn_more" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/length_60"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/length_10"
+        android:layout_toRightOf="@id/imgShop"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/length_5"
+            android:text="HanHee Shop"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length_14"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="@color/bg_shop_detail_follow_users"
+            android:paddingLeft="@dimen/length_5"
+            android:paddingRight="@dimen/length_5"
+            android:paddingTop="@dimen/length_1"
+            android:paddingBottom="@dimen/length_2"
+            android:text="Đã xác thực"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length_10" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/length_60"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/length_10"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/length_30">
+
+            <TextView
+                android:visibility="visible"
+                android:id="@+id/btnFollow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/bg_shop_detail_follow"
+                android:gravity="center"
+                android:paddingLeft="@dimen/length_5"
+                android:paddingRight="@dimen/length_5"
+                android:text="+ Theo dõi"
+                android:textColor="@color/white"
+                android:textSize="@dimen/length_10"
+                android:textStyle="bold" />
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/btnUnFollow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingLeft="@dimen/length_10"
+                android:paddingRight="@dimen/length_10"
+                android:text="Đang theo dõi"
+                android:textColor="@color/white"
+                android:textSize="@dimen/length_10"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/length_30"
+            android:background="@color/bg_shop_detail_follow_users"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="@dimen/length_12"
+                android:layout_height="@dimen/length_12"
+                android:layout_marginLeft="@dimen/length_8"
+                android:layout_marginRight="@dimen/length_3"
+                android:src="@drawable/apk_icon_b2c_user" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/length_8"
+                android:text="21.2k"
+                android:textColor="@color/white"
+                android:textSize="@dimen/length_10" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -3,6 +3,7 @@ package com.gtv.hanhee.testlayout.base;
 import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.gtv.hanhee.testlayout.dagger2.component.ApplicationComponent;
 
@@ -24,6 +25,12 @@ public class MyApplication extends Application {
     private ApplicationComponent mApplicationComponent;
     private AppDatabase db;
     public static ProductDao mProductDao;
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {

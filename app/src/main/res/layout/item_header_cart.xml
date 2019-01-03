@@ -1,33 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:padding="@dimen/length_10"
-    android:layout_height="wrap_content">
+    android:layout_height="@dimen/length_48"
 
-    <CheckBox
-        android:id="@+id/cbShop"
-        android:layout_centerVertical="true"
-        android:button="@drawable/cb_cart"
-        android:layout_gravity="center"
-        android:layout_marginRight="@dimen/length_8"
-        android:layout_width="@dimen/length_16"
-        android:layout_height="@dimen/length_16" />
-    <TextView
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/cbShop"
-        android:id="@+id/txtShopName"
-        android:textSize="@dimen/length_15"
-        android:textColor="@color/text_main"
-        android:text="Shop Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <ImageView
-        android:layout_marginLeft="@dimen/length_5"
-        android:rotation="180"
-        android:src="@drawable/nav_btn_back_black"
-        android:layout_toRightOf="@id/txtShopName"
-        android:layout_centerVertical="true"
-        android:layout_width="@dimen/length_17"
-        android:layout_height="@dimen/length_17" />
+    android:background="@color/white">
+
+    <View
+        android:id="@+id/topDivider"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_8"
+        android:background="@color/bg_shop_main_color" />
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:layout_below="@id/topDivider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:layout_marginLeft="@dimen/length_8"
+            android:id="@+id/cbShop"
+            android:layout_width="@dimen/length_15"
+            android:layout_height="@dimen/length_15"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/length_8"
+            android:button="@null"
+            android:background="@drawable/bg_round_checkbox_cart"
+            />
+
+        <TextView
+            android:id="@+id/txtShopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/cbShop"
+            android:text="Shop Name"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_15" />
+
+        <ImageView
+            android:layout_width="@dimen/length_16"
+            android:layout_height="@dimen/length_16"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/length_5"
+            android:layout_toRightOf="@id/txtShopName"
+            android:rotation="180"
+            android:src="@drawable/nav_btn_back_black" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_1"
+        android:layout_alignParentBottom="true"
+        android:background="@color/divider_1px" />
 </RelativeLayout>

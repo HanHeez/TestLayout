@@ -8,7 +8,7 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_marginBottom="@dimen/length_55"
-        android:layout_marginTop="@dimen/length_45"
+        android:layout_marginTop="@dimen/length_40"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,11 +20,20 @@
             android:layout_height="wrap_content"
             android:fillViewport="true">
 
+            <!--ln pick address deliver-->
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:text=""
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvCart"
                 android:layout_width="match_parent"
@@ -75,7 +84,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:elevation="@dimen/length_0"
-        android:layout_height="@dimen/length_45">
+        android:layout_height="@dimen/length_40">
 
         <ImageView
             android:clickable="true"
@@ -91,7 +100,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textSize="@dimen/textsize_17"
+            android:textSize="@dimen/length_15"
             android:text="Giỏ hàng"
             android:textColor="@color/text_main" />
 
@@ -103,7 +112,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center"
-            android:textSize="@dimen/textsize_17"
+            android:textSize="@dimen/length_15"
             android:text="Xóa"
             android:textColor="@color/text_main" />
 
@@ -128,6 +137,7 @@
         <LinearLayout
             android:id="@+id/btnHome"
             android:clickable="true"
+            android:layout_weight="1"
             android:background="@drawable/bg_press_item"
             android:paddingLeft="@dimen/length_9"
             android:paddingRight="@dimen/length_9"
@@ -135,17 +145,23 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
             <CheckBox
-                android:button="@drawable/cb_cart"
+                android:id="@+id/cbAll"
+                android:layout_width="@dimen/length_15"
+                android:layout_height="@dimen/length_15"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:layout_width="@dimen/length_16"
-                android:layout_height="@dimen/length_16" />
+                android:layout_marginRight="@dimen/length_2"
+                android:button="@null"
+                android:background="@drawable/bg_round_checkbox_cart"
+                />
             <TextView
                 android:layout_marginLeft="@dimen/length_4"
                 android:textColor="@color/text_main"
                 android:gravity="center"
                 android:text="Tất cả"
-                android:textSize="@dimen/length_16"
+                android:textSize="@dimen/length_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -157,12 +173,12 @@
             android:paddingLeft="@dimen/length_10"
             android:paddingRight="@dimen/length_10"
             android:background="@color/white"
-            android:layout_width="@dimen/length_200"
+            android:layout_width="@dimen/length_180"
             android:layout_height="match_parent">
 
             <TextView
                 android:textColor="@color/text_main"
-                android:text="Tổng tiền: "
+                android:text="Tổng: "
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_marginTop="@dimen/length_2"
@@ -172,11 +188,11 @@
                 android:layout_height="wrap_content" />
             <TextView
                android:id="@+id/txtTotal"
-                android:text="đ329.000"
+                android:text="đ34.123.329.000"
                 android:layout_marginBottom="@dimen/length_2"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/text_shop_deliver"
-                android:textSize="@dimen/length_16"
+                android:textSize="@dimen/length_15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
@@ -184,7 +200,7 @@
                 android:layout_toLeftOf="@id/txtSaveDeliver"
                 android:layout_below="@id/txtTotal"
                 android:text="Tiết kiệm phí vận chuyển: "
-                android:textColor="@color/text_main"
+                android:textColor="@color/text_sub"
                 android:textSize="@dimen/length_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -193,7 +209,7 @@
                 android:layout_below="@id/txtTotal"
                 android:text="đ29.000"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/text_main"
+                android:textColor="@color/text_sub"
                 android:textSize="@dimen/length_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -203,18 +219,21 @@
         <LinearLayout
             android:id="@+id/btnAddToCart"
             android:background="@color/buy_now"
-            android:layout_weight="1"
-            android:orientation="vertical"
+            android:layout_gravity="center"
             android:gravity="center"
-            android:layout_width="wrap_content"
+            android:orientation="vertical"
+            android:layout_width="@dimen/length_90"
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_margin="@dimen/length_5"
+                android:layout_gravity="center"
+
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:text="Thanh toán"
-                android:textSize="@dimen/length_16"
+                android:paddingLeft="@dimen/length_5"
+                android:paddingRight="@dimen/length_5"
+                android:textSize="@dimen/length_14"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
         </LinearLayout>

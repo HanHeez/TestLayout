@@ -24,6 +24,8 @@ import com.gtv.hanhee.testlayout.utils.StatusBarMainUtil;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 public abstract class BaseFragment extends Fragment {
 
@@ -34,6 +36,7 @@ public abstract class BaseFragment extends Fragment {
     private Unbinder unbinder;
     private LoadingDialog dialog;
     protected String token;
+    protected CompositeDisposable mDisposable;
 
     public abstract @LayoutRes
     int getLayoutResId();
@@ -104,10 +107,21 @@ public abstract class BaseFragment extends Fragment {
 
     public abstract void configViews();
 
+    protected void addDisposable(Disposable d){
+        if (mDisposable == null){
+            mDisposable = new CompositeDisposable();
+        }
+        mDisposable.add(d);
+    }
+
     @Override
     public void onDetach() {
         super.onDetach();
         unbinder.unbind();
+
+        if (mDisposable != null){
+            mDisposable.clear();
+        }
     }
 
 

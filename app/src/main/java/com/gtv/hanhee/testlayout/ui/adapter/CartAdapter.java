@@ -2,23 +2,24 @@ package com.gtv.hanhee.testlayout.ui.adapter;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gtv.hanhee.testlayout.R;
-import com.gtv.hanhee.testlayout.base.MyApplication;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
-import com.gtv.hanhee.testlayout.model.Product;
+import com.gtv.hanhee.testlayout.manager.CheckboxCartEvent;
 import com.gtv.hanhee.testlayout.model.ProductSection;
 import com.gtv.hanhee.testlayout.utils.ImageUtils;
+import com.gtv.hanhee.testlayout.utils.RxBus;
 import com.gtv.hanhee.testlayout.utils.StringUtils;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseViewHolder> {
 
@@ -34,15 +35,32 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         this.activity = activity;
     }
 
+    private CheckBox cbShop;
+    private TextView txtShopName;
 
     @Override
     protected void convertHead(BaseViewHolder holder, ProductSection item) {
-        //TODO set txtGroupTag = getTag
+//        Setting View ----------------
+        txtShopName = holder.getView(R.id.txtShopName);
+        cbShop = holder.getView(R.id.cbShop);
+
+//        Event -----------------------
         holder.setText(R.id.txtShopName, item.header);
+        cbShop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    RxBus.getInstance().post(new CheckboxCartEvent(holder.getAdapterPosition(), isChecked));
+
+            }
+        });
     }
 
-    TextView txtName, txtShortDescription, txtTag, txtPrice, txtDiscountPrice, txtQuantity;
-    ImageView imgProduct;
+    private TextView txtName, txtShortDescription, txtTag, txtPrice, txtDiscountPrice, txtQuantity, btnDecrease, btnIncrease;
+    private ImageView imgProduct;
+    private View divider;
+    private LinearLayout lnFreeship;
+    private CheckBox cbProduct;
+    private EditText edtAmount;
 
     @Override
     protected void convert(BaseViewHolder holder, ProductSection item) {
@@ -54,20 +72,58 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         txtDiscountPrice = holder.getView(R.id.txtDiscountPrice);
         txtQuantity = holder.getView(R.id.txtQuantity);
         imgProduct = holder.getView(R.id.imgProduct);
+        divider = holder.getView(R.id.divider);
+        lnFreeship = holder.getView(R.id.lnFreeship);
+        cbProduct = holder.getView(R.id.cbProduct);
+        edtAmount = holder.getView(R.id.edtAmount);
+        btnDecrease = holder.getView(R.id.btnDecrease);
+        btnIncrease = holder.getView(R.id.btnIncrease);
 
 //        Setting Data ------------------------
 
         txtName.setText(item.t.getName());
-        if (item.t.getShortDescription().length()>0) {
+        if (item.t.getShortDescription().length() > 0) {
             txtShortDescription.setText(item.t.getShortDescription());
         } else {
             txtShortDescription.setVisibility(View.GONE);
         }
-        txtPrice.setText(StringUtils.formatPrice(item.t.getPrice()+""));
-        txtDiscountPrice.setText(StringUtils.formatPrice(item.t.getDiscountPrice()+""));
+        txtPrice.setText(StringUtils.formatPrice(item.t.getPrice() + ""));
+        txtDiscountPrice.setText(StringUtils.formatPrice(item.t.getDiscountPrice() + ""));
         txtQuantity.setText(String.format(activity.getString(R.string.shop_quantity), item.t.getQuantity()));
         txtQuantity.setVisibility(View.GONE);
-        ImageUtils.loadImageByGlideWithResize(activity,  item.t.getAvatar(), imgProduct, 350, 350);
+        cbProduct.setChecked(item.isChecked());
+        ImageUtils.loadImageByGlideWithResize(activity, item.t.getAvatar(), imgProduct, 350, 350);
+
+        btnDecrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item.t.getOrderAmount()>1) {
+                    item.t.setOrderAmount(item.t.getOrderAmount() - 1);
+                } else {
+
+                }
+            }
+        });
+
+        btnIncrease.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        if (item.isEnd()) {
+            divider.setVisibility(View.GONE);
+        } else {
+            divider.setVisibility(View.VISIBLE);
+        }
+
+        if (item.isEnd() && (item.t.isFreeShip())) {
+            divider.setVisibility(View.GONE);
+            lnFreeship.setVisibility(View.VISIBLE);
+        } else {
+            divider.setVisibility(View.VISIBLE);
+            lnFreeship.setVisibility(View.GONE);
+        }
     }
 
 }

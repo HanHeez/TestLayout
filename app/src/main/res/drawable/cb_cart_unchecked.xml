@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/tata_icon_vote_unchecked"
-        android:width="@dimen/length_16"
-        android:height="@dimen/length_16"
+        android:width="@dimen/length_10"
+        android:height="@dimen/length_10"
         />
 </layer-list>

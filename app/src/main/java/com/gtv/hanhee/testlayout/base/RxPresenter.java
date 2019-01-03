@@ -16,7 +16,7 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
     protected int day;
 
     protected T mView;
-    protected static CompositeDisposable compositeDisposable;
+    protected CompositeDisposable compositeDisposable;
 
     protected void unSubscribe() {
         if (compositeDisposable != null) {
@@ -33,7 +33,7 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
         compositeDisposable.add(disposable);
     }
 
-    private static CompositeDisposable getCompositeDisposable() {
+    private CompositeDisposable getCompositeDisposable() {
         if (compositeDisposable == null || compositeDisposable.isDisposed()) {
             compositeDisposable = new CompositeDisposable();
         }

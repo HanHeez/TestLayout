@@ -25,12 +25,15 @@ import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected Context mContext;
     protected int statusBarColor = 0;
     protected View statusBarView = null;
+    protected CompositeDisposable mDisposable;
 
     Unbinder unbinder;
     private LoadingDialog dialog;//Dialog loading
@@ -107,10 +110,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
+    protected void addDisposable(Disposable d){
+        if (mDisposable == null){
+            mDisposable = new CompositeDisposable();
+        }
+        mDisposable.add(d);
     }
 
     @Override
@@ -118,6 +122,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         avoidSemClipBoardManagerError();
         unbinder.unbind();
+        if (mDisposable != null){
+            mDisposable.dispose();
+            mDisposable = null;
+        }
         dismissDialog();
     }
 

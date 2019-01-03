@@ -5,6 +5,9 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.gtv.hanhee.testlayout.api.support.Logger;
+import com.gtv.hanhee.testlayout.model.Category;
+import com.gtv.hanhee.testlayout.model.Product;
+import com.gtv.hanhee.testlayout.model.SubCategory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,4 +66,19 @@ public interface BiboService {
     }
 
 //    APi here-----------
+
+    @GET("v2/product/sub_categories")
+    Observable<List<SubCategory>> getListSubCategory(
+            @Header("Authorization") String accessToken,
+           @Query("category") String categoryId
+    );
+
+    @GET("v2/product")
+    Observable<Product> getListProductByCategory( @Header("Authorization")String accessToken, @Query("category") String categoryId);
+    @GET("v2/product")
+    Observable<Product> getListProductBySubCategory( @Header("Authorization")String accessToken, @Query("subCategory") String subCategoryId);
+
+    @GET("v2/product")
+    Observable<Product> getProduct( @Header("Authorization")String accessToken, @Query("_id") String id);
+
 }
