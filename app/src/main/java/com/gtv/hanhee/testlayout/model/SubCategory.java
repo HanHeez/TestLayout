@@ -1,6 +1,12 @@
 package com.gtv.hanhee.testlayout.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class SubCategory {
+
+    @SerializedName("_id")
+    @Expose
     private String id;
     private String name;
     private String description;

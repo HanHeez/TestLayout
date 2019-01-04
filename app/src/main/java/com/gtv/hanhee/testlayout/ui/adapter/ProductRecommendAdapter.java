@@ -46,7 +46,7 @@ public class ProductRecommendAdapter extends BaseQuickAdapter<Product, BaseViewH
 
         txtName.setText(item.getName());
         txtPrice.setText(item.getPrice()+"");
-        txtDiscountPrice.setText(StringUtils.formatPrice(item.getDiscountPrice()+""));
+        txtDiscountPrice.setText(StringUtils.formatPrice(item.getPrice()*item.getDiscountPercent()/100+""));
         txtQuantity.setText(String.format(context.getString(R.string.shop_quantity), item.getQuantity()));
         txtQuantity.setVisibility(View.GONE);
         ImageUtils.loadImageByGlideWithResize(context,  item.getAvatar(), imgProduct, 350, 350);

@@ -141,7 +141,7 @@
             <!--Price-->
 
             <LinearLayout
-                android:id="@+id/rlPrice"
+                android:id="@+id/lnPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
@@ -153,8 +153,6 @@
                     android:id="@+id/txtd1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
                     android:gravity="center"
                     android:text="đ"
                     android:textColor="@color/text_sub"
@@ -164,15 +162,25 @@
                     android:id="@+id/txtPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/length_1"
-                    android:layout_toRightOf="@id/txtd1"
                     android:gravity="bottom"
                     android:text="200.000"
                     android:textColor="@color/text_sub"
                     android:textSize="@dimen/length_10" />
+
             </LinearLayout>
+
+            <TextView
+                android:layout_gravity="bottom"
+                android:id="@+id/txtDiscountPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="@dimen/length_5"
+                android:text="-50%"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/length_10"
+                android:visibility="visible" />
         </LinearLayout>
 
     </RelativeLayout>

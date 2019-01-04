@@ -166,7 +166,7 @@
                         <!--Price-->
 
                         <LinearLayout
-                            android:id="@+id/rlPrice"
+                            android:id="@+id/lnPrice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
@@ -260,6 +260,7 @@
                                 android:textSize="@dimen/length_13" />
 
                             <TextView
+                                android:visibility="gone"
                                 android:id="@+id/txtShipper"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -436,7 +437,7 @@
         </LinearLayout>
 
         <!--Buy-->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/btnBuyNow"
             android:paddingLeft="@dimen/length_10"
             android:paddingRight="@dimen/length_10"
@@ -448,6 +449,16 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:layout_toLeftOf="@id/txtPriceBuyNow"
+                android:textColor="@color/white"
+                android:text="đ"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/length_16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_centerHorizontal="true"
                 android:id="@+id/txtPriceBuyNow"
                 android:textColor="@color/white"
                 android:text="đ1235678950.000"
@@ -457,12 +468,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/txtPriceBuyNow"
                 android:text="Mua ngay"
                 android:textColor="@color/white"
                 android:textSize="@dimen/length_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <!--Add to cart-->
         <LinearLayout

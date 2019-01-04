@@ -20,8 +20,8 @@ public class ShopCategoryPresenter extends RxPresenter<ShopCategoryContact.View>
     }
 
     @Override
-    public void getListSubCategory(String accessToken, String groupId) {
-        Disposable disposable = biboManager.getListSubCategory(accessToken, groupId)
+    public void getListSubCategory(String accessToken, String categoryId, int skip, int limit) {
+        Disposable disposable = biboManager.getListSubCategory(accessToken, categoryId, skip, limit)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         (beans) -> {
                             mView.showListSubCategory(beans);
@@ -35,19 +35,19 @@ public class ShopCategoryPresenter extends RxPresenter<ShopCategoryContact.View>
     }
 
     @Override
-    public void getListProduct(String accessToken) {
-        Disposable disposable = biboManager.getListProduct(accessToken)
+    public void getListProductByCategory(String accessToken, String categoryId, int skip, int limit) {
+        Disposable disposable = biboManager.getListProductByCategory(accessToken, categoryId, skip, limit)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         (beans) -> {
-                            mView.showListProduct(beans);
+                            mView.showListProductByCategory(beans);
                         }
                         ,
                         (e) -> {
                             mView.showError();
                         }
                 );
-
         addSubscrebe(disposable);
     }
+
 }
 

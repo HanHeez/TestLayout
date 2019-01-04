@@ -22,7 +22,6 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
         if (compositeDisposable != null) {
             compositeDisposable.dispose();
             //TODO Change this if don't receiver data
-            compositeDisposable = null;
         }
     }
 

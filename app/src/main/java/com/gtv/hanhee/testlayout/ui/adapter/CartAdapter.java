@@ -55,7 +55,8 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         });
     }
 
-    private TextView txtName, txtShortDescription, txtTag, txtPrice, txtDiscountPrice, txtQuantity, btnDecrease, btnIncrease;
+    private TextView txtName, txtShortDescription, txtTag, txtPrice, txtDiscountPrice, txtQuantity, btnDecrease, btnIncrease, txtDiscountPercent;
+    LinearLayout lnPrice;
     private ImageView imgProduct;
     private View divider;
     private LinearLayout lnFreeship;
@@ -78,6 +79,8 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         edtAmount = holder.getView(R.id.edtAmount);
         btnDecrease = holder.getView(R.id.btnDecrease);
         btnIncrease = holder.getView(R.id.btnIncrease);
+        txtDiscountPercent = holder.getView(R.id.txtDiscountPercent);
+        lnPrice = holder.getView(R.id.lnPrice);
 
 //        Setting Data ------------------------
 
@@ -88,7 +91,15 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
             txtShortDescription.setVisibility(View.GONE);
         }
         txtPrice.setText(StringUtils.formatPrice(item.t.getPrice() + ""));
-        txtDiscountPrice.setText(StringUtils.formatPrice(item.t.getDiscountPrice() + ""));
+        txtDiscountPrice.setText(StringUtils.formatPrice(item.t.getPrice()*(100-item.t.getDiscountPercent())/100 + ""));
+        if (item.t.getDiscountPercent()>0) {
+            txtDiscountPercent.setText("-"+item.t.getDiscountPercent() + "%");
+            txtDiscountPercent.setVisibility(View.VISIBLE);
+            lnPrice.setVisibility(View.VISIBLE);
+        } else {
+            txtDiscountPercent.setVisibility(View.GONE);
+            lnPrice.setVisibility(View.GONE);
+        }
         txtQuantity.setText(String.format(activity.getString(R.string.shop_quantity), item.t.getQuantity()));
         txtQuantity.setVisibility(View.GONE);
         cbProduct.setChecked(item.isChecked());

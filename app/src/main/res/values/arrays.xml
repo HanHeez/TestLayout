@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="shop_tab">
+        <item>Trang chủ</item>
+        <item>Hội nhóm</item>
+        <item>Cá nhân</item>
+
+    </string-array>
+
+    <string-array name="group_tab_layout">
+        <item>Ngày 1</item>
+        <item>Ngày 2</item>
+        <item>Ngày 3</item>
+        <item>Ngày 4</item>
+        <item>Ngày 5</item>
+        <item>Ngày 6</item>
+        <item>Ngày 7</item>
+        <item>Ngày 8</item>
+        <item>Ngày 9</item>
+        <item>Ngày 10</item>
+        <item>Ngày 11</item>
+    </string-array>
+
+    <string-array name="shop_detail_tab">
+        <item>Trang chủ</item>
+        <item>Sản phẩm</item>
+        <item>Bình luận</item>
+    </string-array>
+</resources>

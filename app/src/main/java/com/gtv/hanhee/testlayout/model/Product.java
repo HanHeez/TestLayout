@@ -7,23 +7,32 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 import java.util.List;
 
 @Entity(tableName = "products")
 public class Product implements Serializable {
+
     @PrimaryKey
     @NonNull
+    @SerializedName("_id")
+    @Expose
     private String id;
     private String name;
     private long price;
-    @ColumnInfo(name="discount_price")
-    private long discountPrice;
-    private String description;
-    @ColumnInfo(name="short_description")
-    private String shortDescription;
+    @Ignore
+    private List<SubCategory> subCategories = null;
+
     @ColumnInfo(name="discount_percent")
     private int discountPercent;
+    @ColumnInfo(name="short_description")
+    private String shortDescription;
+    private String description;
+    @ColumnInfo(name="discount_price")
+    private long discountPrice;
     private long quantity;
     @ColumnInfo(name="order_amount")
     private int orderAmount;
@@ -38,8 +47,6 @@ public class Product implements Serializable {
     private Shop shop;
     @Ignore
     List<String> thumbnails;
-    @Ignore
-    private List<Category> subCategory;
 
     public int getOrderAmount() {
         return orderAmount;
@@ -131,29 +138,22 @@ public class Product implements Serializable {
         this.isFreeShip = isFreeShip;
         this.thumbnails = thumbnails;
     }
-    @Ignore
-    public Product(String name, String id, long price, long discountPrice, String description, String shortDescription, int discountPercent, long quantity, String avatar, boolean isFreeShip, List<String> thumbnails, List<Category> subCategory, Shop shop) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.discountPrice = discountPrice;
-        this.description = description;
-        this.shortDescription = shortDescription;
-        this.discountPercent = discountPercent;
-        this.quantity = quantity;
-        this.avatar = avatar;
-        this.isFreeShip = isFreeShip;
-        this.thumbnails = thumbnails;
-        this.subCategory = subCategory;
-        this.shop = shop;
+
+
+    public List<SubCategory> getSubCategories() {
+        return subCategories;
     }
 
-    public List<Category> getSubCategory() {
-        return subCategory;
+    public void setSubCategories(List<SubCategory> subCategories) {
+        this.subCategories = subCategories;
     }
 
-    public void setSubCategory(List<Category> subCategory) {
-        this.subCategory = subCategory;
+    public boolean isCheckedProduct() {
+        return isCheckedProduct;
+    }
+
+    public void setCheckedProduct(boolean checkedProduct) {
+        isCheckedProduct = checkedProduct;
     }
 
     public Shop getShop() {

@@ -15,6 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
             <!--Banner-->
@@ -24,8 +25,11 @@
                 android:layout_height="@dimen/length_130"
                 android:layout_marginBottom="@dimen/length_7"
                 app:image_scale_type="center_crop"
-                app:indicator_height="@dimen/length_5"
-                app:indicator_width="@dimen/length_5" />
+                app:delay_time="5000"
+                app:indicator_height="@dimen/length_3"
+                app:indicator_width="@dimen/length_3" />
+
+
 
             <!--Product-->
             <LinearLayout
@@ -34,6 +38,8 @@
                 android:layout_marginBottom="@dimen/length_7"
                 android:background="@color/white"
                 android:orientation="horizontal">
+
+
 
                 <!--Left product-->
                 <RelativeLayout
@@ -100,15 +106,13 @@
                         android:layout_height="@dimen/length_100"
                         android:layout_alignParentBottom="true"
                         android:paddingBottom="@dimen/length_10"
-                        android:scaleType="centerInside"
-                        />
+                        android:scaleType="centerInside" />
 
                     <TextView
                         android:id="@+id/txtDiscountPercent"
                         android:layout_width="@dimen/length_45"
                         android:layout_height="@dimen/length_45"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/length_15"
                         android:background="@drawable/bg_round_shop_discount_circle"
                         android:gravity="center"
@@ -147,8 +151,7 @@
                             android:layout_alignParentRight="true"
                             android:padding="@dimen/length_5"
 
-                            android:scaleType="centerInside"
-                            />
+                            android:scaleType="centerInside" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -246,8 +249,7 @@
                             android:layout_height="match_parent"
                             android:layout_alignParentRight="true"
                             android:padding="@dimen/length_5"
-                            android:scaleType="centerInside"
-                            />
+                            android:scaleType="centerInside" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -330,35 +332,91 @@
             </LinearLayout>
 
             <!--Middle tab -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_40">
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:background="@color/white"
-                    android:padding="@dimen/length_7"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:padding="@dimen/length_7">
+
                     <ImageView
-                        android:src="@drawable/tools_ic_muise_timing_hover"
-                        android:layout_width="@dimen/length_20"
-                        android:layout_height="@dimen/length_20" />
+                        android:layout_width="@dimen/length_18"
+                        android:layout_height="@dimen/length_18"
+                        android:src="@drawable/tools_ic_muise_timing_hover" />
+
                     <TextView
-                        android:layout_marginLeft="@dimen/length_3"
-                        android:textSize="@dimen/length_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cập nhật giá lúc 10 giờ"
-                        android:textColor="@color/text_sub" />
+                        android:layout_marginLeft="@dimen/length_3"
+                        android:text="Sản phẩm mới"
+                        android:textColor="@color/text_sub"
+                        android:textSize="@dimen/length_14" />
+
                 </LinearLayout>
 
+                <RelativeLayout
+                    android:id="@+id/btnStyleRv"
+                    android:layout_width="@dimen/length_40"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_press_item"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/length_15"
+                        android:layout_height="@dimen/length_15"
+                        android:layout_centerInParent="true"
+
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/length_5"
+
+                        android:src="@drawable/apk_classify_one" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/length_5"
+                    android:paddingRight="@dimen/length_5">
+
+                    <TextView
+                        android:id="@+id/txtMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/length_1"
+                        android:text="Xem thêm"
+                        android:textColor="@color/bg_shop_discount_circle"
+                        android:textSize="@dimen/length_12" />
+
+                    <ImageView
+
+                        android:layout_width="@dimen/length_12"
+                        android:layout_height="@dimen/length_12"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/txtMore"
+                        android:rotation="180"
+                        android:src="@drawable/nav_btn_back_pink" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvShopHome"
-                android:paddingLeft="@dimen/length_3"
-                android:paddingRight="@dimen/length_3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/divider_4px" />
+                android:background="@color/divider_4px"
+                android:paddingLeft="@dimen/length_3"
+                android:paddingRight="@dimen/length_3" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

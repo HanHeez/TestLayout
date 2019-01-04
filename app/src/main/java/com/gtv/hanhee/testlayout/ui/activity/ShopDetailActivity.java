@@ -2,39 +2,24 @@ package com.gtv.hanhee.testlayout.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
-import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
-import com.flyco.tablayout.listener.OnTabSelectListener;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
+import com.gtv.hanhee.testlayout.model.Category;
 import com.gtv.hanhee.testlayout.model.Product;
-import com.gtv.hanhee.testlayout.model.ProductSection;
-import com.gtv.hanhee.testlayout.model.TabEntity;
-import com.gtv.hanhee.testlayout.ui.adapter.CartAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopAdapter;
-import com.gtv.hanhee.testlayout.ui.contract.CartContract;
 import com.gtv.hanhee.testlayout.ui.contract.ShopContract;
-import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopCategoryFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopHomeFragment;
-import com.gtv.hanhee.testlayout.ui.presenter.CartPresenter;
 import com.gtv.hanhee.testlayout.ui.presenter.ShopPresenter;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +28,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class ShopActivity extends BaseActivity implements ShopContract.View, OnItemRvClickListener<Object> {
+public class ShopDetailActivity extends BaseActivity implements ShopContract.View, OnItemRvClickListener<Object> {
 //    @BindView(R.id.refreshLayout)
 //    RefreshLayout refreshLayout;
 //    @BindView(R.id.rvCart)
@@ -71,11 +56,11 @@ public class ShopActivity extends BaseActivity implements ShopContract.View, OnI
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_shop;
+        return R.layout.activity_shop_detail;
     }
 
     public static void startActivity(Context context, String shopId) {
-        Intent intent = new Intent(context, ShopActivity.class);
+        Intent intent = new Intent(context, ShopDetailActivity.class);
         intent.putExtra(SHOP_ID, shopId);
         context.startActivity(intent);
     }
@@ -167,5 +152,10 @@ public class ShopActivity extends BaseActivity implements ShopContract.View, OnI
 
     @Override
     public void complete() {
+    }
+
+    @Override
+    public void showListCategory(List<Category> categoryListResult) {
+
     }
 }

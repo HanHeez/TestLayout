@@ -12,6 +12,9 @@ import java.io.Serializable;
 
 
 public class Category implements Serializable {
+
+    @SerializedName("_id")
+    @Expose
     @ColumnInfo(name="category_id")
     private String id;
     @ColumnInfo(name="category_name")

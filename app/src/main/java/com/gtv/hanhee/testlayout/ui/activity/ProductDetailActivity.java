@@ -4,12 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.IntentCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gtv.hanhee.testlayout.R;
@@ -24,15 +22,12 @@ import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
 import com.gtv.hanhee.testlayout.ui.customview.GlideImageLoader;
 import com.gtv.hanhee.testlayout.ui.customview.ProductRecommendBanner;
 import com.gtv.hanhee.testlayout.ui.presenter.ProductDetailPresenter;
-import com.gtv.hanhee.testlayout.utils.FormatUtils;
 import com.gtv.hanhee.testlayout.utils.ImageUtils;
-import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.gtv.hanhee.testlayout.utils.StringUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.zhouwei.mzbanner.MZBannerView;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
 import java.util.ArrayList;
@@ -44,15 +39,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Completable;
-import io.reactivex.CompletableObserver;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DefaultObserver;
-import io.reactivex.observers.DisposableCompletableObserver;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
-import io.reactivex.subscribers.DefaultSubscriber;
 
 public class ProductDetailActivity extends BaseActivity implements ProductDetailContract.View, OnItemRvClickListener<Object> {
 
@@ -87,6 +74,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     ImageView imgShop;
     @BindView(R.id.txtPriceBuyNow)
     TextView txtPriceBuyNow;
+    @BindView(R.id.lnPrice)
+    LinearLayout lnPrice;
 
     private List<List<Product>> listBannerRecommend = new ArrayList<>();
     private ProductImageDetailAdapter productImageDetailAdapter;
@@ -192,7 +181,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @OnClick(R.id.btnViewShopProduct)
     public void viewShopProduct() {
-        ShopActivity.startActivity(this, product.getShop().getId());
+        ShopDetailActivity.startActivity(this, product.getShop().getId());
     }
 
     @OnClick(R.id.btnAddToCart)
@@ -252,16 +241,22 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         });
 
 //        Setting data ----------
-        txtTag.setText(product.getSubCategory().get(0).getName());
-        txtTag2.setText(product.getSubCategory().get(1).getName());
-        txtTag3.setText(product.getSubCategory().get(2).getName());
+        txtTag.setText(product.getSubCategories().get(0).getName());
+        txtTag2.setText(product.getSubCategories().get(1).getName());
+        txtTag3.setText(product.getSubCategories().get(2).getName());
         txtProductName.setText(product.getName());
-        txtDiscountPrice.setText(StringUtils.formatPrice(product.getDiscountPrice()+""));
+        txtDiscountPrice.setText(StringUtils.formatPrice(product.getPrice() * (100 - product.getDiscountPercent()) / 100 + ""));
+        if (product.getDiscountPercent()>0) {
+            lnPrice.setVisibility(View.VISIBLE);
+
+        } else {
+            lnPrice.setVisibility(View.GONE);
+        }
         txtPrice.setText(StringUtils.formatPrice(product.getPrice()+""));
 //        txtDiscountTime.setText(StringUtils.formatPrice(product.getPrice()+""));
         txtShopName.setText(product.getShop().getName());
-        txtShipper.setText(product.getShop().getShipper());
-        txtPriceBuyNow.setText(StringUtils.formatPrice(product.getDiscountPrice()+""));
+//        txtShipper.setText(product.getShop().getShipper());
+        txtPriceBuyNow.setText(StringUtils.formatPrice(product.getPrice()*(100-product.getDiscountPercent())/100+""));
         ImageUtils.loadImageByGlideWithResize(this, product.getShop().getAvatar(), imgShop, 300, 300);
     }
 

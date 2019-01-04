@@ -5,11 +5,16 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 
 public class Shop implements Serializable {
 
+    @SerializedName("_id")
+    @Expose
     @ColumnInfo(name="shop_id")
     private String id;
     @ColumnInfo(name="shop_name")

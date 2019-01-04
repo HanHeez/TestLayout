@@ -3,16 +3,14 @@ package com.gtv.hanhee.testlayout.ui.fragment;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
-import com.gtv.hanhee.testlayout.model.BannerDetail;
+import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeGridAdapter;
@@ -74,8 +72,8 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
 
     @Override
     public void initDatas() {
-        shopHomePresenter.getShopBanner(token);
-        shopHomePresenter.getListProduct(token);
+        shopHomePresenter.getShopBanner(token, 0, 5);
+        shopHomePresenter.getListProductNewest(token, 0 , 15);
     }
 
     @Override
@@ -88,7 +86,7 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
-                shopHomePresenter.getShopBanner(token);
+                shopHomePresenter.getShopBanner(token, 0, 5);
                 ;
             }
         });
@@ -123,10 +121,10 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     }
 
     @Override
-    public void showShopBanner(List<BannerDetail> bannerDetailListResult) {
+    public void showShopBanner(List<ShopBanner> shopBannerListResult) {
         List<String> images = new ArrayList<>();
-        for (int i=0;i<bannerDetailListResult.size();i++) {
-            images.add(bannerDetailListResult.get(i).getImage());
+        for (int i = 0; i< shopBannerListResult.size(); i++) {
+            images.add(shopBannerListResult.get(i).getImageUrl());
         }
         banner.setImageLoader(new GlideImageLoader(mContext));
         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
@@ -143,11 +141,13 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     }
 
     @Override
-    public void showListProduct(List<Product> productListResult) {
+    public void showListProductNewest(List<Product> productListResult) {
         productList.clear();
         productList.addAll(productListResult);
         shopHomeRowAdapter.notifyDataSetChanged();
+        shopHomeGridAdapter.notifyDataSetChanged();
     }
+
 
     @Override
     public void showError() {

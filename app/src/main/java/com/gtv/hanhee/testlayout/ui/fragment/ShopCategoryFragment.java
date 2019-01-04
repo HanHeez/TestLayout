@@ -5,17 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
-import com.gtv.hanhee.testlayout.model.BannerDetail;
-import com.gtv.hanhee.testlayout.model.CategoriesNews;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.SubCategory;
 import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
@@ -23,15 +18,10 @@ import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeGridAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeRowAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopSubCategoryAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.ShopCategoryContact;
-import com.gtv.hanhee.testlayout.ui.contract.ShopHomeContract;
 import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
-import com.gtv.hanhee.testlayout.ui.customview.GlideImageLoader;
 import com.gtv.hanhee.testlayout.ui.presenter.ShopCategoryPresenter;
-import com.gtv.hanhee.testlayout.ui.presenter.ShopHomePresenter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +41,6 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     RecyclerView rvShopHome;
     @BindView(R.id.rvCategory)
     RecyclerView rvCategory;
-
     private ShopHomeRowAdapter shopHomeRowAdapter;
     private ShopHomeGridAdapter shopHomeGridAdapter;
     private ShopSubCategoryAdapter shopSubCategoryAdapter;
@@ -60,8 +49,30 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     private List<SubCategory> subCategoryList;
     @Inject
     ShopCategoryPresenter shopCategoryPresenter;
-    @Override
 
+    private String categoryId;
+    private static final String CATEGORY_ID = "categoryId";
+
+    public static Fragment newInstance(String  categoryId){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(CATEGORY_ID,categoryId);
+        Fragment fragment = new ShopCategoryFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    @Override
+    protected void initDataGetFromArgument(Bundle savedInstanceState) {
+        super.initDataGetFromArgument(savedInstanceState);
+        if(savedInstanceState != null){
+            categoryId = savedInstanceState.getString(CATEGORY_ID);
+        }
+        else {
+            categoryId = getArguments().getString(CATEGORY_ID);
+        }
+    }
+
+    @Override
     public int getLayoutResId() {
         return R.layout.fragment_shop_category;
     }
@@ -84,21 +95,22 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
     @Override
     public void initDatas() {
-        shopCategoryPresenter.getListSubCategory(token, "1");
-        shopCategoryPresenter.getListProduct(token);
+            shopCategoryPresenter.getListSubCategory(token, categoryId, 0, 8);
+            shopCategoryPresenter.getListProductByCategory(token, categoryId, 0, 15);
+
     }
 
     @Override
     public void configViews() {
 
 //        Setting RefreshLayout -----------------
-
         refreshLayout.setRefreshHeader(new CustomFragmentHeader(mContext));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
-//                shopHomePresenter.getShopBanner(token);
+                shopCategoryPresenter.getListSubCategory(token, categoryId, 0 , 8);
+                shopCategoryPresenter.getListProductByCategory(token, categoryId, 0, 15);
                 ;
             }
         });
@@ -109,9 +121,8 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
 //        Rv SubCategory -----------------
         shopSubCategoryAdapter = new ShopSubCategoryAdapter(activity, subCategoryList, this);
-        rvCategory.setHasFixedSize(true);
-        rvCategory.setNestedScrollingEnabled(false);
 
+        rvCategory.setNestedScrollingEnabled(false);
         GridLayoutManager gridLayoutManagerCategory = new GridLayoutManager(mContext, 4);
         rvCategory.setLayoutManager(gridLayoutManagerCategory);
         rvCategory.setAdapter(shopSubCategoryAdapter);
@@ -119,13 +130,11 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 //        Rv Product -----------------
         shopHomeRowAdapter = new ShopHomeRowAdapter(activity, productList, this);
         shopHomeGridAdapter = new ShopHomeGridAdapter(activity, productList, this);
-        rvShopHome.setHasFixedSize(true);
         rvShopHome.setNestedScrollingEnabled(false);
 
 //        LinearLayoutManager layoutManagerNews = new LinearLayoutManager(mContext);
 //        rvShopHome.setLayoutManager(layoutManagerNews);
 //        rvShopHome.setAdapter(shopHomeRowAdapter);
-
 
         GridLayoutManager gridLayoutManagerShop = new GridLayoutManager(mContext, 2);
         rvShopHome.setLayoutManager(gridLayoutManagerShop);
@@ -143,10 +152,12 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
 
     @Override
-    public void showListProduct(List<Product> productListResult) {
+    public void showListProductByCategory(List<Product> productListResult) {
         productList.clear();
         productList.addAll(productListResult);
         shopHomeRowAdapter.notifyDataSetChanged();
+        shopHomeGridAdapter.notifyDataSetChanged();
+
     }
 
     @Override

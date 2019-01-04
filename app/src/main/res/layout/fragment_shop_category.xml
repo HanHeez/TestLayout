@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/bg_shop_main_color">
 
-
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,12 +18,13 @@
             android:orientation="vertical">
             <!--Product-->
 
-
                 <android.support.v7.widget.RecyclerView
                     android:paddingTop="@dimen/length_5"
                     android:background="@color/white"
                     android:id="@+id/rvCategory"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content">
 
                 </android.support.v7.widget.RecyclerView>
@@ -32,35 +33,87 @@
             <!--Middle tab -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:layout_height="@dimen/length_40">
 
                 <LinearLayout
-                    android:layout_margin="@dimen/length_7"
-                    android:layout_centerInParent="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:padding="@dimen/length_7">
+
                     <ImageView
-                        android:src="@drawable/tools_ic_muise_timing_hover"
-                        android:layout_width="@dimen/length_25"
-                        android:layout_height="@dimen/length_25" />
+                        android:layout_width="@dimen/length_18"
+                        android:layout_height="@dimen/length_18"
+                        android:src="@drawable/tools_ic_muise_timing_hover" />
+
                     <TextView
-                        android:layout_marginLeft="@dimen/length_3"
-                        android:textSize="@dimen/length_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="Cập nhật giá lúc 10 giờ"
-                        android:textColor="@color/text_sub" />
+                        android:layout_marginLeft="@dimen/length_3"
+                        android:text="Sản phẩm mới"
+                        android:textColor="@color/text_sub"
+                        android:textSize="@dimen/length_14" />
+
                 </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/btnStyleRv"
+                    android:layout_width="@dimen/length_40"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_press_item"
+                    android:clickable="true">
+
+                    <ImageView
+                        android:layout_width="@dimen/length_15"
+                        android:layout_height="@dimen/length_15"
+                        android:layout_centerInParent="true"
+
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/length_5"
+
+                        android:src="@drawable/apk_classify_one" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/length_5"
+                    android:paddingRight="@dimen/length_5">
+
+                    <TextView
+                        android:id="@+id/txtMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/length_1"
+                        android:text="Xem thêm"
+                        android:textColor="@color/bg_shop_discount_circle"
+                        android:textSize="@dimen/length_12" />
+
+                    <ImageView
+
+                        android:layout_width="@dimen/length_12"
+                        android:layout_height="@dimen/length_12"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/txtMore"
+                        android:rotation="180"
+                        android:src="@drawable/nav_btn_back_pink" />
+
+                </LinearLayout>
+
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:paddingRight="@dimen/length_3"
                 android:paddingLeft="@dimen/length_3"
                 android:id="@+id/rvShopHome"
+                android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/divider_4px" />

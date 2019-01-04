@@ -20,8 +20,8 @@ public class ShopHomePresenter extends RxPresenter<ShopHomeContract.View> implem
     }
 
     @Override
-    public void getShopBanner(String accessToken) {
-        Disposable disposable = biboManager.getBanner(accessToken)
+    public void getShopBanner(String accessToken, int skip, int limit) {
+        Disposable disposable = biboManager.getShopHomeBanner(accessToken, skip, limit)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         (beans) -> {
                             mView.showShopBanner(beans);
@@ -35,11 +35,11 @@ public class ShopHomePresenter extends RxPresenter<ShopHomeContract.View> implem
     }
 
     @Override
-    public void getListProduct(String accessToken) {
-        Disposable disposable = biboManager.getListProduct(accessToken)
+    public void getListProductNewest(String accessToken, int skip, int limit) {
+        Disposable disposable = biboManager.getListProductNewest(accessToken, skip, limit)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         (beans) -> {
-                            mView.showListProduct(beans);
+                            mView.showListProductNewest(beans);
                         }
                         ,
                         (e) -> {
