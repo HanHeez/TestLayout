@@ -39,9 +39,7 @@ public class MyApplication extends Application {
 
         initComponent();
         initPrefs();
-        db = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "product-store").build();
-        mProductDao = db.productDao();
+        mProductDao = AppDatabase.getInstance(this).productDao();
     }
 
     private void initComponent() {

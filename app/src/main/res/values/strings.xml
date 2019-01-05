@@ -2,7 +2,8 @@
     <string name="app_name">TestLayout</string>
 
     <string name="shop_quantity">Còn %1$d</string>
-    <string name="percent_discount">%1$d</string>
+    <string name="empty_cart_view">Giỏ hàng còn trống T.T</string>
+    <string name="empty_cart_return_home">Tiếp tục mua sắm</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

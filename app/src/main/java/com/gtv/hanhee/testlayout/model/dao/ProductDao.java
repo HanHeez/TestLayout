@@ -23,6 +23,9 @@ public interface ProductDao {
     @Query("SELECT * FROM products")
     Single<List<Product>> getAll();
 
+    @Query("SELECT * FROM products")
+    LiveData<List<Product>> liveGetAll();
+
     @Query("select * from products where id = :productId")
     LiveData<Product> loadProduct(int productId);
 
@@ -31,7 +34,7 @@ public interface ProductDao {
 
 
     @Query("select * from products where id = :productId")
-    Product loadProductSync(int productId);
+    Single<Product> findProduct(String productId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Product... products);
@@ -50,5 +53,5 @@ public interface ProductDao {
 
 
     @Update
-    public void updateProducts(Product... products);
+    void updateProducts(Product... products);
 }

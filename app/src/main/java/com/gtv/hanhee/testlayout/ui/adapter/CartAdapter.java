@@ -8,18 +8,26 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gtv.hanhee.testlayout.R;
+import com.gtv.hanhee.testlayout.base.MyApplication;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.manager.CheckboxCartEvent;
+import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ProductSection;
 import com.gtv.hanhee.testlayout.utils.ImageUtils;
 import com.gtv.hanhee.testlayout.utils.RxBus;
 import com.gtv.hanhee.testlayout.utils.StringUtils;
 
 import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
 
 public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseViewHolder> {
 
@@ -43,8 +51,10 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
 //        Setting View ----------------
         txtShopName = holder.getView(R.id.txtShopName);
         cbShop = holder.getView(R.id.cbShop);
-
 //        Event -----------------------
+
+            cbShop.setChecked(item.isChecked());
+
         holder.setText(R.id.txtShopName, item.header);
         cbShop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -55,8 +65,8 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         });
     }
 
-    private TextView txtName, txtShortDescription, txtTag, txtPrice, txtDiscountPrice, txtQuantity, btnDecrease, btnIncrease, txtDiscountPercent;
-    LinearLayout lnPrice;
+    private TextView txtName, txtShortDescription, txtTag, txtPrice, btnIncrease, txtDiscountPrice, txtQuantity, txtDiscountPercent;
+    LinearLayout lnPrice, btnDecrease;
     private ImageView imgProduct;
     private View divider;
     private LinearLayout lnFreeship;
@@ -83,13 +93,14 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         lnPrice = holder.getView(R.id.lnPrice);
 
 //        Setting Data ------------------------
-
+        edtAmount.setText(item.t.getOrderAmount()+"");
         txtName.setText(item.t.getName());
         if (item.t.getShortDescription().length() > 0) {
             txtShortDescription.setText(item.t.getShortDescription());
         } else {
             txtShortDescription.setVisibility(View.GONE);
         }
+
         txtPrice.setText(StringUtils.formatPrice(item.t.getPrice() + ""));
         txtDiscountPrice.setText(StringUtils.formatPrice(item.t.getPrice()*(100-item.t.getDiscountPercent())/100 + ""));
         if (item.t.getDiscountPercent()>0) {
@@ -109,7 +120,10 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
             @Override
             public void onClick(View v) {
                 if (item.t.getOrderAmount()>1) {
-                    item.t.setOrderAmount(item.t.getOrderAmount() - 1);
+                    item.t.setOrderAmount(item.t.getOrderAmount()-1);
+                    Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(item.t)).subscribeOn(Schedulers.io())
+                            .subscribe();
+                    notifyDataSetChanged();
                 } else {
 
                 }
@@ -119,7 +133,14 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         btnIncrease.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (item.t.getOrderAmount()<5) {
+                    item.t.setOrderAmount(item.t.getOrderAmount()+1);
+                    Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(item.t)).subscribeOn(Schedulers.io())
+                            .subscribe();
+                    notifyDataSetChanged();
+                } else {
 
+                }
             }
         });
         if (item.isEnd()) {

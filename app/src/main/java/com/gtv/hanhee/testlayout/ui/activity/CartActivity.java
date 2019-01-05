@@ -1,5 +1,7 @@
 package com.gtv.hanhee.testlayout.ui.activity;
 
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
@@ -15,6 +18,7 @@ import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.manager.CheckboxCartEvent;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ProductSection;
+import com.gtv.hanhee.testlayout.model.ProductViewModel;
 import com.gtv.hanhee.testlayout.ui.adapter.CartAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.CartContract;
 import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
@@ -25,10 +29,12 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
@@ -48,6 +54,8 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     private static final String PRODUCT_ID = "productId";
     private String productId = "";
     private List<List<Integer>> productByShopList;
+//    @Inject
+//    ProductViewModel productViewModel;
 
 
     @Override
@@ -60,6 +68,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
         intent.putExtra(PRODUCT_ID, productId);
         context.startActivity(intent);
     }
+
 
 
     @Override
@@ -104,7 +113,6 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
                 ;
             }
         });
-
 //        Setting Recycler View ---------------
         cartProductList = new ArrayList<>();
         productByShopList = new ArrayList<>();
@@ -122,12 +130,18 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
             }
         });
 
+        //        Set EmptyView ------------------------
+        View emptyView = getLayoutInflater().inflate(R.layout.layout_empty_cart_view, (ViewGroup) rvCart.getParent(), false);
+        cartAdapter.setEmptyView(R.layout.layout_empty_cart_view, (ViewGroup) rvCart.getParent());
+
+
 //        Event Checkbox  ----------------------------------
         Disposable disposable = RxBus.getInstance()
                 .toObservable(CheckboxCartEvent.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         (event) -> {
+                            cartProductSectionList.get(event.adapterPosition).setChecked(event.isChecked);
                             for (int i=event.adapterPosition+1; i<cartProductSectionList.size(); i++) {
                                 if (cartProductSectionList.get(i).isHeader) break;
                                 cartProductSectionList.get(i).setChecked(event.isChecked);
@@ -139,6 +153,10 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     }
 
 
+    @OnClick(R.id.btnBack)
+    public void onBack() {
+        onBackPressed();
+    }
 
     @Override
     public void onItemRvClick(View view, Object item, int adapterPosition) {
@@ -154,6 +172,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     }
 
     private int currentPositionShop;
+    private ProductSection productSection;
     @Override
     public void showCartProduct(List<Product> productList) {
         if (productList.size() > 0) {
@@ -162,11 +181,13 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
             cartProductSectionList.clear();
             productByShopList.clear();
             currentPositionShop = 0;
-            cartProductSectionList.add(new ProductSection(true, productList.get(0).getShop().getName()));
+            productSection = new ProductSection(true, productList.get(0).getShop().getName());
+            cartProductSectionList.add(productSection);
             while (productList.size() > 0) {
                 for (int i = 0; i < productList.size(); i++) {
                     if (productList.get(i).getShop().getId().equals(currentShopId)) {
-                        cartProductSectionList.add(new ProductSection(productList.get(i), currentPositionShop));
+                        productSection = new ProductSection(productList.get(i), currentPositionShop);
+                        cartProductSectionList.add(productSection);
                         productList.remove(i);
                         i--;
                     }

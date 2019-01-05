@@ -3,6 +3,7 @@ package com.gtv.hanhee.testlayout.ui.fragment;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,8 +11,8 @@ import android.view.View;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
-import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.model.Product;
+import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeGridAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeRowAdapter;
@@ -30,6 +31,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -49,8 +51,10 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     private List<Product> productList;
     @Inject
     ShopHomePresenter shopHomePresenter;
-    @Override
+    private LinearLayoutManager rowLayoutManager;
+    private GridLayoutManager gridLayoutManager;
 
+    @Override
     public int getLayoutResId() {
         return R.layout.fragment_shop_home;
     }
@@ -73,7 +77,7 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     @Override
     public void initDatas() {
         shopHomePresenter.getShopBanner(token, 0, 5);
-        shopHomePresenter.getListProductNewest(token, 0 , 15);
+        shopHomePresenter.getListProductNewest(token, 0, 15);
     }
 
     @Override
@@ -94,14 +98,14 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
 //        Setting RecyclerView ----------------
         productList = new ArrayList<>();
         shopHomeRowAdapter = new ShopHomeRowAdapter(activity, productList, this);
-
         shopHomeGridAdapter = new ShopHomeGridAdapter(activity, productList, this);
+        gridLayoutManager = new GridLayoutManager(mContext, 2);
+        rowLayoutManager = new LinearLayoutManager(mContext);
 
         rvShopHome.setHasFixedSize(true);
         rvShopHome.setNestedScrollingEnabled(false);
 
-        LinearLayoutManager layoutManagerNews = new LinearLayoutManager(mContext);
-        rvShopHome.setLayoutManager(layoutManagerNews);
+        rvShopHome.setLayoutManager(rowLayoutManager);
         rvShopHome.setAdapter(shopHomeRowAdapter);
 
         shopHomeRowAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -112,18 +116,33 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
             ProductDetailActivity.startActivity(mContext, productList.get(position).getId());
         });
 
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 2);
+        gridLayoutManager = new GridLayoutManager(mContext, 2);
 //        rvShopHome.setLayoutManager(gridLayoutManager);
 //        rvShopHome.setAdapter(shopHomeGridAdapter);
 
 //        Setting Banner -------------------
+    }
 
+    private boolean isRow = true;
+    @OnClick(R.id.btnStyleRv)
+    public void changeStyleRv() {
+        if (isRow) {
+            rvShopHome.setLayoutManager(gridLayoutManager);
+            rvShopHome.setAdapter(shopHomeGridAdapter);
+            shopHomeGridAdapter.notifyDataSetChanged();
+            isRow = false;
+        } else {
+            rvShopHome.setLayoutManager(rowLayoutManager);
+            rvShopHome.setAdapter(shopHomeRowAdapter);
+            shopHomeRowAdapter.notifyDataSetChanged();
+            isRow = true;
+        }
     }
 
     @Override
     public void showShopBanner(List<ShopBanner> shopBannerListResult) {
         List<String> images = new ArrayList<>();
-        for (int i = 0; i< shopBannerListResult.size(); i++) {
+        for (int i = 0; i < shopBannerListResult.size(); i++) {
             images.add(shopBannerListResult.get(i).getImageUrl());
         }
         banner.setImageLoader(new GlideImageLoader(mContext));

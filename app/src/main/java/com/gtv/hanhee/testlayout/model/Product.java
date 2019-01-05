@@ -35,7 +35,7 @@ public class Product implements Serializable {
     private long discountPrice;
     private long quantity;
     @ColumnInfo(name="order_amount")
-    private int orderAmount;
+    private int orderAmount=1;
     @ColumnInfo(name="order_total_price")
     private int orderTotalPrice;
     private String avatar;
@@ -47,6 +47,7 @@ public class Product implements Serializable {
     private Shop shop;
     @Ignore
     List<String> thumbnails;
+
 
     public int getOrderAmount() {
         return orderAmount;

@@ -1,5 +1,6 @@
 package com.gtv.hanhee.testlayout.ui.fragment;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
@@ -9,6 +10,7 @@ import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.CategoriesNews;
 import com.gtv.hanhee.testlayout.model.Category;
 import com.gtv.hanhee.testlayout.model.Product;
+import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.ShopContract;
 import com.gtv.hanhee.testlayout.ui.contract.ShopHomeContract;
@@ -22,6 +24,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ShopFragment extends BaseFragment implements ShopContract.View {
 
@@ -68,6 +71,12 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
 
     }
 
+
+    @OnClick(R.id.btnCart)
+    public void goToCart() {
+        Intent intent = new Intent(activity, CartActivity.class);
+        startActivity(intent);
+    }
     @Override
     public void showError() {
 

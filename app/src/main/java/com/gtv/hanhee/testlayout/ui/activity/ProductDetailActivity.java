@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
@@ -39,6 +40,10 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.reactivex.Completable;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
 public class ProductDetailActivity extends BaseActivity implements ProductDetailContract.View, OnItemRvClickListener<Object> {
@@ -191,18 +196,38 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @OnClick(R.id.btnBuyNow)
     public void buyNow() {
-        Random rand1 = new Random();
-        Random rand2 = new Random();
-        int n1 = rand1.nextInt(15) + 1;
-        int n2 = rand2.nextInt(4) + 1;
-        product.setId(String.valueOf(n1));
-        product.getShop().setId(String.valueOf(n2));
-        product.getShop().setName(String.valueOf("Shop "+n2));
-        Completable.fromAction(() -> MyApplication.mProductDao.insertAll(product)).subscribeOn(Schedulers.io())
-                .subscribe();
-        Intent intent = new Intent(this, CartActivity.class);
-        startActivity(intent);
-        Log.d("kiemtraProduct", product.getId()+" - "+product.getShop().getId());
+            MyApplication.mProductDao.findProduct(product.getId()).subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new SingleObserver<Product>() {
+                        @Override
+                        public void onSubscribe(Disposable d) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(Product productResult) {
+                            if (productResult.getOrderAmount()<5) {
+                                productResult.setOrderAmount(productResult.getOrderAmount() + 1);
+                                Completable.fromAction(() -> MyApplication.mProductDao.insertAll(productResult)).subscribeOn(Schedulers.io())
+                                        .subscribe();
+                                Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(mContext, "Không thể thêm vào giỏ hảng. Số lượng tối đa là 5", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            product.setOrderAmount(1);
+                            Completable.fromAction(() -> MyApplication.mProductDao.insertAll(product)).subscribeOn(Schedulers.io())
+                                    .subscribe();
+                            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
+                            startActivity(intent);
+                            Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(product)).subscribeOn(Schedulers.io())
+                                    .subscribe();
+                        }
+                    });
 
     }
 

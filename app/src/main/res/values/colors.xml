@@ -12,6 +12,7 @@
     <color name="text_shop_deliver">#FF0036</color>
     <color name="add_to_cart">#CF3152</color>
     <color name="buy_now">#FF5794</color>
+    <color name="bg_empty_cart_color">#CCCCCC</color>
 
     <color name="text_tab_shop_enabled">#f44a9e</color>
     <color name="text_tab_shop_disable">#343434</color>
