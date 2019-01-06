@@ -1,17 +1,31 @@
 package com.gtv.hanhee.testlayout.api;
 
+import android.graphics.Color;
+
 /**
  * Created by Hoang Nam on 19/03/2017.
  */
 
-public interface Constants {
+public class Constants {
 //    String API_ENDPOINT = "http://192.168.1.144:3003/api/";
 //    String API_ENDPOINT2 = "http://192.168.1.144:3003";
-  String API_ENDPOINT = "http://dev.sieuloinhuan.net/api/";
-   String API_ENDPOINT2 = "http://dev.sieuloinhuan.net";
+public static final String API_ENDPOINT = "http://dev.sieuloinhuan.net/api/";
+    public static final  String API_ENDPOINT2 = "http://dev.sieuloinhuan.net";
 
-    String API_UPLOAD = "https://storage.sieuloinhuan.net/api/";
-    String TOKEN_ID = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmUyNWQ1MjczMTdmMjVhMjY0ZDVlNGEiLCJuYW1lIjoiTG9uZyBOZ3V54buFbiIsInBob25lIjoiIiwiYXZhdGFyIjoiaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMjQ4ODE2MTYyMTIwODg2NC9waWN0dXJlIiwiaXNVcGRhdGUiOnRydWUsIndlZWtOdW1iZXIiOjM3LCJkYXlOdW1iZXIiOjQsInByb3ZpZGVyIjoiZmFjZWJvb2siLCJyb2xlIjoidXNlciIsImRldmljZVRva2VuIjoiZWxRY1Q3QW13dE06QVBBOTFiSHB1NDY1aWI4bTM0bklSYVgwLXIxaUtrUjgzeUdSbXpPalB2dDN6OG8wZmIzMHV5ek1tUUttUkJ0MkdtdjEzRHpBYWFmRXJIem1qUWRrd1FkdDJqalVPQkdXdTNVZjBoUTNiN0F5d2VDSnBueVhpSzdrdmc2c0NBbU9yc2xuSDdjdy1CU2giLCJzY29yZSI6MTAwMSwiaWF0IjoxNTQ2NTAxNDIxLCJleHAiOjE1NDcxMDYyMjF9.dcp5I_UA85o2r6tjUx4gUgFd5_Q7uTimHVUo0TUetVM";
+    public static final  String API_UPLOAD = "https://storage.sieuloinhuan.net/api/";
+    public static final  String TOKEN_ID = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmUyNWQ1MjczMTdmMjVhMjY0ZDVlNGEiLCJuYW1lIjoiTG9uZyBOZ3V54buFbiIsInBob25lIjoiIiwiYXZhdGFyIjoiaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMjQ4ODE2MTYyMTIwODg2NC9waWN0dXJlIiwiaXNVcGRhdGUiOnRydWUsIndlZWtOdW1iZXIiOjM3LCJkYXlOdW1iZXIiOjQsInByb3ZpZGVyIjoiZmFjZWJvb2siLCJyb2xlIjoidXNlciIsImRldmljZVRva2VuIjoiZWxRY1Q3QW13dE06QVBBOTFiSHB1NDY1aWI4bTM0bklSYVgwLXIxaUtrUjgzeUdSbXpPalB2dDN6OG8wZmIzMHV5ek1tUUttUkJ0MkdtdjEzRHpBYWFmRXJIem1qUWRrd1FkdDJqalVPQkdXdTNVZjBoUTNiN0F5d2VDSnBueVhpSzdrdmc2c0NBbU9yc2xuSDdjdy1CU2giLCJzY29yZSI6MTAwMSwiaWF0IjoxNTQ2NTAxNDIxLCJleHAiOjE1NDcxMDYyMjF9.dcp5I_UA85o2r6tjUx4gUgFd5_Q7uTimHVUo0TUetVM";
+
+    public static final int[] tagColors = new int[]{
+            Color.parseColor("#90C5F0"),
+            Color.parseColor("#91CED5"),
+            Color.parseColor("#F88F55"),
+            Color.parseColor("#C0AFD0"),
+            Color.parseColor("#E78F8F"),
+            Color.parseColor("#67CCB7"),
+            Color.parseColor("#F6BC7E")
+    };
+
+
     boolean DEBUG_MODE = true;
     public static int MULTITYPE_NORMAL = 0;
     public static int MULTITYPE_IMAGE = 1;

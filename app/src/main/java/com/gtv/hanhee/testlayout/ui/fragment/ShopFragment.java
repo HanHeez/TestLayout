@@ -6,19 +6,15 @@ import android.support.v4.view.ViewPager;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
-import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
-import com.gtv.hanhee.testlayout.model.CategoriesNews;
 import com.gtv.hanhee.testlayout.model.Category;
-import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
+import com.gtv.hanhee.testlayout.ui.activity.ShopSearchActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.ShopContract;
-import com.gtv.hanhee.testlayout.ui.contract.ShopHomeContract;
 import com.gtv.hanhee.testlayout.ui.presenter.ShopPresenter;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,6 +29,7 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     @BindView(R.id.viewPager)
     ViewPager viewPager;
 
+
     private CommunityFlycoTabLayoutAdapter communityFlycoTabLayoutAdapter;
     private List<String> mTitles = new ArrayList<>();
     private List<Fragment> mFragments = new ArrayList<>();
@@ -45,6 +42,11 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
         return R.layout.fragment_shop;
     }
 
+    @OnClick(R.id.rlSearch)
+    public void onSearch() {
+        Intent intent = new Intent(activity, ShopSearchActivity.class);
+        startActivity(intent);
+    }
 
     @Override
     public void attachView() {

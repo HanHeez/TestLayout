@@ -1,4 +1,7 @@
 <resources>
+  <dimen name="toolbar_height">
+    77.78dp
+  </dimen>
   <dimen name="toro_media_button_height">
     106.67dp
   </dimen>

@@ -37,16 +37,17 @@
 
 
         <Button
+
             android:layout_marginTop="@dimen/length_10"
             android:layout_gravity="center"
-            android:id="@+id/page_tip_eventview"
+            android:id="@+id/btnCartGoHome"
             android:layout_width="@dimen/length_144"
             android:layout_height="@dimen/length_34"
-            android:background="@drawable/tip_btn_selector"
             android:gravity="center"
             android:text="@string/empty_cart_return_home"
             android:textAllCaps="false"
             android:textColor="#ffff4978"
-            android:textSize="@dimen/length_14" />
+            android:textSize="@dimen/length_14"
+            />
     </LinearLayout>
 </RelativeLayout>

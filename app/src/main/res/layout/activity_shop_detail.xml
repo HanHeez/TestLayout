@@ -10,7 +10,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:elevation="@dimen/length_0"
-        android:layout_height="@dimen/length_35">
+        android:layout_height="@dimen/toolbar_height">
 
         <ImageView
             android:clickable="true"

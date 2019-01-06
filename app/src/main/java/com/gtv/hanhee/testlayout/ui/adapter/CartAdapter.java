@@ -1,6 +1,7 @@
 package com.gtv.hanhee.testlayout.ui.adapter;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,7 +16,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.MyApplication;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
+import com.gtv.hanhee.testlayout.manager.ChangeProductAmountEvent;
 import com.gtv.hanhee.testlayout.manager.CheckboxCartEvent;
+import com.gtv.hanhee.testlayout.manager.CheckboxProductEvent;
+
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ProductSection;
 import com.gtv.hanhee.testlayout.utils.ImageUtils;
@@ -53,25 +57,24 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         cbShop = holder.getView(R.id.cbShop);
 //        Event -----------------------
 
-            cbShop.setChecked(item.isChecked());
-
+        cbShop.setChecked(item.isCheckedShop());
         holder.setText(R.id.txtShopName, item.header);
-        cbShop.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    RxBus.getInstance().post(new CheckboxCartEvent(holder.getAdapterPosition(), isChecked));
-
-            }
-        });
+         cbShop.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               CheckBox cb = (CheckBox) v;
+               RxBus.getInstance().post(new CheckboxCartEvent(holder.getAdapterPosition(), cb.isChecked()));
+           }
+       });
     }
 
-    private TextView txtName, txtShortDescription, txtTag, txtPrice, btnIncrease, txtDiscountPrice, txtQuantity, txtDiscountPercent;
+    private TextView txtName, txtShortDescription, txtTag,
+            txtPrice, btnIncrease, txtDiscountPrice, txtQuantity, txtDiscountPercent,txtAmount;
     LinearLayout lnPrice, btnDecrease;
     private ImageView imgProduct;
     private View divider;
     private LinearLayout lnFreeship;
     private CheckBox cbProduct;
-    private EditText edtAmount;
 
     @Override
     protected void convert(BaseViewHolder holder, ProductSection item) {
@@ -86,23 +89,23 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         divider = holder.getView(R.id.divider);
         lnFreeship = holder.getView(R.id.lnFreeship);
         cbProduct = holder.getView(R.id.cbProduct);
-        edtAmount = holder.getView(R.id.edtAmount);
+        txtAmount = holder.getView(R.id.txtAmount);
         btnDecrease = holder.getView(R.id.btnDecrease);
         btnIncrease = holder.getView(R.id.btnIncrease);
         txtDiscountPercent = holder.getView(R.id.txtDiscountPercent);
         lnPrice = holder.getView(R.id.lnPrice);
 
 //        Setting Data ------------------------
-        edtAmount.setText(item.t.getOrderAmount()+"");
+        txtAmount.setText(item.t.getOrderAmount()+"");
         txtName.setText(item.t.getName());
         if (item.t.getShortDescription().length() > 0) {
             txtShortDescription.setText(item.t.getShortDescription());
         } else {
             txtShortDescription.setVisibility(View.GONE);
         }
-
+        long discountPrice = item.t.getPrice()*(100-item.t.getDiscountPercent())/100;
         txtPrice.setText(StringUtils.formatPrice(item.t.getPrice() + ""));
-        txtDiscountPrice.setText(StringUtils.formatPrice(item.t.getPrice()*(100-item.t.getDiscountPercent())/100 + ""));
+        txtDiscountPrice.setText(StringUtils.formatPrice(discountPrice + ""));
         if (item.t.getDiscountPercent()>0) {
             txtDiscountPercent.setText("-"+item.t.getDiscountPercent() + "%");
             txtDiscountPercent.setVisibility(View.VISIBLE);
@@ -111,38 +114,40 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
             txtDiscountPercent.setVisibility(View.GONE);
             lnPrice.setVisibility(View.GONE);
         }
+        cbProduct.setChecked(item.t.isCheckedProduct());
         txtQuantity.setText(String.format(activity.getString(R.string.shop_quantity), item.t.getQuantity()));
         txtQuantity.setVisibility(View.GONE);
-        cbProduct.setChecked(item.isChecked());
+
         ImageUtils.loadImageByGlideWithResize(activity, item.t.getAvatar(), imgProduct, 350, 350);
 
-        btnDecrease.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (item.t.getOrderAmount()>1) {
-                    item.t.setOrderAmount(item.t.getOrderAmount()-1);
-                    Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(item.t)).subscribeOn(Schedulers.io())
-                            .subscribe();
-                    notifyDataSetChanged();
-                } else {
-
-                }
+        btnDecrease.setOnClickListener(v -> {
+            if (item.t.getOrderAmount()>1) {
+                item.t.setOrderAmount(item.t.getOrderAmount()-1);
+                Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(item.t)).subscribeOn(Schedulers.io())
+                        .subscribe();
+                RxBus.getInstance().post(new ChangeProductAmountEvent(discountPrice, "decrease"));
+                notifyDataSetChanged();
             }
         });
 
-        btnIncrease.setOnClickListener(new View.OnClickListener() {
+        cbProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (item.t.getOrderAmount()<5) {
-                    item.t.setOrderAmount(item.t.getOrderAmount()+1);
-                    Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(item.t)).subscribeOn(Schedulers.io())
-                            .subscribe();
-                    notifyDataSetChanged();
-                } else {
-
-                }
+                CheckBox cb = (CheckBox) v;
+                RxBus.getInstance().post(new CheckboxProductEvent(holder.getAdapterPosition(), cb.isChecked()));
             }
         });
+
+        btnIncrease.setOnClickListener(v -> {
+            if (item.t.getOrderAmount()<5) {
+                item.t.setOrderAmount(item.t.getOrderAmount()+1);
+                Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(item.t)).subscribeOn(Schedulers.io())
+                        .subscribe();
+                RxBus.getInstance().post(new ChangeProductAmountEvent(discountPrice, "increase"));
+                notifyDataSetChanged();
+            }
+        });
+
         if (item.isEnd()) {
             divider.setVisibility(View.GONE);
         } else {

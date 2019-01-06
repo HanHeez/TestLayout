@@ -29,8 +29,8 @@ public interface ProductDao {
     @Query("select * from products where id = :productId")
     LiveData<Product> loadProduct(int productId);
 
-    @Query("SELECT shop_id, shop_name, shop_avatar, shop_description, shop_shipper FROM products")
-    Shop getShopFromProduct();
+    @Query("SELECT shop_id, shop_name, shop_avatar, shop_description, shop_shipper, is_checked_shop FROM products")
+    Single<Shop> getShopFromProduct();
 
 
     @Query("select * from products where id = :productId")

@@ -8,7 +8,7 @@
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:layout_marginBottom="@dimen/length_55"
-        android:layout_marginTop="@dimen/length_40"
+        android:layout_marginTop="@dimen/toolbar_height"
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,15 +26,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </LinearLayout>
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvCart"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
             </android.support.v7.widget.RecyclerView>
 
             <!--Recommend Title-->
@@ -49,12 +44,13 @@
                 <ImageView
                     android:layout_width="@dimen/length_18"
                     android:layout_height="@dimen/length_18"
-                    android:src="@drawable/icon_recommend_tab" />
+                    android:src="@drawable/icon_recommend_tab"
+                    />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/length_3"
+                    android:layout_marginStart="@dimen/length_3"
                     android:text="Có thể bạn cũng thích"
                     android:textColor="@color/text_btn"
                     android:textSize="@dimen/length_14" />
@@ -80,7 +76,7 @@
         android:background="@color/white"
         android:layout_width="match_parent"
         android:elevation="@dimen/length_0"
-        android:layout_height="@dimen/length_40">
+        android:layout_height="@dimen/toolbar_height">
 
         <ImageView
             android:clickable="true"
@@ -101,6 +97,7 @@
             android:textColor="@color/text_main" />
 
         <TextView
+            android:id="@+id/btnDelete"
             android:paddingRight="@dimen/length_15"
             android:paddingLeft="@dimen/length_15"
             android:layout_centerVertical="true"
@@ -112,6 +109,20 @@
             android:text="Xóa"
             android:textColor="@color/text_main" />
 
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/btnFinish"
+            android:paddingRight="@dimen/length_15"
+            android:paddingLeft="@dimen/length_15"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:textSize="@dimen/length_15"
+            android:text="Hoàn thành"
+            android:textColor="@color/text_main" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/length_1"
@@ -120,11 +131,23 @@
     </RelativeLayout>
     <!--End Custom Toolbar-->
 
+    <TextView
+        android:layout_above="@id/lnBottomBar"
+        android:id="@+id/txtTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_main"
+        android:gravity="center"
+        android:padding="@dimen/length_10"
+        android:text="Vui lòng chọn ít nhất 1 sản phẩm"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+
     <!--Custom Bottom Bar-->
     <LinearLayout
         android:elevation="@dimen/length_2"
         android:orientation="horizontal"
-        android:id="@+id/rlBottomBar"
+        android:id="@+id/lnBottomBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/length_55"
         android:layout_alignParentBottom="true"
@@ -139,21 +162,20 @@
             android:paddingRight="@dimen/length_9"
             android:gravity="center"
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent">
 
             <CheckBox
                 android:id="@+id/cbAll"
                 android:layout_width="@dimen/length_15"
                 android:layout_height="@dimen/length_15"
-                android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:layout_marginRight="@dimen/length_2"
+                android:layout_marginEnd="@dimen/length_2"
                 android:button="@null"
                 android:background="@drawable/bg_round_checkbox_cart"
                 />
             <TextView
-                android:layout_marginLeft="@dimen/length_4"
+                android:layout_marginStart="@dimen/length_4"
                 android:textColor="@color/text_main"
                 android:gravity="center"
                 android:text="Tất cả"
@@ -162,10 +184,11 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <!--Buy-->
+        <!--Total Price-->
         <RelativeLayout
+            android:visibility="visible"
           android:gravity="center_vertical"
-            android:id="@+id/btnBuyNow"
+            android:id="@+id/rlTotalPrice"
             android:paddingLeft="@dimen/length_10"
             android:paddingRight="@dimen/length_10"
             android:background="@color/white"
@@ -178,42 +201,54 @@
                 android:maxLines="1"
                 android:ellipsize="end"
                 android:layout_marginTop="@dimen/length_2"
-               android:layout_toLeftOf="@id/txtTotal"
+                android:layout_toStartOf="@id/textd"
                 android:textSize="@dimen/length_14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-               android:id="@+id/txtTotal"
-                android:text="đ34.123.329.000"
+                android:id="@+id/textd"
+                android:layout_toStartOf="@id/txtTotalPrice"
+                android:text="đ"
+                android:layout_marginRight="@dimen/length_1"
                 android:layout_marginBottom="@dimen/length_2"
-                android:layout_alignParentRight="true"
+                android:textColor="@color/text_shop_deliver"
+                android:textSize="@dimen/length_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+               android:id="@+id/txtTotalPrice"
+                android:text="34.123.329.000"
+                android:layout_marginBottom="@dimen/length_2"
+                android:layout_alignParentEnd="true"
                 android:textColor="@color/text_shop_deliver"
                 android:textSize="@dimen/length_15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
 
-                android:layout_toLeftOf="@id/txtSaveDeliver"
-                android:layout_below="@id/txtTotal"
-                android:text="Tiết kiệm phí vận chuyển: "
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/txtTotalPrice"
+                android:text="Đã bao gồm VAT(nếu có)"
                 android:textColor="@color/text_sub"
                 android:textSize="@dimen/length_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
+                android:visibility="gone"
                 android:id="@+id/txtSaveDeliver"
-                android:layout_below="@id/txtTotal"
-                android:text="đ29.000"
-                android:layout_alignParentRight="true"
+                android:layout_below="@id/txtTotalPrice"
+                android:text=""
+                android:layout_alignParentEnd="true"
                 android:textColor="@color/text_sub"
                 android:textSize="@dimen/length_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </RelativeLayout>
 
-        <!--Add to cart-->
+        <!--Send Order-->
         <LinearLayout
-            android:id="@+id/btnAddToCart"
+            android:visibility="visible"
+            android:id="@+id/btnSubmit"
             android:background="@color/buy_now"
             android:layout_gravity="center"
             android:gravity="center"
@@ -223,7 +258,6 @@
 
             <TextView
                 android:layout_gravity="center"
-
                 android:textColor="@color/white"
                 android:gravity="center"
                 android:text="Thanh toán"
@@ -232,6 +266,33 @@
                 android:textSize="@dimen/length_14"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent" />
+        </LinearLayout>
+
+        <!--Delete-->
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/lnDelete"
+            android:background="@color/white"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="@dimen/length_90"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/btnSubmitDelete"
+                android:layout_gravity="center"
+                android:textColor="@color/bg_shop_home_tag"
+                android:gravity="center"
+                android:text="Xóa"
+                android:background="@drawable/bg_round_shop_product_tag"
+                android:paddingLeft="@dimen/length_12"
+                android:paddingRight="@dimen/length_12"
+                android:paddingTop="@dimen/length_5"
+                android:paddingBottom="@dimen/length_5"
+                android:textSize="@dimen/length_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

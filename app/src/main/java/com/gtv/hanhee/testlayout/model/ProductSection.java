@@ -5,19 +5,27 @@ import com.chad.library.adapter.base.entity.SectionEntity;
 public class ProductSection extends SectionEntity<Product> {
 
     private boolean isEnd = false;
-    private boolean isChecked = true;
+    private boolean isCheckedShop = true;
     private int positionShop;
 
     public ProductSection(boolean isHeader, String header) {
         super(isHeader, header);
     }
 
-    public boolean isChecked() {
-        return isChecked;
+    public boolean isCheckedShop() {
+        return isCheckedShop;
     }
 
-    public void setChecked(boolean checked) {
-        isChecked = checked;
+    public void setCheckedShop(boolean checkedShop) {
+        isCheckedShop = checkedShop;
+    }
+
+    public int getPositionShop() {
+        return positionShop;
+    }
+
+    public void setPositionShop(int positionShop) {
+        this.positionShop = positionShop;
     }
 
     public ProductSection(Product product, int positionShop) {

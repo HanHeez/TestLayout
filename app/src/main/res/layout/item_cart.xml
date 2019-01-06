@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clickable="true"
     android:background="@drawable/bg_press_item"
    >
 
@@ -12,8 +13,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/bg_press_item"
-        android:clickable="true"
         android:paddingLeft="@dimen/length_8"
         android:paddingTop="@dimen/length_4"
         android:paddingRight="@dimen/length_8">
@@ -244,8 +243,8 @@
                 </LinearLayout>
 
                 <!--Amount-->
-                <EditText
-                    android:id="@+id/edtAmount"
+                <TextView
+                    android:id="@+id/txtAmount"
                     android:layout_width="@dimen/length_35"
                     android:layout_height="match_parent"
                     android:background="@null"

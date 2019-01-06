@@ -10,9 +10,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-
 public class Shop implements Serializable {
-
     @SerializedName("_id")
     @Expose
     @ColumnInfo(name="shop_id")
@@ -25,7 +23,16 @@ public class Shop implements Serializable {
     private String description;
     @ColumnInfo(name="shop_shipper")
     private String shipper;
+    @ColumnInfo(name="is_checked_shop")
+    private boolean isCheckedShop = true;
 
+    public boolean isCheckedShop() {
+        return isCheckedShop;
+    }
+
+    public void setCheckedShop(boolean checkedShop) {
+        isCheckedShop = checkedShop;
+    }
 
     public String getShipper() {
         return shipper;

@@ -41,7 +41,7 @@ public class Product implements Serializable {
     private String avatar;
     @ColumnInfo(name="is_free_ship")
     private boolean isFreeShip;
-    @Ignore
+    @ColumnInfo(name="is_checked_product")
     private boolean isCheckedProduct = true;
     @Embedded
     private Shop shop;

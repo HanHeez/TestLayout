@@ -1,18 +1,24 @@
 package com.gtv.hanhee.testlayout.ui.fragment;
 
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ShopBanner;
+import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
+import com.gtv.hanhee.testlayout.ui.activity.MainActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeGridAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeRowAdapter;
@@ -91,6 +97,7 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
                 shopHomePresenter.getShopBanner(token, 0, 5);
+                shopHomePresenter.getListProductNewest(token, 0, 15);
                 ;
             }
         });
@@ -107,6 +114,22 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
 
         rvShopHome.setLayoutManager(rowLayoutManager);
         rvShopHome.setAdapter(shopHomeRowAdapter);
+
+//        set Empty view ------------------
+//        View emptyView = getLayoutInflater().inflate(R.layout.layout_empty_cart_view, (ViewGroup) rvShopHome.getParent(), false);
+//
+//        shopHomeRowAdapter.setEmptyView(R.layout.layout_empty_cart_view, (ViewGroup) rvShopHome.getParent());
+//        shopHomeGridAdapter.setEmptyView(R.layout.layout_empty_cart_view, (ViewGroup) rvShopHome.getParent());
+//        emptyView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("kiemtra", "onclick");
+//                Intent intent = new Intent(getActivity(), MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//            }
+//        });
+
 
         shopHomeRowAdapter.setOnItemClickListener((adapter, view, position) -> {
             ProductDetailActivity.startActivity(mContext, productList.get(position).getId());

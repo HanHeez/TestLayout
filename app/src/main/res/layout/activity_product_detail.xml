@@ -345,7 +345,7 @@
     <RelativeLayout
         android:id="@+id/rlToolbar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/length_35"
+        android:layout_height="@dimen/toolbar_height"
         android:layout_alignParentTop="true"
         android:background="@color/transparent_50">
 

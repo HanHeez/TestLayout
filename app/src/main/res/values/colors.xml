@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Home-->
+
     <color name="bg_home_week_color">#F07BB5</color>
     <color name="bg_home_week_color_shadow">#F2F2F2</color>
     <color name="bg_home_week_back_color">#F9CAE1</color>
@@ -16,6 +17,11 @@
 
     <color name="text_tab_shop_enabled">#f44a9e</color>
     <color name="text_tab_shop_disable">#343434</color>
+
+    <color name="common_bg">@color/white</color>
+    <color name="common_touch_bg">#E3E3E3</color>
+
+    <color name="tip">#88303F9F</color>
 
     <!--Shop-->
     <color name="bg_shop_main_color">#F6F6F6</color>

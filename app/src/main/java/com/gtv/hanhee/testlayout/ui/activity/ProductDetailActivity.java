@@ -16,6 +16,7 @@ import com.gtv.hanhee.testlayout.base.BaseActivity;
 import com.gtv.hanhee.testlayout.base.MyApplication;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.Product;
+import com.gtv.hanhee.testlayout.model.Shop;
 import com.gtv.hanhee.testlayout.ui.adapter.ProductImageDetailAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ProductRecommendViewHolder;
 import com.gtv.hanhee.testlayout.ui.contract.ProductDetailContract;
@@ -220,6 +221,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                         @Override
                         public void onError(Throwable e) {
                             product.setOrderAmount(1);
+                            product.setCheckedProduct(true);
                             Completable.fromAction(() -> MyApplication.mProductDao.insertAll(product)).subscribeOn(Schedulers.io())
                                     .subscribe();
                             Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
@@ -228,7 +230,6 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                                     .subscribe();
                         }
                     });
-
     }
 
     @OnClick(R.id.btnFavourite)

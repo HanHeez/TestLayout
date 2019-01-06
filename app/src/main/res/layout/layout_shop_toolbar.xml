@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/white"
-    android:layout_height="@dimen/length_35">
+    android:layout_height="@dimen/toolbar_height">
 
     <ImageView
         android:id="@+id/btnMessage"
