@@ -29,6 +29,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class OrderActivity extends BaseActivity implements OrderContract.View, OnItemRvClickListener<Object> {
 
@@ -46,34 +47,36 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     private List<ProductSection> productSectionList;
     private static final String GET_TYPE = "type";
     private static final String PRODUCT_ID = "productId";
+    private static final String AMOUNT_BUY_NOW = "amountBuyNow";
     private String type="";
     private String productId="";
     private Product product;
+    private int amountBuyNow;
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_order;
     }
 
-    public static void startActivity(Context context, String type, String productId) {
+    public static void startActivity(Context context, String type, String productId, int amount) {
         Intent intent = new Intent(context, OrderActivity.class);
         intent.putExtra(GET_TYPE, type);
+        intent.putExtra(AMOUNT_BUY_NOW, amount);
         intent.putExtra(PRODUCT_ID, productId);
         context.startActivity(intent);
     }
-
-
-
 
     @Override
     protected void initDataGetFromIntent(Bundle savedInstanceState) {
         super.initDataGetFromIntent(savedInstanceState);
         if (savedInstanceState != null) {
-            type = savedInstanceState.getString(GET_TYPE);
-            productId = savedInstanceState.getString(PRODUCT_ID);
+            type = savedInstanceState.getString(GET_TYPE, "");
+            productId = savedInstanceState.getString(PRODUCT_ID, "");
+            amountBuyNow = savedInstanceState.getInt(AMOUNT_BUY_NOW, 0);
         } else {
             type = getIntent().getStringExtra(GET_TYPE);
-            productId = savedInstanceState.getString(PRODUCT_ID);
+            productId = getIntent().getStringExtra(PRODUCT_ID);
+            amountBuyNow = getIntent().getIntExtra(AMOUNT_BUY_NOW, 0);
         }
     }
 
@@ -86,7 +89,7 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     public void initDatas() {
         activityComponent().inject(this);
         mPresenter.attachView(this);
-        if (type=="buynow") {
+        if (type.equals("buynow")) {
             mPresenter.getProduct(token, productId);
         } else {
             mPresenter.getCartProduct();
@@ -95,6 +98,10 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
 //        shopPresenter.getCartProduct();
     }
 
+    @OnClick(R.id.btnBack)
+    public void onBack(){
+        onBackPressed();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -111,7 +118,7 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
-                if (type=="buynow") {
+                if (type.equals("buynow")) {
                     mPresenter.getProduct(token, productId);
                 } else {
                     mPresenter.getCartProduct();
@@ -125,6 +132,7 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
         orderProductAdapter = new OrderProductAdapter(this, productSectionList, this);
         LinearLayoutManager layoutManagerNews = new LinearLayoutManager(this);
         rvProduct.setHasFixedSize(true);
+        rvProduct.setNestedScrollingEnabled(false);
         rvProduct.setLayoutManager(layoutManagerNews);
         rvProduct.setAdapter(orderProductAdapter);
 
@@ -147,25 +155,34 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     @Override
     public void showProduct(Product productResult) {
         product = productResult;
+        product.setOrderAmount(amountBuyNow);
         productList.clear();
+        productSectionList.clear();
         productList.add(product);
         addProductToList();
-
     }
 
     private int currentPositionShop = 0;
     private ProductSection productSection;
-
+    private long shopProductTotalPrice = 0;
+    private int orderShopTotalProduct = 0;
     private void addProductToList() {
         if (productList.size() > 0) {
             String currentShopId = productList.get(0).getShop().getId();
             productSectionList.clear();
             currentPositionShop = 0;
+            shopProductTotalPrice = 0;
+            orderShopTotalProduct = 0;
             productSection = new ProductSection(true, productList.get(0).getShop().getName());
             productSectionList.add(productSection);
             while (productList.size() > 0) {
                 for (int i = 0; i < productList.size(); i++) {
                     if (productList.get(i).getShop().getId().equals(currentShopId)) {
+                        orderShopTotalProduct++;
+                        long productTruePrice = productList.get(i).getPrice()*(100-productList.get(i).getDiscountPercent())*productList.get(i).getOrderAmount()/100;
+                        shopProductTotalPrice = shopProductTotalPrice+ productTruePrice;
+                        productList.get(i).setOrderTotalPrice(shopProductTotalPrice);
+                        productList.get(i).setOrderShopTotalProduct(orderShopTotalProduct);
                         productSection = new ProductSection(productList.get(i), currentPositionShop);
                         productSectionList.add(productSection);
                         if (!productSection.t.isCheckedProduct()) {
@@ -177,12 +194,15 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
                 }
                 productSectionList.get(productSectionList.size() - 1).setEnd(true);
                 if (productList.size() > 0) {
+                    shopProductTotalPrice = 0;
+                    orderShopTotalProduct = 0;
                     currentShopId = productList.get(0).getShop().getId();
                     currentPositionShop = productSectionList.size();
                     productSectionList.add(new ProductSection(true, productList.get(0).getShop().getName()));
 
                 }
             }
+
             calculateTotalPrice();
             orderProductAdapter.notifyDataSetChanged();
         }
@@ -193,10 +213,9 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
         totalPrice = 0;
         for (int i = 0; i < productSectionList.size(); i++) {
             if (!productSectionList.get(i).isHeader) {
-                if (productSectionList.get(i).t.isCheckedProduct()) {
                     long discountPrice = productSectionList.get(i).t.getPrice() * (100 - productSectionList.get(i).t.getDiscountPercent()) / 100;
                     totalPrice = totalPrice + discountPrice * productSectionList.get(i).t.getOrderAmount();
-                }
+
             }
         }
         txtTotalPrice.setText(StringUtils.formatPrice(totalPrice + ""));
@@ -205,7 +224,14 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
 
     @Override
     public void showCartProduct(List<Product> productListResult) {
-
+        productList.clear();
+        productSectionList.clear();
+        for (int i=0;i<productListResult.size();i++) {
+            if (productListResult.get(i).isCheckedProduct()){
+                productList.add(productListResult.get(i));
+            }
+        }
+        addProductToList();
     }
 
     @Override

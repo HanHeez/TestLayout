@@ -85,6 +85,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     LinearLayout lnPrice;
     @BindView(R.id.txtAmountCart)
     TextView txtAmountCart;
+    @BindView(R.id.txtTip)
+    TextView txtTip;
 
     private List<List<Product>> listBannerRecommend = new ArrayList<>();
     private ProductImageDetailAdapter productImageDetailAdapter;
@@ -126,6 +128,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     @Override
     public void initDatas() {
         activityComponent().inject(this);
+        showTip = false;
         productDetailPresenter.attachView(this);
         productDetailPresenter.getProduct(token, productId);
         productDetailPresenter.getRecommendProductList(token, productId, 0, 18);
@@ -236,12 +239,12 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                             SharedPreferencesUtil.getInstance().putInt("amountCart", amountProductCart);
                             settingAmountCart();
                             productResult.setOrderAmount(productResult.getOrderAmount() + 1);
+                            productResult.setCheckedProduct(true);
                             Completable.fromAction(() -> MyApplication.mProductDao.insertAll(productResult)).subscribeOn(Schedulers.io())
                                     .subscribe();
-                            Toast.makeText(mContext, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
-//
+                            showTipViewRepeat("Sản phẩm đã được thêm vào giỏ hàng", txtTip);
                         } else {
-                            Toast.makeText(mContext, "Không thể thêm vào giỏ hảng. Số lượng tối đa là 5", Toast.LENGTH_SHORT).show();
+                            showTipViewRepeat("Không thể thêm vào giỏ hàng. Số lượng tối đa là 5", txtTip);
                         }
                     }
 
@@ -254,7 +257,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                         product.setCheckedProduct(true);
                         Completable.fromAction(() -> MyApplication.mProductDao.insertAll(product)).subscribeOn(Schedulers.io())
                                 .subscribe();
-                        Toast.makeText(mContext, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();//
+                        showTipViewRepeat("Sản phẩm đã được thêm vào giỏ hàng", txtTip);
                         Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(product)).subscribeOn(Schedulers.io())
                                 .subscribe();
                     }
@@ -263,7 +266,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @OnClick(R.id.btnBuyNow)
     public void buyNow() {
-        OrderActivity.startActivity(this, "buynow", productId);
+        OrderActivity.startActivity(this, "buynow", productId, 1);
+
     }
 
     @OnClick(R.id.btnFavourite)

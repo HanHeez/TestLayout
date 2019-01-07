@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rlService"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/length_240"
+    android:layout_height="@dimen/length_250"
     android:layout_margin="@dimen/length_1_5"
     android:background="@drawable/bg_press_item"
     android:clickable="true"
@@ -96,11 +96,54 @@
             android:visibility="gone" />
 
         <!--freeShip -->
+        <LinearLayout
+            android:layout_above="@+id/lnAllPrice"
+            android:id="@+id/lnPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
 
+            android:background="@drawable/bg_strike_through"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/txtd1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="đ"
+                android:textColor="@color/text_sub"
+                android:textSize="@dimen/length_12" />
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/length_1"
+                android:gravity="bottom"
+                android:text="200.000"
+                android:textColor="@color/text_sub"
+                android:textSize="@dimen/length_12" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_above="@+id/lnAllPrice"
+            android:layout_toRightOf="@id/lnPrice"
+            android:id="@+id/txtDiscountPercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+
+            android:layout_marginLeft="@dimen/length_5"
+            android:text="-50%"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_12"
+            android:visibility="visible" />
         <!--Price-->
         <LinearLayout
             android:id="@+id/lnAllPrice"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:orientation="horizontal">
@@ -108,7 +151,7 @@
             <!--Discount Price-->
             <LinearLayout
                 android:layout_weight="1"
-                android:layout_gravity="bottom"
+                android:layout_gravity="top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -117,7 +160,6 @@
                     android:id="@+id/rlDiscountPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -152,58 +194,22 @@
 
                 <!--Price-->
 
-                <LinearLayout
-                    android:id="@+id/lnPrice"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginLeft="@dimen/length_4"
-                    android:background="@drawable/bg_strike_through"
-                    android:gravity="center_vertical">
 
-                    <TextView
-                        android:id="@+id/txtd1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="đ"
-                        android:textColor="@color/text_sub"
-                        android:textSize="@dimen/length_12" />
-
-                    <TextView
-                        android:id="@+id/txtPrice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/length_1"
-                        android:gravity="bottom"
-                        android:text="200.000"
-                        android:textColor="@color/text_sub"
-                        android:textSize="@dimen/length_12" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/txtDiscountPercent"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-
-                    android:layout_marginLeft="@dimen/length_5"
-                    android:text="-50%"
-                    android:textColor="@color/text_main"
-                    android:textSize="@dimen/length_12"
-                    android:visibility="visible" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/imgFreeShip"
-                android:layout_width="@dimen/length_30"
-                android:layout_height="@dimen/length_30"
-                android:layout_gravity="end"
-                android:layout_marginTop="@dimen/margin_top_free_ship"
-                android:src="@drawable/ic_free_ship"
-                android:textSize="@dimen/txt_shop_detail_bottom_tab" />
+
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgFreeShip"
+            android:layout_width="@dimen/length_30"
+            android:layout_height="@dimen/length_30"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="end"
+            android:layout_marginRight="@dimen/length_3"
+            android:src="@drawable/ic_free_ship"
+            android:textSize="@dimen/txt_shop_detail_bottom_tab" />
 
     </RelativeLayout>
 

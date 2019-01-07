@@ -136,13 +136,30 @@
                 android:textSize="@dimen/length_12" />
 
 
+            <!--Free Ship-->
+            <TextView
+                android:id="@+id/txtFreeShip"
+                android:layout_marginBottom="@dimen/length_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/lnPrice"
+                android:layout_marginRight="@dimen/length_5"
+                android:background="@drawable/bg_round_view_shop_product"
+                android:gravity="center"
+                android:paddingLeft="@dimen/length_5"
+                android:paddingTop="@dimen/length_2"
+                android:paddingRight="@dimen/length_5"
+                android:paddingBottom="@dimen/length_2"
+                android:text="Miễn phí vận chuyển"
+                android:textColor="@color/bg_shop_home_tag"
+                android:textSize="@dimen/txt_tag"
+                android:visibility="visible" />
             <!--Price-->
             <LinearLayout
                 android:id="@+id/lnPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/rlDiscountPrice"
-
                 android:background="@drawable/bg_strike_through"
                 android:gravity="center_vertical">
 
@@ -226,12 +243,12 @@
                 <TextView
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/bg_border_cart_increase_decrease_item"
                     android:id="@+id/txtAmount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:textColor="@color/text_main"
                      android:layout_marginBottom="@dimen/length_7"
                     android:layout_marginRight="@dimen/length_5"
                     android:text="Số lượng: 5"
@@ -258,43 +275,79 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/lnTotalPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rlMainProduct"
+    <!--Total Price Shop -->
+    <RelativeLayout
         android:layout_marginTop="@dimen/length_10"
-        android:orientation="horizontal"
+        android:layout_below="@id/rlMainProduct"
+        android:visibility="visible"
+        android:id="@+id/rlTotalPriceShop"
         android:paddingLeft="@dimen/length_10"
-        android:paddingTop="@dimen/length_10"
         android:paddingRight="@dimen/length_10"
-        android:paddingBottom="@dimen/length_10"
-        android:visibility="visible">
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/divider_1px" />
 
         <TextView
+            android:id="@+id/txtTotalProductShop"
+            android:layout_marginTop="@dimen/length_10"
+            android:textColor="@color/text_main"
+            android:text="1"
+            android:layout_toStartOf="@id/textsp"
+            android:textSize="@dimen/length_15"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/length_5"
-            android:background="@drawable/bg_round_view_shop_product"
-            android:gravity="center"
-            android:paddingLeft="@dimen/length_5"
-            android:paddingTop="@dimen/length_2"
-            android:paddingRight="@dimen/length_5"
-            android:paddingBottom="@dimen/length_2"
-
-            android:text="Miễn phí vận chuyển"
-            android:textColor="@color/bg_shop_home_tag"
-            android:textSize="@dimen/txt_tag"
-            android:visibility="visible" />
-
+            android:layout_height="wrap_content" />
         <TextView
+            android:id="@+id/textsp"
+            android:layout_marginTop="@dimen/length_10"
+            android:textColor="@color/text_main"
+            android:text=" sản phẩm, tổng: "
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_toStartOf="@id/textd"
+            android:textSize="@dimen/length_15"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingRight="@dimen/length_8"
-            android:text="Miễn phí vận chuyển giao hàng Tiêu chuẩn cho mọi đơn hàng"
-            android:textSize="@dimen/length_12" />
-    </LinearLayout>
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="@dimen/length_10"
+            android:id="@+id/textd"
+            android:layout_toStartOf="@id/txtTotalPriceShop"
+            android:text="đ"
+            android:layout_marginRight="@dimen/length_1"
+            android:layout_marginBottom="@dimen/length_2"
+            android:textColor="@color/text_shop_deliver"
+            android:textSize="@dimen/length_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="@dimen/length_10"
+            android:id="@+id/txtTotalPriceShop"
+            android:text="34.123.329.000"
+            android:layout_marginBottom="@dimen/length_2"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/text_shop_deliver"
+            android:textSize="@dimen/length_15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginBottom="@dimen/length_10"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/txtTotalPriceShop"
+            android:text="Đã bao gồm VAT(nếu có)"
+            android:textColor="@color/text_sub"
+            android:textSize="@dimen/length_11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
+
+
 
 
 </RelativeLayout>

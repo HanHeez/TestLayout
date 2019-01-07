@@ -11,6 +11,8 @@
         android:background="@color/bg_shop_main_color" />
 
     <LinearLayout
+        android:paddingLeft="@dimen/length_10"
+        android:paddingRight="@dimen/length_10"
         android:gravity="center_vertical"
         android:layout_below="@id/topDivider"
         android:layout_width="match_parent"
@@ -28,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/cbShop"
-            android:text="Kiện hàng 1"
+            android:text="Kiện hàng"
             android:textColor="@color/text_main"
             android:textSize="@dimen/txt_shop_name_detail" />
 

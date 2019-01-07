@@ -17,7 +17,6 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
@@ -129,13 +128,13 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     public void initDatas() {
         activityComponent().inject(this);
         cartPresenter.attachView(this);
+        showTip = false;
         cartPresenter.getCartProduct();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
         if (cartPresenter != null) {
             cartPresenter.detachView();
         }
@@ -158,6 +157,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
         cartAdapter = new CartAdapter(this, cartProductSectionList, this);
         LinearLayoutManager layoutManagerNews = new LinearLayoutManager(this);
         rvCart.setHasFixedSize(true);
+        rvCart.setNestedScrollingEnabled(false);
         rvCart.setLayoutManager(layoutManagerNews);
         rvCart.setAdapter(cartAdapter);
         cartAdapter.setOnItemClickListener((adapter, view, position) -> {
@@ -341,94 +341,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
                         }
                     });
         } else {
-            showTipViewAndDelayClose("Vui lòng chọn ít nhất 1 sản phẩm");
-        }
-    }
-
-    private boolean showTip = false;
-    Handler handler = new Handler();
-
-    public void showTipViewAndDelayClose(String tip) {
-        showTip = !showTip;
-
-        txtTip.setText(tip);
-        if (showTip) {
-            txtTip.setVisibility(View.VISIBLE);
-            Animation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                    1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
-            mShowAction.setDuration(200);
-            txtTip.startAnimation(mShowAction);
-            mShowAction.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-
-                            Animation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-                                    0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                                    1.0f);
-                            mHiddenAction.setDuration(200);
-                            txtTip.startAnimation(mHiddenAction);
-                            mHiddenAction.setAnimationListener(new Animation.AnimationListener() {
-                                @Override
-                                public void onAnimationStart(Animation animation) {
-                                }
-
-                                @Override
-                                public void onAnimationEnd(Animation animation) {
-                                    showTip = false;
-                                    handler.removeCallbacksAndMessages(null);
-                                    txtTip.setVisibility(View.GONE);
-                                }
-
-                                @Override
-                                public void onAnimationRepeat(Animation animation) {
-
-                                }
-                            });
-                        }
-                    }, 2000);
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-        } else {
-            Animation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-                    0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                    1.0f);
-            mHiddenAction.setDuration(200);
-            txtTip.startAnimation(mHiddenAction);
-            mHiddenAction.setAnimationListener(new Animation.AnimationListener() {
-                @Override
-                public void onAnimationStart(Animation animation) {
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
-                    showTip = false;
-                    handler.removeCallbacksAndMessages(null);
-                    txtTip.setVisibility(View.GONE);
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-
+            showTipViewAndDelayClose("Vui lòng chọn ít nhất 1 sản phẩm", txtTip);
         }
     }
 
@@ -453,21 +366,27 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
                 }
             }
         }
-        checkedSizeCart();
+        checkedSizeCart(true);
         calculateTotalPrice();
         cartAdapter.notifyDataSetChanged();
     }
 
-    private void checkedSizeCart() {
-        if (cartProductSectionList.size() > 0) {
-            lnBottomBar.setVisibility(View.VISIBLE);
-            btnDelete.setVisibility(View.VISIBLE);
-            btnFinish.setVisibility(View.GONE);
-        } else {
-            lnBottomBar.setVisibility(View.GONE);
-            btnDelete.setVisibility(View.GONE);
-            btnFinish.setVisibility(View.GONE);
-        }
+    private void checkedSizeCart(boolean isDelete) {
+            if (cartProductSectionList.size() > 0) {
+                lnBottomBar.setVisibility(View.VISIBLE);
+                btnDelete.setVisibility(View.VISIBLE);
+                if (isDelete) {
+                    btnDelete.setVisibility(View.GONE);
+                    btnFinish.setVisibility(View.VISIBLE);
+                } else {
+                    btnDelete.setVisibility(View.VISIBLE);
+                    btnFinish.setVisibility(View.GONE);
+                }
+            } else {
+                lnBottomBar.setVisibility(View.GONE);
+                btnDelete.setVisibility(View.GONE);
+                btnFinish.setVisibility(View.GONE);
+            }
     }
 
     @OnClick(R.id.btnBack)
@@ -477,10 +396,18 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
 
     @OnClick(R.id.btnSubmit)
     public void onSubmit() {
-        Toast.makeText(mContext, "Đơn hàng của bạn đã được gửi thành công", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        boolean checkProduct = false;
+        for (int i=0;i<cartProductSectionList.size();i++) {
+            if (!cartProductSectionList.get(i).isHeader && cartProductSectionList.get(i).t.isCheckedProduct()) {
+                checkProduct = true;
+                break;
+            }
+        }
+        if (checkProduct) {
+            OrderActivity.startActivity(this, "cart", "", 0);
+        } else {
+            showTipViewAndDelayClose("Vui lòng chọn ít nhất 1 sản phẩm", txtTip);
+        }
     }
 
 
@@ -566,6 +493,6 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
             checkAllProduct();
             cartAdapter.notifyDataSetChanged();
         }
-        checkedSizeCart();
+        checkedSizeCart(false);
     }
 }

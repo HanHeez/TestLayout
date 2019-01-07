@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
@@ -34,50 +35,32 @@ public class OrderProductAdapter extends BaseSectionQuickAdapter<ProductSection,
 
 
     public OrderProductAdapter(Activity activity, List<ProductSection> data, OnItemRvClickListener onItemRvClickListener) {
-        super(R.layout.item_cart, R.layout.item_header_cart, data);
+        super(R.layout.item_order_product, R.layout.item_header_order_product, data);
         this.onItemRvClickListener = onItemRvClickListener;
         this.list = data;
         this.activity = activity;
     }
 
-    private CheckBox cbShop;
-    private LinearLayout lnCbShop;
     private TextView txtShopName;
 
     @Override
     protected void convertHead(BaseViewHolder holder, ProductSection item) {
 //        Setting View ----------------
         txtShopName = holder.getView(R.id.txtShopName);
-        cbShop = holder.getView(R.id.cbShop);
-        lnCbShop = holder.getView(R.id.lnCbShop);
-
 //        Event -----------------------
-        lnCbShop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemRvClickListener.onItemRvClick(v, item, holder.getAdapterPosition());
-            }
-        });
-        cbShop.setChecked(item.isCheckedShop());
-        holder.setText(R.id.txtShopName, item.header);
-        cbShop.setOnClickListener(v -> {
-            CheckBox cb = (CheckBox) v;
-            RxBus.getInstance().post(new CheckboxCartEvent(holder.getAdapterPosition(), cb.isChecked()));
-        });
+        holder.setText(R.id.txtShopName, "Được giao bởi "+item.header);
     }
 
     private TextView txtName, txtShortDescription, txtTag,
-            txtPrice, txtDiscountPrice, txtQuantity, txtDiscountPercent,txtAmount;
+            txtPrice, txtDiscountPrice, txtQuantity, txtDiscountPercent,txtAmount, txtFreeShip;
     private ImageView imgProduct;
     private View divider;
-    private LinearLayout lnFreeship, lnCbProduct, btnIncrease, lnPrice, btnDecrease;
-    private CheckBox cbProduct;
-    private int amountProductCart;
+    private LinearLayout lnPrice;
+    private RelativeLayout rlTotalPriceShop;
 
     @Override
     protected void convert(BaseViewHolder holder, ProductSection item) {
         //        Config View -----------------------
-        amountProductCart = SharedPreferencesUtil.getInstance().getInt("amountCart", 0);
 
         txtName = holder.getView(R.id.txtName);
         txtShortDescription = holder.getView(R.id.txtShortDescription);
@@ -87,19 +70,19 @@ public class OrderProductAdapter extends BaseSectionQuickAdapter<ProductSection,
         txtQuantity = holder.getView(R.id.txtQuantity);
         imgProduct = holder.getView(R.id.imgProduct);
         divider = holder.getView(R.id.divider);
-        lnFreeship = holder.getView(R.id.lnFreeship);
-        cbProduct = holder.getView(R.id.cbProduct);
         txtAmount = holder.getView(R.id.txtAmount);
-        btnDecrease = holder.getView(R.id.btnDecrease);
-        btnIncrease = holder.getView(R.id.btnIncrease);
+        txtFreeShip = holder.getView(R.id.txtFreeShip);
+        rlTotalPriceShop = holder.getView(R.id.rlTotalPriceShop);
         txtDiscountPercent = holder.getView(R.id.txtDiscountPercent);
         lnPrice = holder.getView(R.id.lnPrice);
-        lnCbProduct = holder.getView(R.id.lnCbProduct);
 
 //        Setting Data ------------------------
-        lnCbProduct.setOnClickListener(v -> onItemRvClickListener.onItemRvClick(v, item.t, holder.getAdapterPosition()));
-
-        txtAmount.setText(item.t.getOrderAmount()+"");
+        if (item.t.isFreeShip()) {
+            txtFreeShip.setVisibility(View.VISIBLE);
+        } else {
+            txtFreeShip.setVisibility(View.GONE);
+        }
+        txtAmount.setText("Số lượng: "+item.t.getOrderAmount());
         txtName.setText(item.t.getName());
         if (item.t.getShortDescription().length() > 0) {
             txtShortDescription.setText(item.t.getShortDescription());
@@ -117,58 +100,21 @@ public class OrderProductAdapter extends BaseSectionQuickAdapter<ProductSection,
             txtDiscountPercent.setVisibility(View.GONE);
             lnPrice.setVisibility(View.GONE);
         }
-        cbProduct.setChecked(item.t.isCheckedProduct());
+
         txtQuantity.setText(String.format(activity.getString(R.string.shop_quantity), item.t.getQuantity()));
         txtQuantity.setVisibility(View.GONE);
 
         ImageUtils.loadImageByGlideWithResize(activity, item.t.getAvatar(), imgProduct, 350, 350);
 
-        btnDecrease.setOnClickListener(v -> {
-            if (item.t.getOrderAmount()>1) {
-                amountProductCart = SharedPreferencesUtil.getInstance().getInt("amountCart", 0);
-                amountProductCart--;
-                SharedPreferencesUtil.getInstance().putInt("amountCart", amountProductCart);
-                item.t.setOrderAmount(item.t.getOrderAmount()-1);
-                Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(item.t)).subscribeOn(Schedulers.io())
-                        .subscribe();
-                RxBus.getInstance().post(new ChangeProductAmountEvent(discountPrice, "decrease"));
-                notifyDataSetChanged();
-            }
-        });
-
-        cbProduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CheckBox cb = (CheckBox) v;
-                RxBus.getInstance().post(new CheckboxProductEvent(holder.getAdapterPosition(), cb.isChecked()));
-            }
-        });
-
-        btnIncrease.setOnClickListener(v -> {
-            if (item.t.getOrderAmount()<5) {
-                amountProductCart = SharedPreferencesUtil.getInstance().getInt("amountCart", 0);
-                amountProductCart++;
-                SharedPreferencesUtil.getInstance().putInt("amountCart", amountProductCart);
-                item.t.setOrderAmount(item.t.getOrderAmount()+1);
-                Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(item.t)).subscribeOn(Schedulers.io())
-                        .subscribe();
-                RxBus.getInstance().post(new ChangeProductAmountEvent(discountPrice, "increase"));
-                notifyDataSetChanged();
-            }
-        });
-
         if (item.isEnd()) {
             divider.setVisibility(View.GONE);
-        } else {
-            divider.setVisibility(View.VISIBLE);
-        }
+            rlTotalPriceShop.setVisibility(View.VISIBLE);
+            holder.setText(R.id.txtTotalProductShop, item.t.getOrderShopTotalProduct()+"");
+            holder.setText(R.id.txtTotalPriceShop, StringUtils.formatPrice(item.t.getOrderTotalPrice()+""));
 
-        if (item.isEnd() && (item.t.isFreeShip())) {
-            divider.setVisibility(View.GONE);
-            lnFreeship.setVisibility(View.VISIBLE);
         } else {
             divider.setVisibility(View.VISIBLE);
-            lnFreeship.setVisibility(View.GONE);
+            rlTotalPriceShop.setVisibility(View.GONE);
         }
     }
 

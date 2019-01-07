@@ -37,7 +37,9 @@ public class Product implements Serializable {
     @ColumnInfo(name="order_amount")
     private int orderAmount;
     @ColumnInfo(name="order_total_price")
-    private int orderTotalPrice;
+    private long orderTotalPrice;
+    @ColumnInfo(name="order_shop_total_product")
+    private int orderShopTotalProduct;
     private String avatar;
     @ColumnInfo(name="is_free_ship")
     private boolean isFreeShip;
@@ -48,6 +50,13 @@ public class Product implements Serializable {
     @Ignore
     List<String> thumbnails;
 
+    public int getOrderShopTotalProduct() {
+        return orderShopTotalProduct;
+    }
+
+    public void setOrderShopTotalProduct(int orderShopTotalProduct) {
+        this.orderShopTotalProduct = orderShopTotalProduct;
+    }
 
     public int getOrderAmount() {
         return orderAmount;
@@ -57,11 +66,11 @@ public class Product implements Serializable {
         this.orderAmount = orderAmount;
     }
 
-    public int getOrderTotalPrice() {
+    public long getOrderTotalPrice() {
         return orderTotalPrice;
     }
 
-    public void setOrderTotalPrice(int orderTotalPrice) {
+    public void setOrderTotalPrice(long orderTotalPrice) {
         this.orderTotalPrice = orderTotalPrice;
     }
 
@@ -97,21 +106,7 @@ public class Product implements Serializable {
         this.shortDescription = shortDescription;
     }
 
-
-    public Product(@NonNull String id, String name, long price, long discountPrice, String description, String shortDescription, int discountPercent, long quantity, int orderAmount, int orderTotalPrice, String avatar, boolean isFreeShip, Shop shop) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.discountPrice = discountPrice;
-        this.description = description;
-        this.shortDescription = shortDescription;
-        this.discountPercent = discountPercent;
-        this.quantity = quantity;
-        this.orderAmount = orderAmount;
-        this.orderTotalPrice = orderTotalPrice;
-        this.avatar = avatar;
-        this.isFreeShip = isFreeShip;
-        this.shop = shop;
+    public Product() {
     }
 
     @Ignore

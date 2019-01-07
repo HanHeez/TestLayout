@@ -111,7 +111,7 @@
             android:layout_above="@+id/lnPrice"
             android:id="@+id/imgFreeShip"
             android:src="@drawable/ic_free_ship"
-            android:layout_marginBottom="@dimen/margin_top_free_ship"
+
             android:layout_marginRight="@dimen/length_7"
             android:textSize="@dimen/txt_shop_detail_bottom_tab"
             android:layout_width="@dimen/length_30"

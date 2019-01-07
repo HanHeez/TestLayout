@@ -420,6 +420,18 @@
     </RelativeLayout>
     <!--End Custom Toolbar-->
 
+    <TextView
+        android:layout_above="@id/rlBottomBar"
+        android:id="@+id/txtTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_main"
+        android:gravity="center"
+        android:padding="@dimen/length_10"
+        android:text="Vui lòng chọn ít nhất 1 sản phẩm"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+
     <!--Custom Bottom Bar-->
     <LinearLayout
         android:id="@+id/rlBottomBar"
