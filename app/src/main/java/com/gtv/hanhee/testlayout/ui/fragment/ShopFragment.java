@@ -3,6 +3,8 @@ package com.gtv.hanhee.testlayout.ui.fragment;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.TextView;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
@@ -12,6 +14,7 @@ import com.gtv.hanhee.testlayout.ui.activity.ShopSearchActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.ShopContract;
 import com.gtv.hanhee.testlayout.ui.presenter.ShopPresenter;
+import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
@@ -28,13 +31,15 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     SmartTabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
-
+    @BindView(R.id.txtAmountCart)
+    TextView txtAmountCart;
 
     private CommunityFlycoTabLayoutAdapter communityFlycoTabLayoutAdapter;
     private List<String> mTitles = new ArrayList<>();
     private List<Fragment> mFragments = new ArrayList<>();
     @Inject
     ShopPresenter shopPresenter;
+    private int amountProductCart = 0;
 
 
     @Override
@@ -70,12 +75,34 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
 
     @Override
     public void configViews() {
-
     }
 
+    public void settingAmountCart() {
+        if (amountProductCart == 0) {
+            txtAmountCart.setVisibility(View.GONE);
+        } else {
+            txtAmountCart.setVisibility(View.VISIBLE);
+            if(amountProductCart>99) {
+                txtAmountCart.setText("99+");
+            } else txtAmountCart.setText(amountProductCart+"");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        amountProductCart = SharedPreferencesUtil.getInstance().getInt("amountCart", 0);
+        settingAmountCart();
+    }
 
     @OnClick(R.id.btnCart)
     public void goToCart() {
+        Intent intent = new Intent(activity, CartActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.imgCart)
+    public void goToImgCart() {
         Intent intent = new Intent(activity, CartActivity.class);
         startActivity(intent);
     }

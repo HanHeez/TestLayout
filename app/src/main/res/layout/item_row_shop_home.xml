@@ -7,13 +7,13 @@
     android:paddingLeft="@dimen/length_8"
     android:paddingRight="@dimen/length_8"
     android:paddingTop="@dimen/length_4"
-    android:layout_height="@dimen/length_108">
+    android:layout_height="@dimen/length_128">
 
     <RelativeLayout
 
         android:id="@+id/rlImageProduct"
-        android:layout_width="@dimen/length_100"
-        android:layout_height="@dimen/length_100"
+        android:layout_width="@dimen/length_120"
+        android:layout_height="@dimen/length_120"
 
         android:layout_marginBottom="@dimen/length_4"
         android:layout_marginRight="@dimen/length_4"
@@ -22,8 +22,8 @@
 
         <android.support.v7.widget.CardView
             android:id="@+id/cvProduct"
-            android:layout_width="@dimen/length_100"
-            android:layout_height="@dimen/length_100"
+            android:layout_width="@dimen/length_120"
+            android:layout_height="@dimen/length_120"
             app:cardCornerRadius="@dimen/length_3"
             app:cardElevation="@dimen/length_0">
 
@@ -36,7 +36,7 @@
         </android.support.v7.widget.CardView>
 
         <TextView
-            android:layout_width="@dimen/length_25"
+            android:layout_width="@dimen/length_30"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="@dimen/length_5"
@@ -45,7 +45,7 @@
             android:padding="@dimen/length_1"
             android:text="HOT"
             android:textColor="@color/white"
-            android:textSize="@dimen/length_8"
+            android:textSize="@dimen/txt_tag"
             android:textStyle="bold" />
     </RelativeLayout>
 
@@ -76,7 +76,7 @@
                 android:paddingBottom="@dimen/length_2"
                 android:text="Ưu đãi"
                 android:textColor="@color/bg_shop_home_tag"
-                android:textSize="@dimen/length_8" />
+                android:textSize="@dimen/txt_tag" />
 
             <!--Name-->
             <TextView
@@ -90,7 +90,7 @@
                 android:text="Áo cho bé"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textSize="@dimen/length_13"
+                android:textSize="@dimen/txt_shop_detail_price"
                 android:textColor="@color/text_main" />
         </RelativeLayout>
 
@@ -103,10 +103,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/rlName"
-            android:textSize="@dimen/length_11"
+            android:textSize="@dimen/txt_shop_detail_bottom_tab"
             android:text="Áo siêu đẹp" />
 
 
+        <ImageView
+            android:layout_above="@+id/lnPrice"
+            android:id="@+id/imgFreeShip"
+            android:src="@drawable/ic_free_ship"
+            android:layout_marginBottom="@dimen/margin_top_free_ship"
+            android:layout_marginRight="@dimen/length_7"
+            android:textSize="@dimen/txt_shop_detail_bottom_tab"
+            android:layout_width="@dimen/length_30"
+            android:layout_height="@dimen/length_30" />
         <!--Price-->
         <LinearLayout
             android:id="@+id/lnPrice"
@@ -126,7 +135,7 @@
                 android:gravity="center"
                 android:text="đ"
                 android:textColor="@color/text_sub"
-                android:textSize="@dimen/length_11" />
+                android:textSize="@dimen/txt_shop_detail_bottom_tab" />
 
             <TextView
                 android:id="@+id/txtPrice"
@@ -139,7 +148,7 @@
                 android:gravity="bottom"
                 android:text="200.000"
                 android:textColor="@color/text_sub"
-                android:textSize="@dimen/length_11" />
+                android:textSize="@dimen/txt_shop_detail_bottom_tab" />
 
 
         </LinearLayout>
@@ -178,7 +187,7 @@
                 android:paddingBottom="@dimen/length_1"
                 android:text="đ"
                 android:textColor="@color/bg_shop_home_tag"
-                android:textSize="@dimen/length_11" />
+                android:textSize="@dimen/txt_shop_detail_bottom_tab" />
 
             <TextView
                 android:id="@+id/txtDiscountPrice"
@@ -192,16 +201,17 @@
                 android:gravity="bottom"
                 android:text="190.000"
                 android:textColor="@color/bg_shop_home_tag"
-                android:textSize="@dimen/length_15" />
+                android:textSize="@dimen/txt_shop_name_detail" />
         </LinearLayout>
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/txtQuantity"
             android:layout_marginBottom="@dimen/length_7"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:text="Còn 25k sản phẩm"
-            android:textSize="@dimen/length_11"
+            android:textSize="@dimen/txt_shop_detail_bottom_tab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

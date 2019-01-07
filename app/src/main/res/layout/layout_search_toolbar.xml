@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/toolbar_height"
+    android:layout_height="@dimen/tabbar_height"
     android:background="@color/white"
     android:orientation="horizontal">
 
@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/icon_search"
-                android:layout_width="@dimen/length_14"
-                android:layout_height="@dimen/length_14"
+                android:layout_width="@dimen/length_16"
+                android:layout_height="@dimen/length_16"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/length_15"
@@ -53,12 +53,12 @@
                 android:hint="Tìm kiếm"
                 android:maxLines="1"
                 android:textColor="@color/grey600"
-                android:textSize="@dimen/length_12" />
+                android:textSize="@dimen/length_13" />
 
             <ImageView
                 android:id="@+id/btnRemoveSearch"
-                android:layout_width="@dimen/length_13"
-                android:layout_height="@dimen/length_13"
+                android:layout_width="@dimen/length_15"
+                android:layout_height="@dimen/length_20"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/length_8"
@@ -84,7 +84,7 @@
                 android:paddingBottom="@dimen/length_5"
                 android:text="Tìm kiếm"
                 android:textColor="@color/white"
-                android:textSize="@dimen/length_10" />
+                android:textSize="@dimen/length_12" />
         </RelativeLayout>
     </LinearLayout>
 

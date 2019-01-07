@@ -32,6 +32,7 @@ public class ShopHomeGridAdapter extends BaseQuickAdapter<Product, BaseViewHolde
     private TextView txtName, txtTag, txtPrice, txtDiscountPrice, txtQuantity, txtDiscountPercent;
     private LinearLayout lnPrice;
     private ImageView imgProduct;
+    private ImageView imgFreeShip;
 
     @Override
     protected void convert(BaseViewHolder holder, Product item) {
@@ -42,11 +43,16 @@ public class ShopHomeGridAdapter extends BaseQuickAdapter<Product, BaseViewHolde
         txtDiscountPrice = holder.getView(R.id.txtDiscountPrice);
         txtQuantity = holder.getView(R.id.txtQuantity);
         imgProduct = holder.getView(R.id.imgProduct);
+        imgFreeShip = holder.getView(R.id.imgFreeShip);
         txtDiscountPercent = holder.getView(R.id.txtDiscountPercent);
         lnPrice = holder.getView(R.id.lnPrice);
 
 //        Setting Data ------------------------
-
+        if (item.isFreeShip()) {
+            imgFreeShip.setVisibility(View.VISIBLE);
+        } else {
+            imgFreeShip.setVisibility(View.GONE);
+        }
         txtName.setText(item.getName());
         txtPrice.setText(StringUtils.formatPrice(item.getPrice()+""));
         txtDiscountPrice.setText(StringUtils.formatPrice(item.getPrice()*(100-item.getDiscountPercent())/100 + ""));

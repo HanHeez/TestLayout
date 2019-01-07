@@ -8,7 +8,7 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/length_66"
+        android:layout_height="@dimen/length_90"
         android:layout_alignParentTop="true"
         android:background="@color/white"
         app:elevation="@dimen/length_0">
@@ -23,7 +23,7 @@
             <com.ogaclejapan.smarttablayout.SmartTabLayout
                 android:id="@id/tabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/length_30"
+                android:layout_height="@dimen/tabbar_height"
                 app:stl_dividerColor="@color/transparent"
                 app:stl_dividerThickness="0dp"
                 app:stl_defaultTabTextAllCaps="false"

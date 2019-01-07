@@ -32,6 +32,7 @@ public class ShopHomeRowAdapter extends BaseQuickAdapter<Product, BaseViewHolder
     TextView txtName, txtShortDescription, txtTag, txtPrice, txtDiscountPrice, txtQuantity, txtDiscountPercent;
     LinearLayout lnPrice;
     ImageView imgProduct;
+    private ImageView imgFreeShip;
 
     @Override
     protected void convert(BaseViewHolder holder, Product item) {
@@ -43,10 +44,16 @@ public class ShopHomeRowAdapter extends BaseQuickAdapter<Product, BaseViewHolder
         txtDiscountPrice = holder.getView(R.id.txtDiscountPrice);
         txtQuantity = holder.getView(R.id.txtQuantity);
         imgProduct = holder.getView(R.id.imgProduct);
+        imgFreeShip = holder.getView(R.id.imgFreeShip);
         txtDiscountPercent = holder.getView(R.id.txtDiscountPercent);
         lnPrice = holder.getView(R.id.lnPrice);
 
 //        Setting Data ------------------------
+        if (item.isFreeShip()) {
+            imgFreeShip.setVisibility(View.VISIBLE);
+        } else {
+            imgFreeShip.setVisibility(View.GONE);
+        }
 
         txtName.setText(item.getName());
         if (item.getShortDescription().length()>0) {

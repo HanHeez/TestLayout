@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@color/white"
-    android:layout_height="@dimen/toolbar_height">
+    android:layout_height="@dimen/tabbar_height">
 
     <ImageView
         android:id="@+id/btnMessage"
@@ -11,7 +11,7 @@
         android:layout_centerVertical="true"
         android:background="@drawable/bg_press_item"
         android:clickable="true"
-        android:padding="@dimen/length_10"
+        android:padding="@dimen/length_8"
         android:src="@drawable/nav_btn_message_black" />
 
     <RelativeLayout
@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/length_7"
-        android:layout_marginRight="@dimen/length_90"
+        android:layout_marginRight="@dimen/length_100"
         android:layout_marginBottom="@dimen/length_7"
         android:background="@drawable/bg_round_home_search">
 
@@ -42,28 +42,29 @@
             android:layout_toRightOf="@id/icon_search"
             android:text="Tìm kiếm sản phẩm"
             android:textColor="@color/grey600"
-            android:textSize="@dimen/length_12" />
+            android:textSize="@dimen/length_13" />
     </RelativeLayout>
 
     <RelativeLayout
+        android:id="@+id/btnCart"
         android:clickable="true"
         android:background="@drawable/bg_press_item"
-        android:layout_width="@dimen/length_40"
+        android:layout_width="@dimen/length_45"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true">
 
         <ImageView
             android:layout_centerVertical="true"
-            android:id="@+id/btnCart"
-            android:layout_width="@dimen/length_20"
-            android:layout_height="@dimen/length_20"
+            android:id="@+id/imgCart"
+            android:layout_width="@dimen/length_25"
+            android:layout_height="@dimen/length_25"
             android:layout_marginLeft="@dimen/length_5"
             android:src="@drawable/apk_eco_cart" />
 
         <TextView
             android:id="@+id/txtAmountCart"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_marginTop="@dimen/length_5"
             android:layout_marginRight="@dimen/length_5"
             android:paddingRight="@dimen/length_3"
@@ -71,14 +72,14 @@
             android:text="99+"
             android:gravity="center"
             android:textStyle="bold"
-            android:textSize="@dimen/length_7"
+            android:textSize="@dimen/length_9"
             android:textColor="@color/white"
-            android:background="@drawable/bg_round_shop_discount_circle"
+            android:background="@drawable/bg_round_shop_discount_border"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:minWidth="@dimen/length_13"
+            android:minWidth="@dimen/length_16"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/length_13" />
+            android:layout_height="@dimen/length_16" />
     </RelativeLayout>
 
     <View
@@ -87,6 +88,5 @@
         android:layout_height="@dimen/length_1"
         android:layout_alignParentBottom="true"
         android:background="@color/divider_1px" />
-
 
 </RelativeLayout>

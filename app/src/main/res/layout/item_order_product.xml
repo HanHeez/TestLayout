@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_press_item"
+    android:background="@color/white"
     android:clickable="true">
 
     <RelativeLayout
@@ -24,6 +24,7 @@
             android:orientation="vertical">
 
             <CheckBox
+                android:visibility="gone"
                 android:id="@+id/cbProduct"
                 android:layout_width="@dimen/length_19"
                 android:layout_height="@dimen/length_19"
@@ -48,6 +49,7 @@
                 android:id="@+id/cvProduct"
                 android:layout_width="@dimen/length_90"
                 android:layout_height="@dimen/length_100"
+
                 app:cardCornerRadius="@dimen/length_3"
                 app:cardElevation="@dimen/length_0">
 
@@ -56,7 +58,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/hot_girl2"
-                    android:scaleType="centerCrop" />
+                    android:scaleType="centerCrop"
+                     />
 
             </android.support.v7.widget.CardView>
 
@@ -218,79 +221,22 @@
                     android:textSize="@dimen/length_15" />
             </LinearLayout>
 
-            <!--Amount Linearlayout -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:orientation="horizontal">
-
-                <!--Decrease-->
-                <LinearLayout
-                    android:layout_marginRight="-1dp"
-                    android:id="@+id/btnDecrease"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-
-                        android:layout_width="@dimen/length_27"
-                        android:layout_height="@dimen/length_27"
-                        android:layout_gravity="center"
-                        android:layout_marginLeft="@dimen/length_10"
-                        android:background="@drawable/bg_border_cart_increase_decrease_item"
-                        android:gravity="center">
-
-                        <View
-                            android:id="@+id/txtDecrease"
-                            android:layout_width="@dimen/length_7"
-                            android:layout_height="@dimen/length_2"
-                            android:layout_marginTop="@dimen/length_1"
-                            android:background="@color/text_sub"
-                            android:gravity="center" />
-                    </LinearLayout>
-                </LinearLayout>
 
                 <!--Amount-->
                 <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
                     android:background="@drawable/bg_border_cart_increase_decrease_item"
                     android:id="@+id/txtAmount"
-                    android:layout_width="@dimen/length_37"
-                    android:layout_height="@dimen/length_27"
-                    android:layout_gravity="center"
-
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="2"
-                    android:padding="@dimen/length_3"
-                    android:text="55"
-                    android:textSize="@dimen/length_10" />
-
-                <!--Decrease -->
-                <LinearLayout
-                    android:layout_marginLeft="-1dp"
-                    android:id="@+id/btnIncrease"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/length_47"
-                    android:gravity="center">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                     android:layout_marginBottom="@dimen/length_7"
+                    android:layout_marginRight="@dimen/length_5"
+                    android:text="Số lượng: 5"
+                    android:textSize="@dimen/length_11" />
 
-                    <TextView
-                        android:layout_width="@dimen/length_27"
-                        android:layout_height="@dimen/length_27"
-                        android:layout_marginTop="@dimen/length_10"
-                        android:layout_marginRight="@dimen/length_10"
-                        android:layout_marginBottom="@dimen/length_10"
-                        android:background="@drawable/bg_border_cart_increase_decrease_item"
-                        android:gravity="center"
-                        android:text="+"
-                        android:textSize="@dimen/length_13" />
-                </LinearLayout>
-
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/txtQuantity"
@@ -313,7 +259,7 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/lnFreeship"
+        android:id="@+id/lnTotalPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rlMainProduct"
@@ -323,7 +269,7 @@
         android:paddingTop="@dimen/length_10"
         android:paddingRight="@dimen/length_10"
         android:paddingBottom="@dimen/length_10"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"

@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -39,6 +38,7 @@ import com.gtv.hanhee.testlayout.ui.customview.dialog.NormalDialog;
 import com.gtv.hanhee.testlayout.ui.customview.dialog.OnBtnClickL;
 import com.gtv.hanhee.testlayout.ui.presenter.CartPresenter;
 import com.gtv.hanhee.testlayout.utils.RxBus;
+import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.gtv.hanhee.testlayout.utils.StringUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -93,8 +93,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     private static final String PRODUCT_ID = "productId";
     private String productId = "";
     private long totalPrice = 0;
-//    @Inject
-//    ProductViewModel productViewModel;
+    private int amountProductCart = 0;
 
     BaseAnimatorSet mBasIn;
     BaseAnimatorSet mBasOut;
@@ -167,7 +166,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
             } else {
 //                ProductDetailActivity.startActivity(CartActivity.this, cartProductSectionList.get(position).t.getId());
                 Intent intent = new Intent(CartActivity.this, ProductDetailActivity.class);
-                intent.putExtra("productId",cartProductSectionList.get(position).t.getId());
+                intent.putExtra("productId", cartProductSectionList.get(position).t.getId());
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
             }
@@ -268,6 +267,10 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
         });
     }
 
+    @OnClick(R.id.btnCheckAll)
+    public void setCheckAll() {
+        cbAll.performClick();
+    }
 
 
     public void checkAllProduct() {
@@ -344,6 +347,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
 
     private boolean showTip = false;
     Handler handler = new Handler();
+
     public void showTipViewAndDelayClose(String tip) {
         showTip = !showTip;
 
@@ -367,29 +371,29 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
                         @Override
                         public void run() {
 
-                                Animation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-                                        0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                                        Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                                        1.0f);
-                                mHiddenAction.setDuration(200);
-                                txtTip.startAnimation(mHiddenAction);
-                                mHiddenAction.setAnimationListener(new Animation.AnimationListener() {
-                                    @Override
-                                    public void onAnimationStart(Animation animation) {
-                                    }
+                            Animation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                                    0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                                    Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                                    1.0f);
+                            mHiddenAction.setDuration(200);
+                            txtTip.startAnimation(mHiddenAction);
+                            mHiddenAction.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+                                }
 
-                                    @Override
-                                    public void onAnimationEnd(Animation animation) {
-                                        showTip = false;
-                                        handler.removeCallbacksAndMessages(null);
-                                        txtTip.setVisibility(View.GONE);
-                                    }
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    showTip = false;
+                                    handler.removeCallbacksAndMessages(null);
+                                    txtTip.setVisibility(View.GONE);
+                                }
 
-                                    @Override
-                                    public void onAnimationRepeat(Animation animation) {
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
 
-                                    }
-                                });
+                                }
+                            });
                         }
                     }, 2000);
 
@@ -400,7 +404,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
 
                 }
             });
-        }  else {
+        } else {
             Animation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
                     0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                     Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
@@ -441,6 +445,9 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
                 if (productSection.t.isCheckedProduct()) {
                     Completable.fromAction(() -> MyApplication.mProductDao.deleteProducts(productSection.t)).subscribeOn(Schedulers.io())
                             .subscribe();
+                    amountProductCart = SharedPreferencesUtil.getInstance().getInt("amountCart", 0);
+                    amountProductCart = amountProductCart - productSection.t.getOrderAmount();
+                    SharedPreferencesUtil.getInstance().putInt("amountCart", amountProductCart);
                     cartProductSectionList.remove(i);
                     i--;
                 }
@@ -452,7 +459,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     }
 
     private void checkedSizeCart() {
-        if (cartProductSectionList.size()>0) {
+        if (cartProductSectionList.size() > 0) {
             lnBottomBar.setVisibility(View.VISIBLE);
             btnDelete.setVisibility(View.VISIBLE);
             btnFinish.setVisibility(View.GONE);
@@ -462,6 +469,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
             btnFinish.setVisibility(View.GONE);
         }
     }
+
     @OnClick(R.id.btnBack)
     public void onBack() {
         onBackPressed();
@@ -496,7 +504,23 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
 
     @Override
     public void onItemRvClick(View view, Object item, int adapterPosition) {
-
+        if (item instanceof Product) {
+            switch (view.getId()) {
+                case R.id.lnCbProduct:
+                    CheckBox cbProduct = rvCart.findViewHolderForAdapterPosition(adapterPosition).itemView.findViewById(R.id.cbProduct);
+                    cbProduct.performClick();
+                    break;
+            }
+        } else {
+            if (item instanceof ProductSection) {
+                switch (view.getId()) {
+                    case R.id.lnCbShop:
+                        CheckBox cbShop = rvCart.findViewHolderForAdapterPosition(adapterPosition).itemView.findViewById(R.id.cbShop);
+                        cbShop.performClick();
+                        break;
+                }
+            }
+        }
     }
 
     @Override

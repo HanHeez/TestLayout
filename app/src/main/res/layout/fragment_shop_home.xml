@@ -224,7 +224,7 @@
                                     android:paddingBottom="@dimen/length_2"
                                     android:text="2 ngày 10 giờ"
                                     android:textColor="@color/text_product_name_shop_home"
-                                    android:textSize="@dimen/length_8" />
+                                    android:textSize="@dimen/txt_tag" />
                             </RelativeLayout>
                         </LinearLayout>
 
@@ -321,7 +321,7 @@
                                     android:paddingBottom="@dimen/length_2"
                                     android:text="8 giờ"
                                     android:textColor="@color/text_product_name_shop_home"
-                                    android:textSize="@dimen/length_8" />
+                                    android:textSize="@dimen/txt_tag" />
                             </RelativeLayout>
                         </LinearLayout>
 

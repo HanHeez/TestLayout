@@ -1,6 +1,7 @@
 package com.gtv.hanhee.testlayout.api;
 
 import com.gtv.hanhee.testlayout.dagger2.PreferencesHelper;
+import com.gtv.hanhee.testlayout.model.AddressInfo;
 import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.model.Category;
 import com.gtv.hanhee.testlayout.model.Product;
@@ -55,6 +56,17 @@ public class BiboManager {
 
     public Observable<Product> getProduct(String accessToken, String id) {
         return service.getProduct(accessToken,id);
+    }
+
+    public Observable<List<AddressInfo>> getAddressInfoList(String accessToken) {
+        List<AddressInfo> addressInfoList = new ArrayList<>();
+        addressInfoList.add(new AddressInfo("1", "Nguyễn Huỳnh Long", "Số 25 Ngõ 37 Đại đồng", "0982292721"));
+        addressInfoList.add(new AddressInfo("2", "Nguyễn Huỳnh Long", "27 NGuyen dinh chieu", "0963365288"));
+        return Observable.just(addressInfoList);
+    }
+
+    public Observable<String> sendAddressInfo(String accessToken) {
+        return Observable.just("thêm địa chỉ thành công");
     }
 
     public Observable<List<Product>> getRecommendProductList(String accessToken, String id, int skip, int limit) {

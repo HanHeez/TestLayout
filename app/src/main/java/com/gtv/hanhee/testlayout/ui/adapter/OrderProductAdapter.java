@@ -1,15 +1,11 @@
 package com.gtv.hanhee.testlayout.ui.adapter;
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseSectionQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -19,8 +15,6 @@ import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.manager.ChangeProductAmountEvent;
 import com.gtv.hanhee.testlayout.manager.CheckboxCartEvent;
 import com.gtv.hanhee.testlayout.manager.CheckboxProductEvent;
-
-import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ProductSection;
 import com.gtv.hanhee.testlayout.utils.ImageUtils;
 import com.gtv.hanhee.testlayout.utils.RxBus;
@@ -30,18 +24,16 @@ import com.gtv.hanhee.testlayout.utils.StringUtils;
 import java.util.List;
 
 import io.reactivex.Completable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseViewHolder> {
+public class OrderProductAdapter extends BaseSectionQuickAdapter<ProductSection, BaseViewHolder> {
 
     public List<ProductSection> list;
     Activity activity;
     OnItemRvClickListener onItemRvClickListener;
 
 
-    public CartAdapter(Activity activity, List<ProductSection> data, OnItemRvClickListener onItemRvClickListener) {
+    public OrderProductAdapter(Activity activity, List<ProductSection> data, OnItemRvClickListener onItemRvClickListener) {
         super(R.layout.item_cart, R.layout.item_header_cart, data);
         this.onItemRvClickListener = onItemRvClickListener;
         this.list = data;
@@ -68,10 +60,10 @@ public class CartAdapter extends BaseSectionQuickAdapter<ProductSection, BaseVie
         });
         cbShop.setChecked(item.isCheckedShop());
         holder.setText(R.id.txtShopName, item.header);
-         cbShop.setOnClickListener(v -> {
-             CheckBox cb = (CheckBox) v;
-             RxBus.getInstance().post(new CheckboxCartEvent(holder.getAdapterPosition(), cb.isChecked()));
-         });
+        cbShop.setOnClickListener(v -> {
+            CheckBox cb = (CheckBox) v;
+            RxBus.getInstance().post(new CheckboxCartEvent(holder.getAdapterPosition(), cb.isChecked()));
+        });
     }
 
     private TextView txtName, txtShortDescription, txtTag,

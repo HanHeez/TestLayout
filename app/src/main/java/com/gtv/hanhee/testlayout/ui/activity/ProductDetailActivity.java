@@ -25,6 +25,7 @@ import com.gtv.hanhee.testlayout.ui.customview.GlideImageLoader;
 import com.gtv.hanhee.testlayout.ui.customview.ProductRecommendBanner;
 import com.gtv.hanhee.testlayout.ui.presenter.ProductDetailPresenter;
 import com.gtv.hanhee.testlayout.utils.ImageUtils;
+import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.gtv.hanhee.testlayout.utils.StringUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -82,6 +83,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     TextView txtPriceBuyNow;
     @BindView(R.id.lnPrice)
     LinearLayout lnPrice;
+    @BindView(R.id.txtAmountCart)
+    TextView txtAmountCart;
 
     private List<List<Product>> listBannerRecommend = new ArrayList<>();
     private ProductImageDetailAdapter productImageDetailAdapter;
@@ -91,6 +94,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private String productId;
     private static final String PRODUCT_ID = "productId";
     private List<Product> cartProductList = new ArrayList<>();
+    private int amountProductCart = 0;
 
     @Override
     public int getLayoutId() {
@@ -154,14 +158,26 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         bannerImage.setBannerStyle(BannerConfig.NUM_INDICATOR);
         bannerImage.setIndicatorGravity(BannerConfig.RIGHT);
 
-//
-//        mainAdapter = new MainAdapter(this, holderObjectList, this);
-//        recyclerView.setHasFixedSize(true);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-//        mDecoration = new ItemOffsetDecoration(this);
-//        recyclerView.addItemDecoration(mDecoration);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView.setAdapter(mainAdapter);
+//        Setting cart amount -------------
+
+    }
+
+    public void settingAmountCart() {
+        if (amountProductCart == 0) {
+            txtAmountCart.setVisibility(View.GONE);
+        } else {
+            txtAmountCart.setVisibility(View.VISIBLE);
+            if(amountProductCart>99) {
+                txtAmountCart.setText("99+");
+            } else txtAmountCart.setText(amountProductCart+"");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        amountProductCart = SharedPreferencesUtil.getInstance().getInt("amountCart", 0);
+        settingAmountCart();
     }
 
     @Override
@@ -174,6 +190,19 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     }
 
+    @OnClick(R.id.rlGoToCart)
+    public void goToCart() {
+        Intent intent = new Intent(this, CartActivity.class);
+        startActivity(intent);
+
+    }
+
+    @OnClick(R.id.btnGoToCart)
+    public void goToImgCart() {
+        Intent intent = new Intent(this, CartActivity.class);
+        startActivity(intent);
+
+    }
 
     @OnClick(R.id.btnBack)
     public void onBack() {
@@ -192,44 +221,49 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     @OnClick(R.id.btnAddToCart)
     public void addToCart() {
+        MyApplication.mProductDao.findProduct(product.getId()).subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new SingleObserver<Product>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
+                    }
+
+                    @Override
+                    public void onSuccess(Product productResult) {
+                        if (productResult.getOrderAmount()<5) {
+                            amountProductCart++;
+                            SharedPreferencesUtil.getInstance().putInt("amountCart", amountProductCart);
+                            settingAmountCart();
+                            productResult.setOrderAmount(productResult.getOrderAmount() + 1);
+                            Completable.fromAction(() -> MyApplication.mProductDao.insertAll(productResult)).subscribeOn(Schedulers.io())
+                                    .subscribe();
+                            Toast.makeText(mContext, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();
+//
+                        } else {
+                            Toast.makeText(mContext, "Không thể thêm vào giỏ hảng. Số lượng tối đa là 5", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        product.setOrderAmount(1);
+                        amountProductCart++;
+                        SharedPreferencesUtil.getInstance().putInt("amountCart", amountProductCart);
+                        settingAmountCart();
+                        product.setCheckedProduct(true);
+                        Completable.fromAction(() -> MyApplication.mProductDao.insertAll(product)).subscribeOn(Schedulers.io())
+                                .subscribe();
+                        Toast.makeText(mContext, "Sản phẩm đã được thêm vào giỏ hàng", Toast.LENGTH_SHORT).show();//
+                        Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(product)).subscribeOn(Schedulers.io())
+                                .subscribe();
+                    }
+                });
     }
 
     @OnClick(R.id.btnBuyNow)
     public void buyNow() {
-            MyApplication.mProductDao.findProduct(product.getId()).subscribeOn(Schedulers.io()).
-                    observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new SingleObserver<Product>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onSuccess(Product productResult) {
-                            if (productResult.getOrderAmount()<5) {
-                                productResult.setOrderAmount(productResult.getOrderAmount() + 1);
-                                Completable.fromAction(() -> MyApplication.mProductDao.insertAll(productResult)).subscribeOn(Schedulers.io())
-                                        .subscribe();
-                                Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(mContext, "Không thể thêm vào giỏ hảng. Số lượng tối đa là 5", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            product.setOrderAmount(1);
-                            product.setCheckedProduct(true);
-                            Completable.fromAction(() -> MyApplication.mProductDao.insertAll(product)).subscribeOn(Schedulers.io())
-                                    .subscribe();
-                            Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
-                            startActivity(intent);
-                            Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(product)).subscribeOn(Schedulers.io())
-                                    .subscribe();
-                        }
-                    });
+        OrderActivity.startActivity(this, "buynow", productId);
     }
 
     @OnClick(R.id.btnFavourite)
@@ -317,9 +351,5 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
             }
         });
 
-//            Intent intent = new Intent(mContext, ImageReviewActivity.class);
-//            intent.putStringArrayListExtra("images", (ArrayList<String>) postDetails.getImages());
-//            intent.putExtra("type", "multi");
-//            mContext.startActivity(intent);
     }
 }

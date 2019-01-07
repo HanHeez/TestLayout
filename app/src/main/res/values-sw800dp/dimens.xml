@@ -1,6 +1,39 @@
 <resources>
+  <dimen name="txt_tag">
+    22.22dp
+  </dimen>
+  <dimen name="txt_product_name_detail">
+    40.0dp
+  </dimen>
+  <dimen name="txt_shop_name_detail">
+    33.33dp
+  </dimen>
+  <dimen name="txt_shop_detail_true_price">
+    44.44dp
+  </dimen>
+  <dimen name="txt_shop_detail_price">
+    31.11dp
+  </dimen>
+  <dimen name="txt_shop_detail_bottom_tab">
+    26.67dp
+  </dimen>
+  <dimen name="txt_shop_detail_top_icon_width">
+    66.67dp
+  </dimen>
+  <dimen name="txt_shop_detail_top_icon_height">
+    66.67dp
+  </dimen>
   <dimen name="toolbar_height">
-    77.78dp
+    88.89dp
+  </dimen>
+  <dimen name="tabbar_height">
+    100.0dp
+  </dimen>
+  <dimen name="bottom_bar_height">
+    111.11dp
+  </dimen>
+  <dimen name="margin_top_free_ship">
+    -13.33dp
   </dimen>
   <dimen name="toro_media_button_height">
     106.67dp

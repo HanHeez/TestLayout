@@ -35,7 +35,8 @@
         <activity android:name=".ui.activity.ProductDetailActivity" />
         <activity android:name=".ui.activity.CartActivity" />
         <activity android:name=".ui.activity.ShopDetailActivity" />
-        <activity android:name=".ui.activity.ShopSearchActivity"></activity>
+        <activity android:name=".ui.activity.ShopSearchActivity" />
+        <activity android:name=".ui.activity.OrderActivity"></activity>
     </application>
 
 </manifest>
