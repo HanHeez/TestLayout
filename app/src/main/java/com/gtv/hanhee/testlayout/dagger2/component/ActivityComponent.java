@@ -8,6 +8,7 @@ import com.gtv.hanhee.testlayout.ui.activity.OrderActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProfileUserActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ShopDetailActivity;
+import com.gtv.hanhee.testlayout.ui.activity.UserInfoChooseActivity;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopCategoryFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopHomeFragment;
@@ -27,4 +28,5 @@ public interface ActivityComponent {
     ShopDetailActivity inject(ShopDetailActivity shopDetailActivity);
     OrderActivity inject(OrderActivity orderActivity);
     ProfileUserActivity inject(ProfileUserActivity profileUserActivity);
+    UserInfoChooseActivity inject(UserInfoChooseActivity userInfoChooseActivity);
 }

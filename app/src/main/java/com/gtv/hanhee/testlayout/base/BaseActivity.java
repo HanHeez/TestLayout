@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import com.gtv.hanhee.testlayout.dagger2.module.ActivityModule;
 import com.gtv.hanhee.testlayout.ui.customview.LoadingDialog;
 import com.gtv.hanhee.testlayout.utils.StatusBarMainUtil;
 
+import java.lang.ref.WeakReference;
 import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
@@ -38,7 +40,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int statusBarColor = 0;
     protected View statusBarView = null;
     protected CompositeDisposable mDisposable;
-    protected Handler handler = new Handler();
 
     Unbinder unbinder;
     private LoadingDialog dialog;//Dialog loading
@@ -125,7 +126,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
         avoidSemClipBoardManagerError();
         unbinder.unbind();
         if (mDisposable != null){
@@ -223,8 +223,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected boolean showTip = false;
-
-    protected void showTipViewRepeat(String tip, TextView txtTip) {
+    protected void showTipViewRepeat(String tip, TextView txtTip, Handler handler) {
         showTip = true;
         handler.removeCallbacksAndMessages(null);
         txtTip.setText(tip);
@@ -283,7 +282,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    protected void showTipViewAndDelayClose(String tip, TextView txtTip) {
+    protected void showTipViewAndDelayClose(String tip, TextView txtTip, Handler handler) {
         showTip = !showTip;
         txtTip.setText(tip);
         if (showTip) {

@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
@@ -19,6 +21,7 @@ import com.gtv.hanhee.testlayout.ui.adapter.OrderProductAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.OrderContract;
 import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
 import com.gtv.hanhee.testlayout.ui.presenter.OrderPresenter;
+import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.gtv.hanhee.testlayout.utils.StringUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -39,16 +42,32 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     RecyclerView rvProduct;
     @BindView(R.id.txtTotalPrice)
     TextView txtTotalPrice;
+    @BindView(R.id.txtAddress)
+    TextView txtAddress;
+    @BindView(R.id.txtUsername)
+    TextView txtUsername;
+    @BindView(R.id.txtPhoneNumber)
+    TextView txtPhoneNumber;
+    @BindView(R.id.btnEditUserInfo)
+    TextView btnEditUserInfo;
+    @BindView(R.id.rlAddUserInfo)
+    RelativeLayout rlAddUserInfo;
+    @BindView(R.id.rlUserInfo)
+    RelativeLayout rlUserInfo;
 
     @Inject
     OrderPresenter mPresenter;
     private OrderProductAdapter orderProductAdapter;
     private List<Product> productList;
+    private List<AddressInfo> addressInfoList;
+    private AddressInfo addressInfo;
     private List<ProductSection> productSectionList;
     private static final String GET_TYPE = "type";
     private static final String PRODUCT_ID = "productId";
     private static final String AMOUNT_BUY_NOW = "amountBuyNow";
     private String type="";
+    private boolean isHaveAddress = false;
+    private int addressPosition;
     private String productId="";
     private Product product;
     private int amountBuyNow;
@@ -94,6 +113,7 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
         } else {
             mPresenter.getCartProduct();
         }
+        mPresenter.getListAddressInfo(token);
 
 //        shopPresenter.getCartProduct();
     }
@@ -102,6 +122,24 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     public void onBack(){
         onBackPressed();
     }
+
+
+    @OnClick(R.id.btnEditUserInfo)
+    public void onEditUserInfo(){
+       if (isHaveAddress) {
+           Intent intent = new Intent(this, UserInfoChooseActivity.class);
+           startActivity(intent);
+       } else {
+           //TODO: add address
+           Toast.makeText(mContext, "Thêm địa chỉ", Toast.LENGTH_SHORT).show();
+       }
+    }
+    @OnClick(R.id.rlAddUserInfo)
+    public void onAddUserInfo(){
+        //TODO: add address 2
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -135,7 +173,6 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
         rvProduct.setNestedScrollingEnabled(false);
         rvProduct.setLayoutManager(layoutManagerNews);
         rvProduct.setAdapter(orderProductAdapter);
-
     }
 
 
@@ -235,8 +272,21 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     }
 
     @Override
-    public void showAddressInfoList(List<AddressInfo> addressInfoListResult) {
-
+    public void showListAddressInfo(List<AddressInfo> addressInfoListResult) {
+        addressPosition = SharedPreferencesUtil.getInstance().getInt("addressUser", 0);
+        if (addressInfoListResult.size()>0) {
+            addressInfo = addressInfoListResult.get(addressPosition);
+            rlAddUserInfo.setVisibility(View.GONE);
+            rlUserInfo.setVisibility(View.VISIBLE);
+            txtAddress.setText(addressInfo.getAddress());
+            txtUsername.setText(addressInfo.getFullName());
+            isHaveAddress = true;
+            txtPhoneNumber.setText(addressInfo.getPhoneNumber());
+        } else {
+            isHaveAddress = false;
+            rlAddUserInfo.setVisibility(View.VISIBLE);
+            rlUserInfo.setVisibility(View.GONE);
+        }
     }
 
     @Override

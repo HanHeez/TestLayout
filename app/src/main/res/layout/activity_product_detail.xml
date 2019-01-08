@@ -331,12 +331,55 @@
                     app:canLoop="true"
                     app:indicatorAlign="center"
                     app:indicatorPaddingLeft="10dp"
+                    android:visibility="visible"
                     app:open_mz_mode="false" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/length_8"
                     android:background="@color/bg_shop_main_color" />
+
+                <!--Description-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/length_7">
+
+                    <View
+                        android:background="@color/text_sub"
+                        android:layout_width="@dimen/length_25"
+                        android:layout_height="1dp" />
+                    <TextView
+                        android:layout_marginRight="@dimen/length_8"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/length_8"
+                        android:text="Mô tả sản phẩm"
+                        android:textColor="@color/text_sub"
+                        android:textSize="@dimen/length_14" />
+                    <View
+                        android:background="@color/text_sub"
+                        android:layout_width="@dimen/length_25"
+                        android:layout_height="1dp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtDescription"
+                    android:layout_marginRight="@dimen/length_10"
+                    android:layout_marginTop="@dimen/length_10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/length_10"
+                    android:text="Mô tả chi tiết"
+                    android:textColor="@color/text_sub"
+                    android:layout_marginBottom="@dimen/length_15"
+                    android:textSize="@dimen/length_14" />
+
+
             </LinearLayout>
 
         </android.support.v4.widget.NestedScrollView>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +43,7 @@ import com.gtv.hanhee.testlayout.utils.StringUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,6 +85,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     TextView txtTip;
     private Button btnCartGoHome;
     private View emptyView;
+    private final MyHandler mHandler = new MyHandler(this);
 
     @Inject
     CartPresenter cartPresenter;
@@ -135,6 +138,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
         if (cartPresenter != null) {
             cartPresenter.detachView();
         }
@@ -341,7 +345,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
                         }
                     });
         } else {
-            showTipViewAndDelayClose("Vui lòng chọn ít nhất 1 sản phẩm", txtTip);
+            showTipViewAndDelayClose("Vui lòng chọn ít nhất 1 sản phẩm", txtTip, mHandler);
         }
     }
 
@@ -406,7 +410,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
         if (checkProduct) {
             OrderActivity.startActivity(this, "cart", "", 0);
         } else {
-            showTipViewAndDelayClose("Vui lòng chọn ít nhất 1 sản phẩm", txtTip);
+            showTipViewAndDelayClose("Vui lòng chọn ít nhất 1 sản phẩm", txtTip, mHandler);
         }
     }
 
@@ -494,5 +498,21 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
             cartAdapter.notifyDataSetChanged();
         }
         checkedSizeCart(false);
+    }
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<CartActivity> mActivity;
+
+        public MyHandler(CartActivity activity) {
+            mActivity = new WeakReference<CartActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            CartActivity activity = mActivity.get();
+            if (activity != null) {
+                // ...
+            }
+        }
     }
 }

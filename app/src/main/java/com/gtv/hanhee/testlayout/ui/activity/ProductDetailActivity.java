@@ -3,6 +3,8 @@ package com.gtv.hanhee.testlayout.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +35,7 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.zhouwei.mzbanner.holder.MZHolderCreator;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -85,6 +88,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     LinearLayout lnPrice;
     @BindView(R.id.txtAmountCart)
     TextView txtAmountCart;
+    @BindView(R.id.txtDescription)
+    TextView txtDescription;
     @BindView(R.id.txtTip)
     TextView txtTip;
 
@@ -97,6 +102,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     private static final String PRODUCT_ID = "productId";
     private List<Product> cartProductList = new ArrayList<>();
     private int amountProductCart = 0;
+    private final MyHandler mHandler = new MyHandler(this);
 
     @Override
     public int getLayoutId() {
@@ -128,15 +134,16 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     @Override
     public void initDatas() {
         activityComponent().inject(this);
+
         showTip = false;
         productDetailPresenter.attachView(this);
         productDetailPresenter.getProduct(token, productId);
-        productDetailPresenter.getRecommendProductList(token, productId, 0, 18);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
         if (productDetailPresenter != null) {
             productDetailPresenter.detachView();
         }
@@ -242,9 +249,9 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                             productResult.setCheckedProduct(true);
                             Completable.fromAction(() -> MyApplication.mProductDao.insertAll(productResult)).subscribeOn(Schedulers.io())
                                     .subscribe();
-                            showTipViewRepeat("Sản phẩm đã được thêm vào giỏ hàng", txtTip);
+                            showTipViewRepeat("Sản phẩm đã được thêm vào giỏ hàng", txtTip, mHandler);
                         } else {
-                            showTipViewRepeat("Không thể thêm vào giỏ hàng. Số lượng tối đa là 5", txtTip);
+                            showTipViewRepeat("Không thể thêm vào giỏ hàng. Số lượng tối đa là 5", txtTip, mHandler);
                         }
                     }
 
@@ -257,7 +264,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
                         product.setCheckedProduct(true);
                         Completable.fromAction(() -> MyApplication.mProductDao.insertAll(product)).subscribeOn(Schedulers.io())
                                 .subscribe();
-                        showTipViewRepeat("Sản phẩm đã được thêm vào giỏ hàng", txtTip);
+                        showTipViewRepeat("Sản phẩm đã được thêm vào giỏ hàng", txtTip, mHandler);
                         Completable.fromAction(() -> MyApplication.mProductDao.updateProducts(product)).subscribeOn(Schedulers.io())
                                 .subscribe();
                     }
@@ -285,10 +292,12 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     }
 
 
-
     @Override
     public void onItemRvClick(View view, Object item, int adapterPosition) {
-
+        if (item instanceof Product) {
+            Product product = (Product) item;
+           ProductDetailActivity.startActivity(this, product.getId());
+        }
     }
 
     @Override
@@ -309,6 +318,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         txtTag2.setText(product.getSubCategories().get(1).getName());
         txtTag3.setText(product.getSubCategories().get(2).getName());
         txtProductName.setText(product.getName());
+        txtDescription.setText(product.getDescription());
         txtDiscountPrice.setText(StringUtils.formatPrice(product.getPrice() * (100 - product.getDiscountPercent()) / 100 + ""));
         if (product.getDiscountPercent()>0) {
             lnPrice.setVisibility(View.VISIBLE);
@@ -322,38 +332,63 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 //        txtShipper.setText(product.getShop().getShipper());
         txtPriceBuyNow.setText(StringUtils.formatPrice(product.getPrice()*(100-product.getDiscountPercent())/100+""));
         ImageUtils.loadImageByGlideWithResize(this, product.getShop().getAvatar(), imgShop, 300, 300);
+
+        //TODO: change subcategoryId here
+        listBannerRecommend.clear();
+        for (int i=0;i<product.getSubCategories().size();i++) {
+            if (i>2) break;
+            productDetailPresenter.getListProductBySubCategory(token, product.getSubCategories().get(i).getId(), 0, 6);
+
+
+        }
+//        productDetailPresenter.getRecommendProductList(token, product.getSubCategories().get(0).getId(), 0, 18);
+
     }
 
     @Override
     public void showRecommendProductList(List<Product> recommendProductListResult) {
-        recommendProductList.clear();
-        recommendProductList.addAll(recommendProductListResult);
-        listBannerRecommend.clear();
-        int startPos = 1;
-        boolean isFinishPage = true;
-        currentListProduct.clear();
+//        recommendProductList.clear();
+//        recommendProductList.addAll(recommendProductListResult);
+//        listBannerRecommend.clear();
+//        int startPos = 1;
+//        boolean isFinishPage = true;
+//        currentListProduct.clear();
+//
+//        for (int i=0; i<recommendProductList.size(); i++) {
+//            isFinishPage = false;
+//            currentListProduct.add(recommendProductList.get(i));
+//            if (i>=6*startPos-1) {
+//                listBannerRecommend.add(currentListProduct);
+//                currentListProduct = new ArrayList<>();
+//                startPos++;
+//                isFinishPage = true;
+//            }
+//        }
+//
+//        if (!isFinishPage) {
+//            listBannerRecommend.add(currentListProduct);
+//        }
+    }
 
-        for (int i=0; i<recommendProductList.size(); i++) {
-            isFinishPage = false;
-            currentListProduct.add(recommendProductList.get(i));
-            if (i>=6*startPos-1) {
-                listBannerRecommend.add(currentListProduct);
-                currentListProduct = new ArrayList<>();
-                startPos++;
-                isFinishPage = true;
-            }
+    @Override
+    public void showListProductBySubCategory(List<Product> productListResult) {
+        listBannerRecommend.add(productListResult);
+        bannerRecommend.setPages(listBannerRecommend, (MZHolderCreator<ProductRecommendViewHolder>) () -> new ProductRecommendViewHolder(this));
+    }
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<ProductDetailActivity> mActivity;
+
+        public MyHandler(ProductDetailActivity activity) {
+            mActivity = new WeakReference<ProductDetailActivity>(activity);
         }
 
-        if (!isFinishPage) {
-            listBannerRecommend.add(currentListProduct);
-        }
-
-        bannerRecommend.setPages(listBannerRecommend, new MZHolderCreator<ProductRecommendViewHolder>() {
-            @Override
-            public ProductRecommendViewHolder createViewHolder() {
-                return new ProductRecommendViewHolder();
+        @Override
+        public void handleMessage(Message msg) {
+            ProductDetailActivity activity = mActivity.get();
+            if (activity != null) {
+                // ...
             }
-        });
-
+        }
     }
 }

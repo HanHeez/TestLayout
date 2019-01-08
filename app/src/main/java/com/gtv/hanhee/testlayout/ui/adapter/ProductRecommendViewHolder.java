@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.Product;
@@ -24,6 +25,11 @@ public class ProductRecommendViewHolder implements MZViewHolder<List<Product>>, 
     @BindView(R.id.rvRecommend)
     RecyclerView rvRecommend;
     private ProductRecommendAdapter productRecommendAdapter;
+    OnItemRvClickListener onItemRvClickListener;
+
+    public ProductRecommendViewHolder(OnItemRvClickListener onItemRvClickListener) {
+        this.onItemRvClickListener = onItemRvClickListener;
+    }
 
     @Override
     public View createView(Context context) {
@@ -36,7 +42,6 @@ public class ProductRecommendViewHolder implements MZViewHolder<List<Product>>, 
     @Override
     public void onBind(Context context, int position, List<Product> data) {
 
-
 //        Rv Product -----------------
         productRecommendAdapter = new ProductRecommendAdapter(context, data, this);      ;
         rvRecommend.setHasFixedSize(true);
@@ -46,6 +51,12 @@ public class ProductRecommendViewHolder implements MZViewHolder<List<Product>>, 
         rvRecommend.setLayoutManager(gridLayoutManagerShop);
         rvRecommend.setAdapter(productRecommendAdapter);
         productRecommendAdapter.notifyDataSetChanged();
+        productRecommendAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                onItemRvClickListener.onItemRvClick(view, data.get(position), position);
+            }
+        });
     }
 
     @Override

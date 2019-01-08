@@ -37,10 +37,25 @@ public class ProductDetailPresenter extends RxPresenter<ProductDetailContract.Vi
 
     @Override
     public void getRecommendProductList(String accessToken, String id, int skip, int limit) {
-        Disposable disposable = biboManager.getRecommendProductList(accessToken, id, skip, limit)
+        Disposable disposable = biboManager.getListProductRecommend(accessToken, id, skip, limit)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         (beans) -> {
                             mView.showRecommendProductList(beans);
+                        }
+                        ,
+                        (e) -> {
+                            mView.showError();
+                        }
+                );
+        addSubscrebe(disposable);
+    }
+
+    @Override
+    public void getListProductBySubCategory(String accessToken, String subCategoryId, int skip, int limit) {
+        Disposable disposable = biboManager.getListProductBySubCategory(accessToken, subCategoryId, skip, limit)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                        (beans) -> {
+                            mView.showListProductBySubCategory(beans);
                         }
                         ,
                         (e) -> {

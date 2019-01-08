@@ -59,11 +59,11 @@ public class OrderPresenter extends RxPresenter<OrderContract.View> implements O
     }
 
     @Override
-    public void getAddressInfoList(String accessToken) {
-        Disposable disposable = biboManager.getAddressInfoList(accessToken)
+    public void getListAddressInfo(String accessToken) {
+        Disposable disposable = biboManager.getListAddressInfo(accessToken)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         (beans) -> {
-                            mView.showAddressInfoList(beans);
+                            mView.showListAddressInfo(beans);
                         }
                         ,
                         (e) -> {

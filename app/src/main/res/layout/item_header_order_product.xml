@@ -11,8 +11,8 @@
         android:background="@color/bg_shop_main_color" />
 
     <LinearLayout
-        android:paddingLeft="@dimen/length_10"
-        android:paddingRight="@dimen/length_10"
+        android:paddingLeft="@dimen/length_8"
+        android:paddingRight="@dimen/length_8"
         android:gravity="center_vertical"
         android:layout_below="@id/topDivider"
         android:layout_width="match_parent"

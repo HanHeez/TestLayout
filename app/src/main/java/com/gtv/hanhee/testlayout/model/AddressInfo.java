@@ -1,16 +1,49 @@
 package com.gtv.hanhee.testlayout.model;
 
-public class AddressInfo {
-    private String id;
-    private String name;
-    private String address;
-    private String phone;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    public AddressInfo(String id, String name, String address, String phone) {
-        this.id = id;
-        this.name = name;
-        this.address = address;
-        this.phone = phone;
+import java.io.Serializable;
+
+public class AddressInfo implements Serializable {
+    @SerializedName("_id")
+    @Expose
+    private String id;
+    @SerializedName("updatedAt")
+    @Expose
+    private String updatedAt;
+    @SerializedName("createdAt")
+    @Expose
+    private String createdAt;
+    @SerializedName("fullName")
+    @Expose
+    private String fullName;
+    @SerializedName("phoneNumber")
+    @Expose
+    private String phoneNumber;
+    @SerializedName("address")
+    @Expose
+    private String address;
+    @SerializedName("user")
+    @Expose
+    private String user;
+    @SerializedName("note")
+    @Expose
+    private String note;
+    @SerializedName("email")
+    @Expose
+    private String email;
+    @SerializedName("__v")
+    @Expose
+    private Integer v;
+    private boolean isDefault = false;
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean aDefault) {
+        isDefault = aDefault;
     }
 
     public String getId() {
@@ -21,12 +54,36 @@ public class AddressInfo {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {
@@ -37,11 +94,35 @@ public class AddressInfo {
         this.address = address;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getUser() {
+        return user;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Integer getV() {
+        return v;
+    }
+
+    public void setV(Integer v) {
+        this.v = v;
     }
 }
