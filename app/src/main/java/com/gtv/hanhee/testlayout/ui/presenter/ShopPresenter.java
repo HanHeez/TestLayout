@@ -16,7 +16,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
 import io.reactivex.schedulers.Schedulers;
 
-public class ShopPresenter extends RxPresenter<ShopContract.View> implements ShopContract.Presenter<ShopContract.View> {
+public class ShopPresenter
+        extends RxPresenter<ShopContract.View> implements ShopContract.Presenter<ShopContract.View> {
     private BiboManager biboManager;
 
     @Inject

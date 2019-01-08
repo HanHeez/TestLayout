@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <!--Main Layout-->
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlToolbar">
+
+        <android.support.design.widget.AppBarLayout
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!--collapsing height -->
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <!--Custom Main Layout inside Collapsing-->
+                <include layout="@layout/layout_user_profile_inside_toolbar" />
+                <!--End Custom Main Layout inside Collapsing-->
+
+                <!--Toolbar height == Tablayout height -->
+                <android.support.v7.widget.Toolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_0"
+                    android:layout_marginBottom="@dimen/tabbar_height"
+                    android:gravity="top"
+                    android:background="@null"
+                    android:minHeight="?attr/actionBarSize"
+                    android:tooltipText=""
+                    app:contentInsetEnd="@dimen/length_0"
+                    app:contentInsetLeft="@dimen/length_0"
+                    app:contentInsetRight="@dimen/length_0"
+                    app:contentInsetStart="@dimen/length_0"
+                    app:layout_collapseMode="pin" />
+
+                <!--Custom Tablayout -->
+                <com.ogaclejapan.smarttablayout.SmartTabLayout
+                    android:layout_gravity="center_horizontal|bottom"
+                    android:id="@id/tabLayout"
+                    android:layout_width="@dimen/length_200"
+                    android:layout_height="@dimen/tabbar_height"
+                    app:stl_dividerColor="@color/transparent"
+                    app:stl_dividerThickness="0dp"
+                    app:stl_distributeEvenly="true"
+                    app:stl_defaultTabTextAllCaps="false"
+                    app:stl_indicatorColor="@color/text_member"
+                    app:stl_customTabTextLayoutId="@layout/layout_custom_shop_header_tab"
+                    app:stl_customTabTextViewId="@id/custom_text"
+                    app:stl_indicatorInterpolation="linear"
+                    app:stl_indicatorThickness="0dp"
+                    android:paddingBottom="@dimen/length_4"
+                    app:stl_titleOffset="auto_center"
+                    app:stl_underlineThickness="0dp" />
+
+                <View
+                    android:background="@color/bg_home_search_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
+                <!--End Custom Tablayout -->
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <!--Main Bottom Layout-->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v4.view.ViewPager>
+        </LinearLayout>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+    <!--Custom Toolbar-->
+    <include layout="@layout/layout_user_profile_toolbar" />
+    <!--End Custom Toolbar-->
+</RelativeLayout>

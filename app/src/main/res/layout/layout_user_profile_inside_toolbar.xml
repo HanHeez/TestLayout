@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/length_250"
+    android:layout_marginBottom="@dimen/tabbar_height">
+
+    <ImageView
+        android:id="@+id/imgBg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_test" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/length_85"
+        android:layout_height="@dimen/length_85"
+        android:layout_centerInParent="true"
+        android:src="@color/transparent_50" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgAvatar"
+        android:layout_width="@dimen/length_80"
+        android:layout_height="@dimen/length_80"
+        android:layout_centerInParent="true"
+        android:src="@drawable/hot_girl2" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/length_26"
+        android:layout_below="@id/imgAvatar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/length_7"
+        android:gravity="center"
+        android:paddingLeft="@dimen/length_10"
+        android:paddingRight="@dimen/length_10"
+        android:text="Long Nguyễn"
+        android:textColor="@color/white"
+        android:textSize="@dimen/length_15"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="@dimen/length_60"
+        android:layout_height="@dimen/length_25"
+        android:layout_below="@id/imgAvatar"
+        android:layout_marginTop="@dimen/length_7"
+        android:layout_toRightOf="@id/txtName"
+        android:background="@drawable/apk_rank_bg"
+        android:gravity="center"
+        android:text="LV 300"
+        android:textColor="@color/white"
+        android:textSize="@dimen/length_14" />
+    
+    <View
+        android:id="@+id/dvdFollow"
+        android:layout_marginBottom="@dimen/length_12"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_width="1dp"
+        android:layout_height="@dimen/length_15"
+        android:background="@color/white"/>
+
+    <!--Followed-->
+    <LinearLayout
+        android:layout_marginRight="@dimen/length_5"
+        android:layout_toLeftOf="@id/dvdFollow"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/length_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đã theo dõi: "
+            android:textColor="@color/white"
+            android:textSize="@dimen/length_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length_14" />
+    </LinearLayout>
+    <!--Follower-->
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/length_5"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/dvdFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/length_10">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Người theo dõi: "
+            android:textColor="@color/white"
+            android:textSize="@dimen/length_14" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="30K"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length_14" />
+    </LinearLayout>
+
+</RelativeLayout>

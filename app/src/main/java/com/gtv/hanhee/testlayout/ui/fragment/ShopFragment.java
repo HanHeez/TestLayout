@@ -10,6 +10,7 @@ import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
 import com.gtv.hanhee.testlayout.model.Category;
 import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
+import com.gtv.hanhee.testlayout.ui.activity.ProfileUserActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ShopSearchActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.ShopContract;
@@ -50,6 +51,12 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     @OnClick(R.id.rlSearch)
     public void onSearch() {
         Intent intent = new Intent(activity, ShopSearchActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.btnMessage)
+    public void goToUser() {
+        Intent intent = new Intent(activity, ProfileUserActivity.class);
         startActivity(intent);
     }
 
