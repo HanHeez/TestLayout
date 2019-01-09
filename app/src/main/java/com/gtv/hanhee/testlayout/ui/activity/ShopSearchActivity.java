@@ -106,6 +106,13 @@ public class ShopSearchActivity extends BaseActivity implements ShopSearchContra
 //        initSearchHistory();
     }
 
+
+    @OnClick(R.id.btnBack)
+    public void onBack() {
+        onBackPressed();
+    }
+
+
     @Override
     public void configViews() {
 //        overridePendingTransition(R.anim.fadein, R.anim.fadeout);

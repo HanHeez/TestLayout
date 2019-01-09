@@ -2,10 +2,12 @@ package com.gtv.hanhee.testlayout.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -13,26 +15,38 @@ import android.widget.Toast;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
+import com.gtv.hanhee.testlayout.base.MyApplication;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.AddressInfo;
+import com.gtv.hanhee.testlayout.model.Message;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ProductSection;
 import com.gtv.hanhee.testlayout.ui.adapter.OrderProductAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.OrderContract;
 import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
+import com.gtv.hanhee.testlayout.ui.customview.FlipVerticalSwingEnterDialog.BaseAnimatorSet;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FadeExit;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FallEnter;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.SlideBottomExit;
+import com.gtv.hanhee.testlayout.ui.customview.dialog.NormalDialog;
+import com.gtv.hanhee.testlayout.ui.customview.dialog.OnBtnClickL;
 import com.gtv.hanhee.testlayout.ui.presenter.OrderPresenter;
 import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.gtv.hanhee.testlayout.utils.StringUtils;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Completable;
+import io.reactivex.schedulers.Schedulers;
 
 public class OrderActivity extends BaseActivity implements OrderContract.View, OnItemRvClickListener<Object> {
 
@@ -48,12 +62,18 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     TextView txtUsername;
     @BindView(R.id.txtPhoneNumber)
     TextView txtPhoneNumber;
+    @BindView(R.id.txtEmail)
+    TextView txtEmail;
+
     @BindView(R.id.btnEditUserInfo)
     TextView btnEditUserInfo;
+
     @BindView(R.id.rlAddUserInfo)
     RelativeLayout rlAddUserInfo;
     @BindView(R.id.rlUserInfo)
     RelativeLayout rlUserInfo;
+    @BindView(R.id.txtTip)
+    TextView txtTip;
 
     @Inject
     OrderPresenter mPresenter;
@@ -67,10 +87,13 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     private static final String AMOUNT_BUY_NOW = "amountBuyNow";
     private String type="";
     private boolean isHaveAddress = false;
-    private int addressPosition;
+    private String addressDefaultId;
     private String productId="";
     private Product product;
     private int amountBuyNow;
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private final MyHandler mHandler = new MyHandler(this);
 
     @Override
     public int getLayoutId() {
@@ -130,15 +153,56 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
            Intent intent = new Intent(this, UserInfoChooseActivity.class);
            startActivity(intent);
        } else {
-           //TODO: add address
-           Toast.makeText(mContext, "Thêm địa chỉ", Toast.LENGTH_SHORT).show();
+          UserInfoAddActivity.startActivity(this,"");
        }
     }
     @OnClick(R.id.rlAddUserInfo)
     public void onAddUserInfo(){
-        //TODO: add address 2
+        UserInfoAddActivity.startActivity(this,"");
     }
 
+    @OnClick(R.id.btnSubmit)
+    public void onSubmitOrder(){
+        if (isHaveAddress) {
+            mBasIn = new FallEnter();
+            mBasOut = new FadeExit();
+            final NormalDialog dialog = new NormalDialog(mContext);
+            dialog.setmTitle("Thông báo");
+            dialog.setmBtnLeftText("Quay lại");
+            dialog.setmBtnRightText("Đồng ý");
+            dialog.content("Xác nhận gửi đơn hàng")//
+                    .style(NormalDialog.STYLE_TWO)//
+                    .titleTextSize(23)//
+                    .showAnim(mBasIn)//
+                    .dismissAnim(mBasOut)//
+                    .show();
+
+            dialog.setOnBtnClickL(
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            dialog.dismiss();
+                        }
+                    },
+                    new OnBtnClickL() {
+                        @Override
+                        public void onBtnClick() {
+                            mPresenter.addProductToCart(token, productSectionList);
+                            dialog.dismiss();
+                        }
+                    });
+        } else {
+            showTipViewRepeat("Vui lòng thêm địa chỉ thanh toán", txtTip, mHandler);
+        }
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getProduct(token, productId);
+        mPresenter.getListAddressInfo(token);
+    }
 
     @Override
     protected void onDestroy() {
@@ -158,8 +222,10 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
                 refreshLayout.finishRefresh(1000/*,false*/);
                 if (type.equals("buynow")) {
                     mPresenter.getProduct(token, productId);
+                    mPresenter.getListAddressInfo(token);
                 } else {
                     mPresenter.getCartProduct();
+                    mPresenter.getListAddressInfo(token);
                 }
             }
         });
@@ -273,13 +339,26 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
 
     @Override
     public void showListAddressInfo(List<AddressInfo> addressInfoListResult) {
-        addressPosition = SharedPreferencesUtil.getInstance().getInt("addressUser", 0);
+        addressDefaultId = SharedPreferencesUtil.getInstance().getString("addressDefaultId", "");
+
         if (addressInfoListResult.size()>0) {
-            addressInfo = addressInfoListResult.get(addressPosition);
+            addressInfo = addressInfoListResult.get(0);
+            if (addressDefaultId.equals("")) {
+                SharedPreferencesUtil.getInstance().putString("addressDefaultId", addressInfo.getId());
+            } else {
+                for (int i = 0; i < addressInfoListResult.size(); i++) {
+                    if (addressInfoListResult.get(i).getId().equals(addressDefaultId)) {
+                        addressInfo = addressInfoListResult.get(i);
+                        break;
+                    }
+                }
+            }
+
             rlAddUserInfo.setVisibility(View.GONE);
             rlUserInfo.setVisibility(View.VISIBLE);
             txtAddress.setText(addressInfo.getAddress());
             txtUsername.setText(addressInfo.getFullName());
+            txtEmail.setText(addressInfo.getEmail());
             isHaveAddress = true;
             txtPhoneNumber.setText(addressInfo.getPhoneNumber());
         } else {
@@ -290,8 +369,39 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     }
 
     @Override
-    public void successSendAddressInfo(String message) {
+    public void successOrderAll(Message message) {
+        Completable.fromAction(() -> MyApplication.mProductDao.deleteAllDataFromProduct()).subscribeOn(Schedulers.io())
+                .subscribe();
+        SharedPreferencesUtil.getInstance().putInt("amountCart", 0);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
 
+    @Override
+    public void successAddProductToCart(Message message) {
+      mPresenter.orderAll(token, addressInfo.getFullName(), addressInfo.getPhoneNumber(), addressInfo.getEmail(), addressInfo.getAddress());
+    }
+
+    @Override
+    public void successRemoveAllProductOnCart(Message message) {
+
+    }
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<OrderActivity> mActivity;
+
+        public MyHandler(OrderActivity activity) {
+            mActivity = new WeakReference<OrderActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            OrderActivity activity = mActivity.get();
+            if (activity != null) {
+                // ...
+            }
+        }
     }
 }
 

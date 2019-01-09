@@ -36,6 +36,8 @@ public class AddressInfo implements Serializable {
     @SerializedName("__v")
     @Expose
     private Integer v;
+    @SerializedName("isDefault")
+    @Expose
     private boolean isDefault = false;
 
     public boolean isDefault() {

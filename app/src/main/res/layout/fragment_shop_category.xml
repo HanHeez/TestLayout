@@ -66,6 +66,7 @@
                     android:clickable="true">
 
                     <ImageView
+                        android:id="@+id/imgStyleRv"
                         android:layout_width="@dimen/length_15"
                         android:layout_height="@dimen/length_15"
                         android:layout_centerInParent="true"
@@ -73,18 +74,20 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/length_5"
 
-                        android:src="@drawable/apk_classify_one" />
+                        android:src="@drawable/apk_classify_two" />
 
                 </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/btnMore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_width="15dp"
+                    android:layout_height="11dp"
                     android:layout_alignParentRight="true"
+                    android:layout_marginRight="369dp"
                     android:gravity="center"
                     android:paddingLeft="@dimen/length_5"
-                    android:paddingRight="@dimen/length_5">
+                    android:paddingRight="@dimen/length_5"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/txtMore"

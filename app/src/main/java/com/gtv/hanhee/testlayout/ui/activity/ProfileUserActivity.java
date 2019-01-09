@@ -29,6 +29,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class ProfileUserActivity extends BaseActivity implements ProfileUserContract.View, OnItemRvClickListener<Object> {
 
@@ -128,6 +129,11 @@ public class ProfileUserActivity extends BaseActivity implements ProfileUserCont
 
     @Override
     public void complete() {
+    }
+
+    @OnClick(R.id.btnBack)
+    public void onBack() {
+        onBackPressed();
     }
 }
 

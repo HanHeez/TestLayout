@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.gtv.hanhee.testlayout.api.support.Logger;
 import com.gtv.hanhee.testlayout.model.AddressInfo;
 import com.gtv.hanhee.testlayout.model.Category;
+import com.gtv.hanhee.testlayout.model.Message;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.model.SubCategory;
@@ -20,8 +21,13 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 
 
@@ -90,4 +96,55 @@ public interface BiboService {
     @GET("v2/product/user_info")
     Observable<List<AddressInfo>> getListAddressInfo(@Header("Authorization") String accessToken);
 
+    @FormUrlEncoded
+    @POST("v2/product/user_info")
+    Observable<Message> addAddressInfo(@Header("Authorization") String accessToken,
+                                       @Field("fullName") String fullName,
+                                       @Field("phoneNumber") String phoneNumber,
+                                       @Field("email") String email,
+                                       @Field("address") String address
+                                       );
+
+    @DELETE("v2/product/user_info")
+    Observable<Message> removeAddressInfo(@Header("Authorization") String accessToken, @Query("_id") String addressid);
+
+    @GET("v2/product/user_info/detail")
+    Observable<AddressInfo> getAddressInfoById(@Header("Authorization") String accessToken, @Query("_id") String addressId);
+
+    @FormUrlEncoded
+    @PUT("v2/product/user_info")
+    Observable<Message> updateAddressInfo(@Header("Authorization") String accessToken, @Field("_id") String addressId,
+                                          @Field("fullName") String fullName,
+                                          @Field("phoneNumber") String phoneNumber,
+                                          @Field("email") String email,
+                                          @Field("address") String address
+                                          );
+
+    //    Cart --------------------
+    @FormUrlEncoded
+    @POST("v2/product/carts")
+    Observable<Message> addProductToCart(@Header("Authorization") String accessToken, @Field("product") String productId,
+                                         @Field("quantity") int quantity);
+
+    @DELETE("v2/product/carts/all")
+    Observable<Message> removeAllProductOnCart(@Header("Authorization") String accessToken);
+
+//    Order -----------------
+    @FormUrlEncoded
+    @POST("v2/product/orders/all")
+    Observable<Message> orderAll(@Header("Authorization") String accessToken,
+                                          @Field("fullName") String fullName,
+                                          @Field("phoneNumber") String phoneNumber,
+                                          @Field("email") String email,
+                                          @Field("address") String address);
+    @FormUrlEncoded
+    @POST("v2/product/orders/all")
+    Observable<Message> orderOne(@Header("Authorization") String accessToken,
+                                 @Field("cartId") String cartId,
+                                 @Field("fullName") String fullName,
+                                 @Field("phoneNumber") String phoneNumber,
+                                 @Field("email") String email,
+                                 @Field("address") String address);
 }
+
+

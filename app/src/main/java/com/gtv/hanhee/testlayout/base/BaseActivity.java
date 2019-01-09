@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
@@ -23,7 +24,12 @@ import com.gtv.hanhee.testlayout.dagger2.component.ActivityComponent;
 
 import com.gtv.hanhee.testlayout.dagger2.component.DaggerActivityComponent;
 import com.gtv.hanhee.testlayout.dagger2.module.ActivityModule;
+import com.gtv.hanhee.testlayout.ui.customview.FlipVerticalSwingEnterDialog.BaseAnimatorSet;
 import com.gtv.hanhee.testlayout.ui.customview.LoadingDialog;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FallEnter;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.SlideBottomExit;
+import com.gtv.hanhee.testlayout.ui.customview.dialog.NormalDialog;
+import com.gtv.hanhee.testlayout.ui.customview.dialog.OnBtnClickL;
 import com.gtv.hanhee.testlayout.utils.StatusBarMainUtil;
 
 import java.lang.ref.WeakReference;

@@ -3,14 +3,19 @@ package com.gtv.hanhee.testlayout.ui.presenter;
 import com.gtv.hanhee.testlayout.api.BiboManager;
 import com.gtv.hanhee.testlayout.base.MyApplication;
 import com.gtv.hanhee.testlayout.base.RxPresenter;
+import com.gtv.hanhee.testlayout.model.Message;
 import com.gtv.hanhee.testlayout.model.Product;
+import com.gtv.hanhee.testlayout.model.ProductSection;
 import com.gtv.hanhee.testlayout.ui.contract.CartContract;
 import com.gtv.hanhee.testlayout.ui.contract.OrderContract;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -74,11 +79,11 @@ public class OrderPresenter extends RxPresenter<OrderContract.View> implements O
     }
 
     @Override
-    public void sendAddressInfo(String accessToken) {
-        Disposable disposable = biboManager.sendAddressInfo(accessToken)
+    public void orderAll(String accessToken, String fullName, String phoneNumber, String email, String address) {
+        Disposable disposable = biboManager.orderAll(accessToken, fullName, phoneNumber, email, address)
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                         (beans) -> {
-                            mView.successSendAddressInfo(beans);
+                            mView.successOrderAll(beans);
                         }
                         ,
                         (e) -> {
@@ -86,6 +91,58 @@ public class OrderPresenter extends RxPresenter<OrderContract.View> implements O
                         }
                 );
         addSubscrebe(disposable);
+    }
+
+    @Override
+    public void addProductToCart(String accessToken, List<ProductSection> productSectionList) {
+        List<Observable<Message>> productList = new ArrayList<>();
+        for (int i=0; i<productSectionList.size();i++) {
+            if (!productSectionList.get(i).isHeader ) {
+                Observable<Message> productObservable = biboManager.addProductToCart(accessToken, productSectionList.get(i).t.getId(), productSectionList.get(i).t.getOrderAmount());
+                productList.add(productObservable);
+            }
+        }
+
+        Observable.concat(productList).observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Message>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Message message) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mView.showError();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        mView.successAddProductToCart(new Message("thành công"));
+                    }
+                });
+
+
+    }
+
+    @Override
+    public void removeAllProductOnCart(String accessToken) {
+        Disposable disposable = biboManager.removeAllProductOnCart(accessToken)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                        (beans) -> {
+                            mView.successRemoveAllProductOnCart(beans);
+                        }
+                        ,
+                        (e) -> {
+                            mView.showError();
+                        }
+                );
+        addSubscrebe(disposable);
+
     }
 
 }

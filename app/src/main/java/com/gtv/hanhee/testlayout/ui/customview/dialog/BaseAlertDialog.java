@@ -108,6 +108,21 @@ public abstract class BaseAlertDialog<T extends BaseAlertDialog<T>> extends Base
         mTvBtnRight.setGravity(Gravity.CENTER);
     }
 
+    public String getmTitle() {
+        return mTitle;
+    }
+
+    public void setmTitle(String mTitle) {
+        this.mTitle = mTitle;
+    }
+
+    public String getmBtnLeftText() {
+        return mBtnLeftText;
+    }
+
+    public void setmBtnLeftText(String mBtnLeftText) {
+        this.mBtnLeftText = mBtnLeftText;
+    }
 
     public String getmBtnRightText() {
         return mBtnRightText;

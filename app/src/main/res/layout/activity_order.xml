@@ -113,6 +113,17 @@
                         android:textSize="@dimen/length_14" />
 
                     <TextView
+                        android:id="@+id/txtEmail"
+                        android:layout_below="@id/txtUsername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/length_5"
+                        android:layout_marginStart="@dimen/length_3"
+                        android:text="a@gmail.com"
+                        android:textColor="@color/text_btn"
+                        android:textSize="@dimen/length_14" />
+
+                    <TextView
                         android:layout_alignParentRight="true"
                         android:id="@+id/txtPhoneNumber"
                         android:layout_width="wrap_content"
@@ -123,7 +134,7 @@
                         android:textSize="@dimen/length_14" />
 
                     <TextView
-                        android:layout_below="@id/txtUsername"
+                        android:layout_below="@id/txtEmail"
                         android:layout_marginTop="@dimen/length_5"
                         android:id="@+id/txtAddress"
                         android:layout_width="wrap_content"
@@ -217,7 +228,7 @@
         android:id="@+id/txtTip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/text_main"
+        android:background="@color/transparent_90"
         android:gravity="center"
         android:padding="@dimen/length_10"
         android:text="Vui lòng chọn ít nhất 1 sản phẩm"
@@ -233,36 +244,23 @@
         android:layout_height="@dimen/length_55"
         android:layout_alignParentBottom="true"
         android:background="@color/white">
-        <!--HOme-->
-        <LinearLayout
-            android:id="@+id/btnCheckAll"
-            android:clickable="true"
-            android:layout_weight="1"
-            android:background="@drawable/bg_press_item"
-            android:paddingLeft="@dimen/length_9"
-            android:paddingRight="@dimen/length_9"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
 
-
-        </LinearLayout>
 
         <!--Total Price-->
         <RelativeLayout
+            android:layout_weight="1"
             android:visibility="visible"
             android:gravity="center_vertical"
             android:id="@+id/rlTotalPrice"
             android:paddingLeft="@dimen/length_10"
             android:paddingRight="@dimen/length_10"
             android:background="@color/white"
-            android:layout_width="@dimen/length_180"
+            android:layout_width="0dp"
             android:layout_height="match_parent">
 
             <TextView
                 android:textColor="@color/text_main"
-                android:text="Tổng: "
+                android:text="Tổng cộng: "
                 android:maxLines="1"
                 android:ellipsize="end"
 

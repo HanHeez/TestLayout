@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
@@ -29,6 +31,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,9 +44,15 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     RecyclerView rvShopHome;
     @BindView(R.id.rvCategory)
     RecyclerView rvCategory;
+    @BindView(R.id.imgStyleRv)
+    ImageView imgStyleRv;
+
     private ShopHomeRowAdapter shopHomeRowAdapter;
     private ShopHomeGridAdapter shopHomeGridAdapter;
     private ShopSubCategoryAdapter shopSubCategoryAdapter;
+
+    private LinearLayoutManager rowLayoutManager;
+    private GridLayoutManager gridLayoutManager;
 
     private List<Product> productList;
     private List<SubCategory> subCategoryList;
@@ -91,7 +100,23 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
         shopCategoryPresenter.attachView(this);
     }
 
-
+    private boolean isRow = false;
+    @OnClick(R.id.btnStyleRv)
+    public void changeStyleRv() {
+        if (isRow) {
+            rvShopHome.setLayoutManager(gridLayoutManager);
+            rvShopHome.setAdapter(shopHomeGridAdapter);
+            imgStyleRv.setImageDrawable(getResources().getDrawable(R.drawable.apk_classify_two));
+            shopHomeGridAdapter.notifyDataSetChanged();
+            isRow = false;
+        } else {
+            rvShopHome.setLayoutManager(rowLayoutManager);
+            rvShopHome.setAdapter(shopHomeRowAdapter);
+            imgStyleRv.setImageDrawable(getResources().getDrawable(R.drawable.apk_classify_one));
+            shopHomeRowAdapter.notifyDataSetChanged();
+            isRow = true;
+        }
+    }
 
     @Override
     public void initDatas() {
@@ -136,8 +161,9 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 //        rvShopHome.setLayoutManager(layoutManagerNews);
 //        rvShopHome.setAdapter(shopHomeRowAdapter);
 
-        GridLayoutManager gridLayoutManagerShop = new GridLayoutManager(mContext, 2);
-        rvShopHome.setLayoutManager(gridLayoutManagerShop);
+        gridLayoutManager = new GridLayoutManager(mContext, 2);
+        rowLayoutManager = new LinearLayoutManager(mContext);
+        rvShopHome.setLayoutManager(gridLayoutManager);
         rvShopHome.setAdapter(shopHomeGridAdapter);
 
         shopHomeRowAdapter.setOnItemClickListener((adapter, view, position) -> {

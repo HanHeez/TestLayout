@@ -1,6 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlUserInfo"
+    android:visibility="visible"
+    android:paddingTop="@dimen/length_7"
+    android:paddingLeft="@dimen/length_7"
+    android:paddingRight="@dimen/length_7"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/length_160">
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView
+        android:id="@+id/btnDelete"
+        android:layout_marginRight="@dimen/length_10"
+        android:layout_marginTop="@dimen/length_13"
+        android:layout_toLeftOf="@id/btnEdit"
+        android:src="@drawable/dadu_btn_delete_hover"
+        android:layout_width="@dimen/length_20"
+        android:layout_height="@dimen/length_20" />
+
+    <ImageView
+        android:id="@+id/btnEdit"
+        android:layout_marginRight="@dimen/length_10"
+        android:layout_marginTop="@dimen/length_13"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/all_ic_babyphoto_edit_press"
+        android:layout_width="@dimen/length_20"
+        android:layout_height="@dimen/length_20" />
+    <TextView
+        android:id="@+id/txtUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/length_10"
+        android:layout_marginStart="@dimen/length_3"
+        android:text="Nguyễn Huỳnh Long"
+        android:textColor="@color/text_main"
+        android:textSize="@dimen/length_15" />
+
+    <TextView
+        android:layout_marginTop="@dimen/length_5"
+        android:layout_below="@id/txtUsername"
+        android:id="@+id/txtPhoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/length_3"
+        android:text="0982292721"
+        android:textColor="@color/text_main"
+        android:textSize="@dimen/length_14" />
+
+    <TextView
+        android:layout_marginTop="@dimen/length_5"
+        android:layout_below="@id/txtPhoneNumber"
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/length_3"
+        android:text="a@gmail.com"
+        android:textColor="@color/text_main"
+        android:textSize="@dimen/length_14" />
+
+    <TextView
+        android:layout_below="@id/txtEmail"
+        android:layout_marginTop="@dimen/length_5"
+        android:id="@+id/txtAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/length_3"
+        android:text="Số 25 ngõ 37 đại đồng, Hoàng Mai, Hà Nội"
+        android:textColor="@color/text_sub"
+        android:textSize="@dimen/length_13" />
+
+    <TextView
+
+        android:id="@+id/txtDefault"
+        android:layout_marginTop="@dimen/length_5"
+        android:paddingTop="@dimen/length_2"
+        android:paddingBottom="@dimen/length_2"
+        android:paddingLeft="@dimen/length_10"
+        android:paddingRight="@dimen/length_10"
+        android:textSize="@dimen/length_14"
+        android:textColor="@color/text_member"
+        android:text="Địa chỉ thanh toán mặc định"
+        android:background="@drawable/bg_round_item_user_info"
+        android:layout_below="@id/txtAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:background="@color/divider_1px"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="1dp" />
+</RelativeLayout>

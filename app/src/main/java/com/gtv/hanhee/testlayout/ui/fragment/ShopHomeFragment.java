@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
@@ -50,6 +51,8 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     Banner banner;
     @BindView(R.id.rvShopHome)
     RecyclerView rvShopHome;
+    @BindView(R.id.imgStyleRv)
+    ImageView imgStyleRv;
 
     private ShopHomeRowAdapter shopHomeRowAdapter;
     private ShopHomeGridAdapter shopHomeGridAdapter;
@@ -59,7 +62,7 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     ShopHomePresenter shopHomePresenter;
     private LinearLayoutManager rowLayoutManager;
     private GridLayoutManager gridLayoutManager;
-
+    private boolean isGrid = false;
     @Override
     public int getLayoutResId() {
         return R.layout.fragment_shop_home;
@@ -152,11 +155,13 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
         if (isRow) {
             rvShopHome.setLayoutManager(gridLayoutManager);
             rvShopHome.setAdapter(shopHomeGridAdapter);
+            imgStyleRv.setImageDrawable(getResources().getDrawable(R.drawable.apk_classify_two));
             shopHomeGridAdapter.notifyDataSetChanged();
             isRow = false;
         } else {
             rvShopHome.setLayoutManager(rowLayoutManager);
             rvShopHome.setAdapter(shopHomeRowAdapter);
+            imgStyleRv.setImageDrawable(getResources().getDrawable(R.drawable.apk_classify_one));
             shopHomeRowAdapter.notifyDataSetChanged();
             isRow = true;
         }

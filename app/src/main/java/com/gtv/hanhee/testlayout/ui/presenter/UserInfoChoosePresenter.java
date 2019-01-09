@@ -33,4 +33,19 @@ public class UserInfoChoosePresenter extends RxPresenter<UserInfoChooseContract.
                 );
         addSubscrebe(disposable);
     }
+
+    @Override
+    public void removeAddressInfo(String accessToken, String addressId) {
+        Disposable disposable = biboManager.removeAddressInfo(accessToken, addressId)
+                .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
+                        (beans) -> {
+                            mView.successRemoveAddressInfo(beans);
+                        }
+                        ,
+                        (e) -> {
+                            mView.showError();
+                        }
+                );
+        addSubscrebe(disposable);
+    }
 }

@@ -20,7 +20,6 @@
 
             <!--shop toolbar -->
             <include layout="@layout/layout_shop_toolbar" />
-
             <!--Tablayout-->
             <com.ogaclejapan.smarttablayout.SmartTabLayout
                 android:id="@id/tabLayout"

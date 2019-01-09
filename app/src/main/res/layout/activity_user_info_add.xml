@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.UserInfoAddActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/tabbar_height"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/length_15"
+        android:paddingRight="@dimen/length_15">
+
+
+        <!--Name-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputEdtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/length_10">
+
+                <EditText
+                    android:id="@+id/edtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Họ Tên"
+                    android:maxLength="200"
+                    android:singleLine="true"
+                    android:paddingRight="@dimen/length_25"
+                    android:textSize="@dimen/length_14" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/btnRemoveName"
+                android:layout_width="@dimen/length_18"
+                android:layout_height="@dimen/length_18"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/length_18"
+                android:layout_marginRight="@dimen/length_3"
+                android:src="@drawable/btg_icon_cross_pressed" />
+        </RelativeLayout>
+
+        <!--Phone-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputEdtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/length_10">
+
+                <EditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Số Điện Thoại"
+                    android:inputType="number"
+                    android:maxLength="200"
+                    android:singleLine="true"
+                    android:paddingRight="@dimen/length_25"
+                    android:textSize="@dimen/length_14" />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/btnRemovePhone"
+                android:layout_width="@dimen/length_18"
+                android:layout_height="@dimen/length_18"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/length_18"
+                android:layout_marginRight="@dimen/length_3"
+                android:src="@drawable/btg_icon_cross_pressed" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputEdtAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/length_10">
+                <EditText
+                    android:id="@+id/edtAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Địa Chỉ Nhận Hàng"
+                    android:maxLength="350"
+                    android:singleLine="true"
+
+                    android:textSize="@dimen/length_14" />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/btnRemoveAddress"
+                android:layout_width="@dimen/length_18"
+                android:layout_height="@dimen/length_18"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/length_18"
+                android:layout_marginRight="@dimen/length_3"
+                android:src="@drawable/btg_icon_cross_pressed" />
+        </RelativeLayout>
+
+        <!--Email-->
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/inputEdtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/length_10">
+                <EditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Địa Chỉ Email"
+                    android:maxLength="350"
+                    android:singleLine="true"
+
+                    android:textSize="@dimen/length_14" />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/btnRemoveEmail"
+                android:layout_width="@dimen/length_18"
+                android:layout_height="@dimen/length_18"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/length_18"
+                android:layout_marginRight="@dimen/length_3"
+                android:src="@drawable/btg_icon_cross_pressed" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/topDivider"
+            android:layout_marginTop="@dimen/length_15"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cbDefault"
+                android:layout_width="@dimen/length_19"
+                android:layout_height="@dimen/length_19"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/length_5"
+                android:layout_marginRight="@dimen/length_12"
+                android:background="@drawable/bg_round_checkbox_cart"
+                android:button="@null"
+                android:gravity="center_vertical" />
+
+
+            <TextView
+                android:id="@+id/txtShopName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/cbShop"
+                android:gravity="center_vertical"
+                android:text="Đặt làm địa chỉ nhận hàng mặc định"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/txt_shop_name_detail" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--Custom Toolbar-->
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/white"
+        android:elevation="@dimen/length_0">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/nav_back_width"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_press_item"
+            android:clickable="true"
+            android:padding="@dimen/length_10"
+            android:src="@drawable/nav_btn_back_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Thêm địa chỉ nhận hàng"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_15" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/length_1"
+            android:layout_alignParentBottom="true"
+            android:background="@color/grey300" />
+    </RelativeLayout>
+    <!--End Custom Toolbar-->
+
+
+    <TextView
+        android:layout_above="@id/lnBottomBar"
+        android:id="@+id/txtTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_shop_deliver"
+        android:gravity="center"
+        android:padding="@dimen/length_10"
+        android:text="Vui lòng nhập thông tin chính xác"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+
+    <!--Custom Bottom Bar-->
+    <LinearLayout
+        android:id="@+id/lnBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_bar_height"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+
+
+        <!--Add User Info-->
+        <LinearLayout
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_shop_discount_circle"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/length_5"
+                android:gravity="center"
+                android:text="Lưu thông tin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/txt_shop_name_detail" />
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

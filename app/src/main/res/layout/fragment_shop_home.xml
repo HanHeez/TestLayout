@@ -109,6 +109,7 @@
                         android:scaleType="centerInside" />
 
                     <TextView
+                        android:layout_centerVertical="true"
                         android:id="@+id/txtDiscountPercent"
                         android:layout_width="@dimen/length_45"
                         android:layout_height="@dimen/length_45"
@@ -121,7 +122,6 @@
 
 
                     <View
-
                         android:layout_width="@dimen/length_1"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -212,6 +212,7 @@
                                     android:textSize="@dimen/length_15" />
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/txtProductDiscountTimeNo2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -309,6 +310,7 @@
                                     android:textSize="@dimen/length_15" />
 
                                 <TextView
+                                    android:visibility="gone"
                                     android:id="@+id/txtProductDiscountTimeNo3"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -367,10 +369,10 @@
                     android:clickable="true">
 
                     <ImageView
+                        android:id="@+id/imgStyleRv"
                         android:layout_width="@dimen/length_15"
                         android:layout_height="@dimen/length_15"
                         android:layout_centerInParent="true"
-
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/length_5"
 
@@ -379,6 +381,7 @@
                 </RelativeLayout>
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:id="@+id/btnMore"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

@@ -32,6 +32,7 @@ import com.gtv.hanhee.testlayout.ui.adapter.CartAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.CartContract;
 import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
 import com.gtv.hanhee.testlayout.ui.customview.FlipVerticalSwingEnterDialog.BaseAnimatorSet;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FadeExit;
 import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FallEnter;
 import com.gtv.hanhee.testlayout.ui.customview.animationstyle.SlideBottomExit;
 import com.gtv.hanhee.testlayout.ui.customview.dialog.NormalDialog;
@@ -97,8 +98,8 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     private long totalPrice = 0;
     private int amountProductCart = 0;
 
-    BaseAnimatorSet mBasIn;
-    BaseAnimatorSet mBasOut;
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
 
     @Override
     public int getLayoutId() {
@@ -319,7 +320,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
         }
         if (isCheckAtLeast) {
             mBasIn = new FallEnter();
-            mBasOut = new SlideBottomExit();
+            mBasOut = new FadeExit();
             final NormalDialog dialog = new NormalDialog(mContext);
             dialog.setmBtnMiddleText("Xóa");
             dialog.setmBtnRightText("Xóa");

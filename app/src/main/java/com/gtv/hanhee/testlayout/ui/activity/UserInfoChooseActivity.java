@@ -7,14 +7,22 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.AddressInfo;
+import com.gtv.hanhee.testlayout.model.Message;
 import com.gtv.hanhee.testlayout.ui.adapter.AddressInfoAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.UserInfoChooseContract;
 import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
+import com.gtv.hanhee.testlayout.ui.customview.FlipVerticalSwingEnterDialog.BaseAnimatorSet;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FadeExit;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FallEnter;
+import com.gtv.hanhee.testlayout.ui.customview.animationstyle.SlideBottomExit;
+import com.gtv.hanhee.testlayout.ui.customview.dialog.NormalDialog;
+import com.gtv.hanhee.testlayout.ui.customview.dialog.OnBtnClickL;
 import com.gtv.hanhee.testlayout.ui.presenter.UserInfoChoosePresenter;
 import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -26,13 +34,15 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class UserInfoChooseActivity extends BaseActivity implements UserInfoChooseContract.View, OnItemRvClickListener<Object> {
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
     @BindView(R.id.rvAddress)
     RecyclerView rvAddress;
-// 
+    @BindView(R.id.btnAddUserInfo)
+    LinearLayout btnAddUserInfo;
 
     @Inject
     UserInfoChoosePresenter mPresenter;
@@ -43,6 +53,9 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
     private static final String TOKEN_USER = "tokenUser";
     private String tokenUser;
     private int addressPosition = 0;
+    private BaseAnimatorSet mBasIn;
+    private BaseAnimatorSet mBasOut;
+    private String addressDefaultId = "";
 
     @Override
     public int getLayoutId() {
@@ -71,6 +84,17 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
 
     }
 
+
+    @OnClick(R.id.btnBack)
+    public void onBack() {
+        onBackPressed();
+    }
+
+    @OnClick(R.id.btnAddUserInfo)
+    public void addUserInfo() {
+        UserInfoAddActivity.startActivity(this, "");
+    }
+
     @Override
     public void initDatas() {
         activityComponent().inject(this);
@@ -87,6 +111,12 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.getListAddressInfo(token);
+    }
+
+    @Override
     public void configViews() {
 //        Setting RefreshLayout -----------------
         refreshLayout.setRefreshHeader(new CustomFragmentHeader(mContext));
@@ -94,6 +124,7 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
+                mPresenter.getListAddressInfo(token);
             }
         });
 
@@ -106,15 +137,58 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
         rvAddress.setLayoutManager(layoutManagerNews);
         rvAddress.setAdapter(addressInfoAdapter);
         addressInfoAdapter.setOnItemClickListener((adapter, view, position) -> {
-            //TODO : set click address
+            SharedPreferencesUtil.getInstance().putString("addressDefaultId", addressInfoList.get(position).getId());
+            finish();
         });
     }
 
 
     @Override
     public void onItemRvClick(View view, Object item, int adapterPosition) {
-
+        if (item instanceof AddressInfo) {
+            AddressInfo addressInfo = (AddressInfo) item;
+            switch (view.getId()) {
+                case R.id.btnDelete:
+                    showAlertDelete(addressInfo.getAddress(), addressInfo.getId(), addressInfo.isDefault());
+                    break;
+                case R.id.btnEdit:
+                    UserInfoAddActivity.startActivity(this, addressInfo.getId());
+                    break;
+            }
+        }
     }
+
+    private void showAlertDelete(String address, String addressId, Boolean isDefaultAddress) {
+        mBasIn = new FallEnter();
+        mBasOut = new FadeExit();
+        final NormalDialog dialog = new NormalDialog(mContext);
+        dialog.setmBtnRightText("Xóa");
+        dialog.content("Bạn có muốn xóa địa chỉ này? \n" + address)//
+                .style(NormalDialog.STYLE_TWO)//
+                .titleTextSize(23)//
+                .showAnim(mBasIn)//
+                .dismissAnim(mBasOut)//
+                .show();
+
+        dialog.setOnBtnClickL(
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        dialog.dismiss();
+                    }
+                },
+                new OnBtnClickL() {
+                    @Override
+                    public void onBtnClick() {
+                        if (isDefaultAddress) {
+                            SharedPreferencesUtil.getInstance().putString("addressDefaultId", "");
+                        }
+                        mPresenter.removeAddressInfo(token, addressId);
+                        dialog.dismiss();
+                    }
+                });
+    }
+
 
     @Override
     public void showError() {
@@ -126,10 +200,31 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
 
     @Override
     public void showListAddressInfo(List<AddressInfo> addressInfoListResult) {
-        addressPosition = SharedPreferencesUtil.getInstance().getInt("addressUser", 0);
+        addressInfoList.clear();
+        addressInfoList.addAll(addressInfoListResult);
         if (addressInfoListResult.size() > 0) {
-            addressInfo = addressInfoListResult.get(addressPosition);
+            addressDefaultId = SharedPreferencesUtil.getInstance().getString("addressDefaultId", "");
+            if (addressDefaultId.equals("")) {
+                SharedPreferencesUtil.getInstance().putString("addressDefaultId", addressInfoList.get(0).getId());
+                addressInfoList.get(0).setDefault(true);
+            } else {
+                for (int i = 0; i < addressInfoList.size(); i++) {
+                    if (addressInfoList.get(i).getId().equals(addressDefaultId)) {
+                        AddressInfo addressInfo = addressInfoList.get(i);
+                        addressInfo.setDefault(true);
+                        addressInfoList.remove(i);
+                        addressInfoList.add(0, addressInfo);
+                        break;
+                    }
+                }
+            }
         }
+        addressInfoAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void successRemoveAddressInfo(Message message) {
+        mPresenter.getListAddressInfo(token);
     }
 }
 
