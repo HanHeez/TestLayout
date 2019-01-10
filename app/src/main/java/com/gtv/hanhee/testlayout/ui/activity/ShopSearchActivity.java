@@ -37,6 +37,7 @@ import butterknife.OnClick;
 
 public class ShopSearchActivity extends BaseActivity implements ShopSearchContract.View {
 
+
     public static final String INTENT_QUERY = "query";
 
     public static void startActivity(Context context, String query) {
@@ -104,6 +105,11 @@ public class ShopSearchActivity extends BaseActivity implements ShopSearchContra
 //            }
 //        });
 //        initSearchHistory();
+    }
+
+    @Override
+    protected void onRefreshing() {
+
     }
 
 
@@ -351,4 +357,8 @@ public class ShopSearchActivity extends BaseActivity implements ShopSearchContra
 //        }
     }
 
+    @Override
+    public void onSkeletonViewClick(View view) {
+
+    }
 }

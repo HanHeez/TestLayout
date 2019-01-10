@@ -11,6 +11,8 @@ import com.gtv.hanhee.testlayout.model.Message;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.model.SubCategory;
+import com.gtv.hanhee.testlayout.model.User;
+import com.gtv.hanhee.testlayout.ui.activity.UserInfoAddActivity;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -145,6 +147,16 @@ public interface BiboService {
                                  @Field("phoneNumber") String phoneNumber,
                                  @Field("email") String email,
                                  @Field("address") String address);
+
+//    User -------------
+
+    @GET("user/get-info")
+    Observable<User> getInfoUserById(@Header("Authorization") String accessToken, @Query("_id") String _id);
+
+    @GET("user/get-info")
+    Observable<User> getInfoUserMom(@Header("Authorization") String accessToken);
+
 }
+
 
 

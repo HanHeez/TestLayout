@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
@@ -43,6 +44,9 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
     RecyclerView rvAddress;
     @BindView(R.id.btnAddUserInfo)
     LinearLayout btnAddUserInfo;
+    @BindView(R.id.rootView)
+    RelativeLayout rootView;
+
 
     @Inject
     UserInfoChoosePresenter mPresenter;
@@ -95,11 +99,42 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
         UserInfoAddActivity.startActivity(this, "");
     }
 
+
+    //    show loading screen ---------
     @Override
     public void initDatas() {
         activityComponent().inject(this);
         mPresenter.attachView(this);
+        showLoadingScreen(rootView);
+        onRefreshing();
+    }
+
+    //    onRefreshing data ------------
+
+    @Override
+    protected void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
         mPresenter.getListAddressInfo(token);
+    }
+
+    //    show error screen -------------
+    @Override
+    public void showError() {
+        isErrorData = true;
+        showErrorScreen(rootView);
+
+    }
+
+    //    click loading screen -----------
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
     }
 
     @Override
@@ -113,7 +148,7 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getListAddressInfo(token);
+        onRefreshing();
     }
 
     @Override
@@ -124,7 +159,7 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
-                mPresenter.getListAddressInfo(token);
+                onRefreshing();
             }
         });
 
@@ -189,11 +224,6 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
                 });
     }
 
-
-    @Override
-    public void showError() {
-    }
-
     @Override
     public void complete() {
     }
@@ -220,12 +250,19 @@ public class UserInfoChooseActivity extends BaseActivity implements UserInfoChoo
             }
         }
         addressInfoAdapter.notifyDataSetChanged();
+        //        Close loading screen ------------------
+        isErrorData = false;
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
+        }
     }
 
     @Override
     public void successRemoveAddressInfo(Message message) {
         mPresenter.getListAddressInfo(token);
     }
+
+
 }
 
 

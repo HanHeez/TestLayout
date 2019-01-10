@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gtv.hanhee.testlayout.R;
@@ -74,6 +75,8 @@ public class UserInfoAddActivity extends BaseActivity implements UserInfoAddCont
     CheckBox cbDefault;
     @BindView(R.id.txtTip)
     TextView txtTip;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
 
 
     @Inject
@@ -118,6 +121,11 @@ public class UserInfoAddActivity extends BaseActivity implements UserInfoAddCont
 //        mPresenter.getCartProduct();
     }
 
+
+    @Override
+    protected void onRefreshing() {
+
+    }
 
 
     @Override
@@ -348,6 +356,11 @@ public class UserInfoAddActivity extends BaseActivity implements UserInfoAddCont
         edtAddress.setText(addressInfoResult.getAddress());
         edtName.setText(addressInfoResult.getFullName());
         edtEmail.setText(addressInfoResult.getEmail());
+    }
+
+    @Override
+    public void onSkeletonViewClick(View view) {
+
     }
 
     private static class MyHandler extends Handler {

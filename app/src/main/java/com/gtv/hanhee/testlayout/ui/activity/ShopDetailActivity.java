@@ -2,10 +2,12 @@ package com.gtv.hanhee.testlayout.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
@@ -39,6 +41,8 @@ public class ShopDetailActivity extends BaseActivity implements ShopContract.Vie
     SlidingTabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    @BindView(R.id.rootView)
+    CoordinatorLayout rootView;
 
     @Inject
     ShopPresenter shopPresenter;
@@ -86,6 +90,11 @@ public class ShopDetailActivity extends BaseActivity implements ShopContract.Vie
         activityComponent().inject(this);
         shopPresenter.attachView(this);
 //        shopPresenter.getCartProduct();
+    }
+
+    @Override
+    protected void onRefreshing() {
+
     }
 
     @Override
@@ -156,6 +165,11 @@ public class ShopDetailActivity extends BaseActivity implements ShopContract.Vie
 
     @Override
     public void showListCategory(List<Category> categoryListResult) {
+
+    }
+
+    @Override
+    public void onSkeletonViewClick(View view) {
 
     }
 }

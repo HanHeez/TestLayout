@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!--Live City-->
+    <LinearLayout
+        android:layout_marginTop="@dimen/length_5"
+        android:id="@+id/lnCity"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginRight="@dimen/length_10"
+            android:text="Sống tại"
+            android:gravity="end"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_14"
+            android:layout_width="@dimen/length_100"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txtCity"
+            android:text="Hà Nội"
+            android:textColor="@color/text_member"
+            android:textSize="@dimen/length_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:layout_marginTop="@dimen/length_5"
+        android:background="@color/divider_1px"
+        android:layout_marginLeft="@dimen/length_110"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Asterism -->
+    <LinearLayout
+        android:layout_marginTop="@dimen/length_5"
+        android:id="@+id/lnAsterism"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginRight="@dimen/length_10"
+            android:text="Chòm sao"
+            android:gravity="end"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_14"
+            android:layout_width="@dimen/length_100"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txtAsterism"
+            android:text="Bọ Cạp"
+            android:textColor="@color/text_member"
+            android:textSize="@dimen/length_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="@dimen/length_5"
+        android:background="@color/divider_1px"
+        android:layout_marginLeft="@dimen/length_110"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Email -->
+    <LinearLayout
+        android:layout_marginTop="@dimen/length_5"
+        android:id="@+id/lnEmail"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginRight="@dimen/length_10"
+            android:text="Email"
+            android:gravity="end"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_14"
+            android:layout_width="@dimen/length_100"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/txtEmail"
+            android:text="abc@gmail.com"
+            android:textColor="@color/text_member"
+            android:textSize="@dimen/length_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="@dimen/length_5"
+        android:background="@color/divider_1px"
+        android:layout_marginLeft="@dimen/length_110"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <!--Email -->
+    <LinearLayout
+        android:layout_marginTop="@dimen/length_5"
+        android:id="@+id/lnJoinGroup"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_marginRight="@dimen/length_10"
+            android:text="Hội nhóm"
+            android:gravity="end"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_14"
+            android:layout_width="@dimen/length_100"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/txtJoinGroupNoData"
+            android:text="Chưa có thông tin"
+            android:textColor="@color/text_member"
+            android:textSize="@dimen/length_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvJoinGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+    </LinearLayout>
+
+
+</LinearLayout>

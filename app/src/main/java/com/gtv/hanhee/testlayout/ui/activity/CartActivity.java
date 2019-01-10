@@ -84,6 +84,9 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
     LinearLayout lnBottomBar;
     @BindView(R.id.txtTip)
     TextView txtTip;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
+
     private Button btnCartGoHome;
     private View emptyView;
     private final MyHandler mHandler = new MyHandler(this);
@@ -133,6 +136,18 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
         activityComponent().inject(this);
         cartPresenter.attachView(this);
         showTip = false;
+
+        showLoadingScreen(rootView);
+        onRefreshing();
+
+    }
+
+    @Override
+    protected void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
+
         cartPresenter.getCartProduct();
     }
 
@@ -153,7 +168,7 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
-                cartPresenter.getCartProduct();
+                onRefreshing();
             }
         });
 //        Setting Recycler View ---------------
@@ -455,8 +470,12 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
         }
     }
 
+
+    //    show error screen -------------
     @Override
     public void showError() {
+        isErrorData = true;
+        showErrorScreen(rootView);
     }
 
     @Override
@@ -499,6 +518,22 @@ public class CartActivity extends BaseActivity implements CartContract.View, OnI
             cartAdapter.notifyDataSetChanged();
         }
         checkedSizeCart(false);
+        //        Close loading screen ------------------
+
+        isErrorData = false;
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
+        }
+    }
+
+    //    click loading screen -----------
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
     }
 
     private static class MyHandler extends Handler {

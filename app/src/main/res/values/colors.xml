@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Home-->
-
     <color name="bg_home_week_color">#F07BB5</color>
     <color name="bg_home_week_color_shadow">#F2F2F2</color>
     <color name="bg_home_week_back_color">#F9CAE1</color>

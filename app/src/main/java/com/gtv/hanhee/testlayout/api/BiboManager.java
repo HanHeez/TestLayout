@@ -2,28 +2,18 @@ package com.gtv.hanhee.testlayout.api;
 
 import com.gtv.hanhee.testlayout.dagger2.PreferencesHelper;
 import com.gtv.hanhee.testlayout.model.AddressInfo;
-import com.gtv.hanhee.testlayout.model.Message;
-import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.model.Category;
+import com.gtv.hanhee.testlayout.model.Message;
 import com.gtv.hanhee.testlayout.model.Product;
-import com.gtv.hanhee.testlayout.model.Shop;
+import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.model.SubCategory;
+import com.gtv.hanhee.testlayout.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import io.reactivex.Observable;
-import retrofit2.http.DELETE;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.POST;
-import retrofit2.http.PUT;
-import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public class BiboManager {
 
@@ -46,37 +36,45 @@ public class BiboManager {
     public Observable<List<Category>> getListCategory(String accessToken) {
         return service.getListCategory(accessToken);
     }
+
     public Observable<List<ShopBanner>> getShopHomeBanner(String accessToken, int skip, int limit) {
         return service.getShopHomeBanner(accessToken, skip, limit);
     }
+
     public Observable<List<Product>> getListProductNewest(String accessToken, int skip, int limit) {
         return service.getListProductNewest(accessToken, skip, limit);
     }
+
     public Observable<List<SubCategory>> getListSubCategory(String accessToken, String categoryId, int skip, int limit) {
-        return service.getListSubCategory(accessToken, categoryId,  skip, limit);
+        return service.getListSubCategory(accessToken, categoryId, skip, limit);
     }
+
     public Observable<Product> getProduct(String accessToken, String id) {
-        return service.getProduct(accessToken,id);
+        return service.getProduct(accessToken, id);
     }
-    public Observable<List<Product>>getListProductRecommend(String accessToken, String categoryId, int skip, int limit) {
+
+    public Observable<List<Product>> getListProductRecommend(String accessToken, String categoryId, int skip, int limit) {
         return service.getListProductRecommend(accessToken, categoryId, skip, limit);
     }
+
     public Observable<List<Product>> getListProductByCategory(String accessToken, String categoryId, int skip, int limit) {
         return service.getListProductByCategory(accessToken, categoryId, skip, limit);
     }
+
     public Observable<List<Product>> getListProductBySubCategory(String accessToken, String subCategoryId, int skip, int limit) {
         return service.getListProductBySubCategory(accessToken, subCategoryId, skip, limit);
     }
 
-//    Cart -----------------
+    //    Cart -----------------
     public Observable<Message> addProductToCart(String accessToken, String productId, int quantity) {
         return service.addProductToCart(accessToken, productId, quantity);
     }
+
     public Observable<Message> removeAllProductOnCart(String accessToken) {
         return service.removeAllProductOnCart(accessToken);
     }
 
-//    User  ------------------
+//    User Address Shop ------------------
 
 
     public Observable<List<AddressInfo>> getListAddressInfo(String accessToken) {
@@ -97,6 +95,15 @@ public class BiboManager {
 
     public Observable<Message> updateAddressInfo(String accessToken, String addressId, String fullName, String phoneNumber, String email, String address) {
         return service.updateAddressInfo(accessToken, addressId, fullName, phoneNumber, email, address);
+    }
+
+    //    User App ----------
+    public Observable<User> getInfoUserById(String accessToken, String userId) {
+        return service.getInfoUserById(accessToken, userId);
+    }
+
+    public Observable<User> getInfoUserMom(String accessToken) {
+        return service.getInfoUserMom(accessToken);
     }
 
 //    Order ----------------------

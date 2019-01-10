@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -92,6 +93,8 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     TextView txtDescription;
     @BindView(R.id.txtTip)
     TextView txtTip;
+    @BindView(R.id.rootView)
+    RelativeLayout rootView;
 
     private List<List<Product>> listBannerRecommend = new ArrayList<>();
     private ProductImageDetailAdapter productImageDetailAdapter;
@@ -131,14 +134,49 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
 
     }
 
+
+
+
+    //    show loading screen ---------
     @Override
     public void initDatas() {
         activityComponent().inject(this);
-
         showTip = false;
         productDetailPresenter.attachView(this);
-        productDetailPresenter.getProduct(token, productId);
+        showLoadingScreen(rootView);
+        onRefreshing();
     }
+
+    //    onRefreshing data ------------
+    @Override
+    protected void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
+        productDetailPresenter.getProduct(token, productId);
+
+    }
+
+    //    show error screen -------------
+    @Override
+    public void showError() {
+        isErrorData = true;
+        showErrorScreen(rootView);
+    }
+
+
+    //    click loading screen -----------
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
+
+
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -190,10 +228,7 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
         settingAmountCart();
     }
 
-    @Override
-    public void showError() {
 
-    }
 
     @Override
     public void complete() {
@@ -374,7 +409,14 @@ public class ProductDetailActivity extends BaseActivity implements ProductDetail
     public void showListProductBySubCategory(List<Product> productListResult) {
         listBannerRecommend.add(productListResult);
         bannerRecommend.setPages(listBannerRecommend, (MZHolderCreator<ProductRecommendViewHolder>) () -> new ProductRecommendViewHolder(this));
+//              Close loading screen ------------------
+        isErrorData = false;
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
+        }
     }
+
+
 
     private static class MyHandler extends Handler {
         private final WeakReference<ProductDetailActivity> mActivity;

@@ -42,6 +42,6 @@
             android:text="Thử lại"
             android:textAllCaps="false"
             android:textColor="#ffff4978"
-            android:textSize="@dimen/textsize_15" />
+            android:textSize="@dimen/length_15" />
     </LinearLayout>
 </RelativeLayout>

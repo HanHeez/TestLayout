@@ -30,6 +30,8 @@ import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FallEnter;
 import com.gtv.hanhee.testlayout.ui.customview.animationstyle.SlideBottomExit;
 import com.gtv.hanhee.testlayout.ui.customview.dialog.NormalDialog;
 import com.gtv.hanhee.testlayout.ui.customview.dialog.OnBtnClickL;
+import com.gtv.hanhee.testlayout.ui.customview.skeleton.Skeleton;
+import com.gtv.hanhee.testlayout.ui.customview.skeleton.SkeletonScreen;
 import com.gtv.hanhee.testlayout.utils.StatusBarMainUtil;
 
 import java.lang.ref.WeakReference;
@@ -41,7 +43,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements OnSkeletonViewClickListener {
     protected Context mContext;
     protected int statusBarColor = 0;
     protected View statusBarView = null;
@@ -90,6 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void initDataGetFromIntent(Bundle savedInstanceState){
     }
+
 
     protected void avoidSemClipBoardManagerError() {
         try {
@@ -146,6 +149,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected abstract void initToolBar();
 
     protected abstract void initDatas();
+
+    protected abstract void onRefreshing();
 
     /**
      * config for View
@@ -369,5 +374,30 @@ public abstract class BaseActivity extends AppCompatActivity {
             });
 
         }
+    }
+
+    protected SkeletonScreen skeletonScreen;
+    protected boolean isErrorData = false;
+
+    public void showLoadingScreen(View rootView) {
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
+        }
+        skeletonScreen = Skeleton.bind(rootView)
+                .load(R.layout.common_loading_view)
+                .duration(1500)
+                .color(R.color.shimmer_color_for_image)
+                .show();
+    }
+
+    public void showErrorScreen(View rootView) {
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
+        }
+        skeletonScreen = Skeleton.bind(rootView)
+                .load(R.layout.common_empty_view, this)
+                .duration(0)
+                .color(R.color.shimmer_color_for_image)
+                .show();
     }
 }

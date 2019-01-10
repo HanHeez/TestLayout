@@ -47,7 +47,7 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     private List<String> mTitles = new ArrayList<>();
     private List<Fragment> mFragments = new ArrayList<>();
     @Inject
-    ShopPresenter shopPresenter;
+    ShopPresenter mPresenter;
     private int amountProductCart = 0;
 
     @Override
@@ -70,30 +70,48 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     @Override
     public void attachView() {
         activityComponent().inject(this);
-        shopPresenter.attachView(this);
+        mPresenter.attachView(this);
 
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        handler.removeCallbacksAndMessages(null);
-        if (shopPresenter !=null) {
-            shopPresenter.detachView();
+        if (mPresenter !=null) {
+            mPresenter.detachView();
         }
     }
 
+//    show loading screen ---------
     @Override
     public void initDatas() {
         showLoadingScreen(rootView);
         onRefreshing();
     }
 
+//    onRefreshing data ------------
     private void onRefreshing() {
         if (isErrorData) {
             showLoadingScreen(rootView);
         }
-        shopPresenter.getListCategory(token);
+        mPresenter.getListCategory(token);
+    }
+
+    //    show error screen -------------
+    @Override
+    public void showError() {
+        isErrorData = true;
+        showErrorScreen(rootView);
+
+    }
+    //    click loading screen -----------
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
     }
 
     @Override
@@ -129,22 +147,14 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
         Intent intent = new Intent(activity, CartActivity.class);
         startActivity(intent);
     }
-    @Override
-    public void showError() {
-        isErrorData = true;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showErrorScreen(rootView);
-            }
-        }, 500);
-    }
+
+
 
     @Override
     public void complete() {
 
     }
-    android.os.Handler handler = new android.os.Handler();
+
     @Override
     public void showListCategory(List<Category> categoryListResult) {
 
@@ -162,18 +172,15 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(communityFlycoTabLayoutAdapter);
         tabLayout.setViewPager(viewPager);
+
+//        Close loading screen ------------------
+
         isErrorData = false;
-        skeletonScreen.hide();
-
-    }
-
-    @Override
-    public void onSkeletonViewClick(View view) {
-        switch (view.getId()) {
-            case R.id.page_tip_eventview:
-                onRefreshing();
-                break;
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
         }
+
     }
+
 }
 

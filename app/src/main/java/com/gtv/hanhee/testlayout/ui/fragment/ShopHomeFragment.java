@@ -206,8 +206,11 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
         productList.addAll(productListResult);
         shopHomeRowAdapter.notifyDataSetChanged();
         shopHomeGridAdapter.notifyDataSetChanged();
+        //        Close loading screen post in ------------------
         isErrorData = false;
-        skeletonScreen.hide();
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
+        }
     }
 
 

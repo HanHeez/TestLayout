@@ -10,14 +10,15 @@
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/toolbar_height"
         android:fillViewport="true">
 
         <LinearLayout
+            android:id="@+id/rootView"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
         <RelativeLayout
             android:id="@+id/layoutHotWord"
             android:layout_width="match_parent"

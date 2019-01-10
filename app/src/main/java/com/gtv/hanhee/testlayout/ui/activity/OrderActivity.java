@@ -2,16 +2,15 @@ package com.gtv.hanhee.testlayout.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
@@ -27,7 +26,6 @@ import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
 import com.gtv.hanhee.testlayout.ui.customview.FlipVerticalSwingEnterDialog.BaseAnimatorSet;
 import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FadeExit;
 import com.gtv.hanhee.testlayout.ui.customview.animationstyle.FallEnter;
-import com.gtv.hanhee.testlayout.ui.customview.animationstyle.SlideBottomExit;
 import com.gtv.hanhee.testlayout.ui.customview.dialog.NormalDialog;
 import com.gtv.hanhee.testlayout.ui.customview.dialog.OnBtnClickL;
 import com.gtv.hanhee.testlayout.ui.presenter.OrderPresenter;
@@ -39,7 +37,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 import javax.inject.Inject;
 
@@ -74,6 +71,10 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     RelativeLayout rlUserInfo;
     @BindView(R.id.txtTip)
     TextView txtTip;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
+    @BindView(R.id.btnSubmit)
+    LinearLayout btnSubmit;
 
     @Inject
     OrderPresenter mPresenter;
@@ -85,10 +86,10 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     private static final String GET_TYPE = "type";
     private static final String PRODUCT_ID = "productId";
     private static final String AMOUNT_BUY_NOW = "amountBuyNow";
-    private String type="";
+    private String type = "";
     private boolean isHaveAddress = false;
     private String addressDefaultId;
-    private String productId="";
+    private String productId = "";
     private Product product;
     private int amountBuyNow;
     private BaseAnimatorSet mBasIn;
@@ -127,42 +128,88 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
 
     }
 
+    //    show loading screen ---------
     @Override
     public void initDatas() {
         activityComponent().inject(this);
         mPresenter.attachView(this);
+        showLoadingScreen(rootView);
+        onRefreshing();
+    }
+
+    //    onRefreshing data ------------
+
+    @Override
+    protected void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
         if (type.equals("buynow")) {
             mPresenter.getProduct(token, productId);
         } else {
             mPresenter.getCartProduct();
         }
-        mPresenter.getListAddressInfo(token);
 
-//        shopPresenter.getCartProduct();
     }
 
+    //    show error screen -------------
+    @Override
+    public void showError() {
+        isErrorData = true;
+        showErrorScreen(rootView);
+
+    }
+
+    //    click loading screen -----------
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
+    }
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<OrderActivity> mActivity;
+
+        public MyHandler(OrderActivity activity) {
+            mActivity = new WeakReference<OrderActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(android.os.Message msg) {
+            OrderActivity activity = mActivity.get();
+            if (activity != null) {
+                // ...
+            }
+        }
+    }
+
+
     @OnClick(R.id.btnBack)
-    public void onBack(){
+    public void onBack() {
         onBackPressed();
     }
 
 
     @OnClick(R.id.btnEditUserInfo)
-    public void onEditUserInfo(){
-       if (isHaveAddress) {
-           Intent intent = new Intent(this, UserInfoChooseActivity.class);
-           startActivity(intent);
-       } else {
-          UserInfoAddActivity.startActivity(this,"");
-       }
-    }
-    @OnClick(R.id.rlAddUserInfo)
-    public void onAddUserInfo(){
-        UserInfoAddActivity.startActivity(this,"");
+    public void onEditUserInfo() {
+        if (isHaveAddress) {
+            Intent intent = new Intent(this, UserInfoChooseActivity.class);
+            startActivity(intent);
+        } else {
+            UserInfoAddActivity.startActivity(this, "");
+        }
     }
 
-    @OnClick(R.id.btnSubmit)
-    public void onSubmitOrder(){
+    @OnClick(R.id.rlAddUserInfo)
+    public void onAddUserInfo() {
+        UserInfoAddActivity.startActivity(this, "");
+    }
+
+
+    public void onSubmitOrder() {
         if (isHaveAddress) {
             mBasIn = new FallEnter();
             mBasOut = new FadeExit();
@@ -200,8 +247,8 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     @Override
     protected void onResume() {
         super.onResume();
-        mPresenter.getProduct(token, productId);
-        mPresenter.getListAddressInfo(token);
+        onRefreshing();
+
     }
 
     @Override
@@ -220,13 +267,7 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
-                if (type.equals("buynow")) {
-                    mPresenter.getProduct(token, productId);
-                    mPresenter.getListAddressInfo(token);
-                } else {
-                    mPresenter.getCartProduct();
-                    mPresenter.getListAddressInfo(token);
-                }
+                onRefreshing();
             }
         });
 
@@ -247,9 +288,6 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
 
     }
 
-    @Override
-    public void showError() {
-    }
 
     @Override
     public void complete() {
@@ -262,13 +300,16 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
         productList.clear();
         productSectionList.clear();
         productList.add(product);
+
         addProductToList();
+        mPresenter.getListAddressInfo(token);
     }
 
     private int currentPositionShop = 0;
     private ProductSection productSection;
     private long shopProductTotalPrice = 0;
     private int orderShopTotalProduct = 0;
+
     private void addProductToList() {
         if (productList.size() > 0) {
             String currentShopId = productList.get(0).getShop().getId();
@@ -282,8 +323,8 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
                 for (int i = 0; i < productList.size(); i++) {
                     if (productList.get(i).getShop().getId().equals(currentShopId)) {
                         orderShopTotalProduct++;
-                        long productTruePrice = productList.get(i).getPrice()*(100-productList.get(i).getDiscountPercent())*productList.get(i).getOrderAmount()/100;
-                        shopProductTotalPrice = shopProductTotalPrice+ productTruePrice;
+                        long productTruePrice = productList.get(i).getPrice() * (100 - productList.get(i).getDiscountPercent()) * productList.get(i).getOrderAmount() / 100;
+                        shopProductTotalPrice = shopProductTotalPrice + productTruePrice;
                         productList.get(i).setOrderTotalPrice(shopProductTotalPrice);
                         productList.get(i).setOrderShopTotalProduct(orderShopTotalProduct);
                         productSection = new ProductSection(productList.get(i), currentPositionShop);
@@ -311,13 +352,15 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
         }
 
     }
+
     private long totalPrice = 0;
+
     public void calculateTotalPrice() {
         totalPrice = 0;
         for (int i = 0; i < productSectionList.size(); i++) {
             if (!productSectionList.get(i).isHeader) {
-                    long discountPrice = productSectionList.get(i).t.getPrice() * (100 - productSectionList.get(i).t.getDiscountPercent()) / 100;
-                    totalPrice = totalPrice + discountPrice * productSectionList.get(i).t.getOrderAmount();
+                long discountPrice = productSectionList.get(i).t.getPrice() * (100 - productSectionList.get(i).t.getDiscountPercent()) / 100;
+                totalPrice = totalPrice + discountPrice * productSectionList.get(i).t.getOrderAmount();
 
             }
         }
@@ -329,19 +372,21 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
     public void showCartProduct(List<Product> productListResult) {
         productList.clear();
         productSectionList.clear();
-        for (int i=0;i<productListResult.size();i++) {
-            if (productListResult.get(i).isCheckedProduct()){
+        for (int i = 0; i < productListResult.size(); i++) {
+            if (productListResult.get(i).isCheckedProduct()) {
                 productList.add(productListResult.get(i));
             }
         }
+
         addProductToList();
+        mPresenter.getListAddressInfo(token);
     }
 
     @Override
     public void showListAddressInfo(List<AddressInfo> addressInfoListResult) {
         addressDefaultId = SharedPreferencesUtil.getInstance().getString("addressDefaultId", "");
 
-        if (addressInfoListResult.size()>0) {
+        if (addressInfoListResult.size() > 0) {
             addressInfo = addressInfoListResult.get(0);
             if (addressDefaultId.equals("")) {
                 SharedPreferencesUtil.getInstance().putString("addressDefaultId", addressInfo.getId());
@@ -365,6 +410,14 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
             isHaveAddress = false;
             rlAddUserInfo.setVisibility(View.VISIBLE);
             rlUserInfo.setVisibility(View.GONE);
+
+
+        }
+        btnSubmit.setOnClickListener(v -> onSubmitOrder());
+        //        Close loading screen ------------------
+        isErrorData = false;
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
         }
     }
 
@@ -380,7 +433,7 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
 
     @Override
     public void successAddProductToCart(Message message) {
-      mPresenter.orderAll(token, addressInfo.getFullName(), addressInfo.getPhoneNumber(), addressInfo.getEmail(), addressInfo.getAddress());
+        mPresenter.orderAll(token, addressInfo.getFullName(), addressInfo.getPhoneNumber(), addressInfo.getEmail(), addressInfo.getAddress());
     }
 
     @Override
@@ -388,21 +441,7 @@ public class OrderActivity extends BaseActivity implements OrderContract.View, O
 
     }
 
-    private static class MyHandler extends Handler {
-        private final WeakReference<OrderActivity> mActivity;
 
-        public MyHandler(OrderActivity activity) {
-            mActivity = new WeakReference<OrderActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            OrderActivity activity = mActivity.get();
-            if (activity != null) {
-                // ...
-            }
-        }
-    }
 }
 
 

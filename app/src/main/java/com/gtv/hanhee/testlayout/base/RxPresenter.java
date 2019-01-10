@@ -32,13 +32,6 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
         compositeDisposable.add(disposable);
     }
 
-    private CompositeDisposable getCompositeDisposable() {
-        if (compositeDisposable == null || compositeDisposable.isDisposed()) {
-            compositeDisposable = new CompositeDisposable();
-        }
-        return compositeDisposable;
-    }
-
     @Override
     public void attachView(T view) {
         this.mView = view;

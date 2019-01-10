@@ -2,6 +2,7 @@ package com.gtv.hanhee.testlayout.ui.activity;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.view.View;
 
 import com.gtv.hanhee.testlayout.base.BaseActivity;
 import com.gtv.hanhee.testlayout.R;
@@ -25,6 +26,12 @@ public class MainActivity extends BaseActivity {
     protected void initDatas() {
 
     }
+
+    @Override
+    protected void onRefreshing() {
+
+    }
+
     Fragment fragment;
     @Override
     protected void configViews() {
@@ -34,5 +41,10 @@ public class MainActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.details_fragment, fragment)
                     .commit();
+    }
+
+    @Override
+    public void onSkeletonViewClick(View view) {
+
     }
 }

@@ -52,7 +52,6 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     LinearLayout rootView;
 
 
-
     private ShopHomeRowAdapter shopHomeRowAdapter;
     private ShopHomeGridAdapter shopHomeGridAdapter;
     private ShopSubCategoryAdapter shopSubCategoryAdapter;
@@ -64,14 +63,14 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     private List<SubCategory> subCategoryList;
     private Handler handler = new Handler();
     @Inject
-    ShopCategoryPresenter shopCategoryPresenter;
+    ShopCategoryPresenter mPresenter;
 
     private String categoryId;
     private static final String CATEGORY_ID = "categoryId";
 
-    public static Fragment newInstance(String  categoryId){
+    public static Fragment newInstance(String categoryId) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(CATEGORY_ID,categoryId);
+        bundle.putSerializable(CATEGORY_ID, categoryId);
         Fragment fragment = new ShopCategoryFragment();
         fragment.setArguments(bundle);
         return fragment;
@@ -80,10 +79,9 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     @Override
     protected void initDataGetFromArgument(Bundle savedInstanceState) {
         super.initDataGetFromArgument(savedInstanceState);
-        if(savedInstanceState != null){
+        if (savedInstanceState != null) {
             categoryId = savedInstanceState.getString(CATEGORY_ID);
-        }
-        else {
+        } else {
             categoryId = getArguments().getString(CATEGORY_ID);
         }
     }
@@ -97,18 +95,19 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     public void onDestroy() {
         super.onDestroy();
         handler.removeCallbacksAndMessages(null);
-        if (shopCategoryPresenter != null) {
-            shopCategoryPresenter.detachView();
+        if (mPresenter != null) {
+            mPresenter.detachView();
         }
     }
 
     @Override
     public void attachView() {
         activityComponent().inject(this);
-        shopCategoryPresenter.attachView(this);
+        mPresenter.attachView(this);
     }
 
     private boolean isRow = false;
+
     @OnClick(R.id.btnStyleRv)
     public void changeStyleRv() {
         if (isRow) {
@@ -126,10 +125,36 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
         }
     }
 
+    //    show loading screen ---------
     @Override
     public void initDatas() {
         showLoadingScreen(rootView);
         onRefreshing();
+    }
+
+    //    show error screen -------------
+    @Override
+    public void showError() {
+        isErrorData = true;
+        showErrorScreen(rootView);
+    }
+
+    //    click loading screen -----------
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
+    }
+
+    //    onRefreshing data ------------
+    private void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
+        mPresenter.getListSubCategory(token, categoryId, 0, 8);
     }
 
     @Override
@@ -151,7 +176,6 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
 //        Rv SubCategory -----------------
         shopSubCategoryAdapter = new ShopSubCategoryAdapter(activity, subCategoryList, this);
-
         rvCategory.setNestedScrollingEnabled(false);
         GridLayoutManager gridLayoutManagerCategory = new GridLayoutManager(mContext, 4);
         rvCategory.setLayoutManager(gridLayoutManagerCategory);
@@ -181,22 +205,22 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
     }
 
-    private void onRefreshing() {
-        if (isErrorData) {
-            showLoadingScreen(rootView);
-        }
-        shopCategoryPresenter.getListSubCategory(token, categoryId, 0 , 8);
-    }
+
 
 
     @Override
     public void showListProductByCategory(List<Product> productListResult) {
-        isErrorData = false;
+
         productList.clear();
         productList.addAll(productListResult);
         shopHomeRowAdapter.notifyDataSetChanged();
         shopHomeGridAdapter.notifyDataSetChanged();
-        skeletonScreen.hide();
+
+        //        Close loading screen  ------------------
+        isErrorData = false;
+        if (skeletonScreen != null) {
+            skeletonScreen.hide();
+        }
 
     }
 
@@ -205,19 +229,9 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
         subCategoryList.clear();
         subCategoryList.addAll(subCategoryListResult);
         shopSubCategoryAdapter.notifyDataSetChanged();
-        shopCategoryPresenter.getListProductByCategory(token, categoryId, 0, 15);
+        mPresenter.getListProductByCategory(token, categoryId, 0, 15);
     }
 
-    @Override
-    public void showError() {
-        isErrorData = true;
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                showErrorScreen(rootView);
-            }
-        }, 500);
-    }
 
     @Override
     public void complete() {
@@ -229,12 +243,5 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
     }
 
-    @Override
-    public void onSkeletonViewClick(View view) {
-        switch (view.getId()) {
-            case R.id.page_tip_eventview:
-                onRefreshing();
-                break;
-        }
-    }
+
 }

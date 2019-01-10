@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
@@ -37,6 +38,8 @@ public class ProfileUserActivity extends BaseActivity implements ProfileUserCont
     SmartTabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
 
     @Inject
     ProfileUserPresenter mPresenter;
@@ -74,14 +77,51 @@ public class ProfileUserActivity extends BaseActivity implements ProfileUserCont
     @Override
     public void initToolBar() {
 
+//        //        Close loading screen post in ------------------
+//        isErrorData = false;
+//        if (skeletonScreen!=null) {
+//            skeletonScreen.hide();
+//        }
     }
 
+    //    show loading screen ---------
     @Override
     public void initDatas() {
         activityComponent().inject(this);
         mPresenter.attachView(this);
-//        mPresenter.getCartProduct();
+        showLoadingScreen(rootView);
+        onRefreshing();
     }
+
+    //    onRefreshing data ------------
+    @Override
+    protected void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
+
+    }
+
+    //    show error screen -------------
+    @Override
+    public void showError() {
+        isErrorData = true;
+        showErrorScreen(rootView);
+    }
+
+
+    //    click loading screen -----------
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
+
+
+    }
+
 
     @Override
     protected void onDestroy() {
@@ -123,9 +163,7 @@ public class ProfileUserActivity extends BaseActivity implements ProfileUserCont
 
     }
 
-    @Override
-    public void showError() {
-    }
+
 
     @Override
     public void complete() {
@@ -135,5 +173,7 @@ public class ProfileUserActivity extends BaseActivity implements ProfileUserCont
     public void onBack() {
         onBackPressed();
     }
+
+
 }
 
