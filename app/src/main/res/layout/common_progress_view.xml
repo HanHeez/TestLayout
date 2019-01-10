@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.htl.baubi.ui.customview.LoadingView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:loadingView="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    loadingView:progress_style="material" />
+
+    android:layout_width="@dimen/length_200"
+    android:background="@color/white"
+    android:layout_height="@dimen/length_200">
+    <com.gtv.hanhee.testlayout.ui.customview.LoadingView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:loadingView="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        loadingView:progress_style="material" />
+</LinearLayout>

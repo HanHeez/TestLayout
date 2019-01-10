@@ -104,4 +104,7 @@ dependencies {
 
 //    Status Bar Utils
     implementation 'com.jaeger.statusbarutil:library:1.5.1'
+
+//    ShimmerLayout
+    implementation 'io.supercharge:shimmerlayout:2.1.0'
 }

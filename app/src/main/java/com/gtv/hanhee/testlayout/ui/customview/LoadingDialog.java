@@ -6,6 +6,7 @@ import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.gtv.hanhee.testlayout.R;
 
@@ -21,8 +22,8 @@ public class LoadingDialog extends Dialog {
     }
 
     public static LoadingDialog instance(Activity activity) {
-        LoadingView v = (LoadingView) View.inflate(activity, R.layout.common_progress_view, null);
-        v.setColor(ContextCompat.getColor(activity, R.color.menu_bg_color));
+        LinearLayout v = (LinearLayout) View.inflate(activity, R.layout.common_progress_view, null);
+//        v.setColor(ContextCompat.getColor(activity, R.color.menu_bg_color));
         LoadingDialog dialog = new LoadingDialog(activity, R.style.loading_dialog);
         dialog.setContentView(v,
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,

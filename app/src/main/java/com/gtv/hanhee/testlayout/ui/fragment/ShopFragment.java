@@ -4,22 +4,28 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
+import com.gtv.hanhee.testlayout.base.OnSkeletonViewClickListener;
 import com.gtv.hanhee.testlayout.model.Category;
 import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProfileUserActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ShopSearchActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
 import com.gtv.hanhee.testlayout.ui.contract.ShopContract;
+import com.gtv.hanhee.testlayout.ui.customview.skeleton.Skeleton;
+import com.gtv.hanhee.testlayout.ui.customview.skeleton.SkeletonScreen;
 import com.gtv.hanhee.testlayout.ui.presenter.ShopPresenter;
 import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import javax.inject.Inject;
 
@@ -34,6 +40,8 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     ViewPager viewPager;
     @BindView(R.id.txtAmountCart)
     TextView txtAmountCart;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
 
     private CommunityFlycoTabLayoutAdapter communityFlycoTabLayoutAdapter;
     private List<String> mTitles = new ArrayList<>();
@@ -41,7 +49,6 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     @Inject
     ShopPresenter shopPresenter;
     private int amountProductCart = 0;
-
 
     @Override
     public int getLayoutResId() {
@@ -70,6 +77,7 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
         if (shopPresenter !=null) {
             shopPresenter.detachView();
         }
@@ -77,6 +85,14 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
 
     @Override
     public void initDatas() {
+        showLoadingScreen(rootView);
+        onRefreshing();
+    }
+
+    private void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
         shopPresenter.getListCategory(token);
     }
 
@@ -115,16 +131,23 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
     }
     @Override
     public void showError() {
-
+        isErrorData = true;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showErrorScreen(rootView);
+            }
+        }, 500);
     }
 
     @Override
     public void complete() {
 
     }
-
+    android.os.Handler handler = new android.os.Handler();
     @Override
     public void showListCategory(List<Category> categoryListResult) {
+
         mFragments.clear();
         mTitles.clear();
         mTitles.add("Trang chủ");
@@ -139,6 +162,18 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(communityFlycoTabLayoutAdapter);
         tabLayout.setViewPager(viewPager);
+        isErrorData = false;
+        skeletonScreen.hide();
+
+    }
+
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
     }
 }
 

@@ -2,6 +2,7 @@ package com.gtv.hanhee.testlayout.ui.fragment;
 
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
@@ -46,6 +48,10 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     RecyclerView rvCategory;
     @BindView(R.id.imgStyleRv)
     ImageView imgStyleRv;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
+
+
 
     private ShopHomeRowAdapter shopHomeRowAdapter;
     private ShopHomeGridAdapter shopHomeGridAdapter;
@@ -56,6 +62,7 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
     private List<Product> productList;
     private List<SubCategory> subCategoryList;
+    private Handler handler = new Handler();
     @Inject
     ShopCategoryPresenter shopCategoryPresenter;
 
@@ -89,6 +96,7 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     @Override
     public void onDestroy() {
         super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
         if (shopCategoryPresenter != null) {
             shopCategoryPresenter.detachView();
         }
@@ -120,22 +128,19 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
     @Override
     public void initDatas() {
-            shopCategoryPresenter.getListSubCategory(token, categoryId, 0, 8);
-            shopCategoryPresenter.getListProductByCategory(token, categoryId, 0, 15);
-
+        showLoadingScreen(rootView);
+        onRefreshing();
     }
 
     @Override
     public void configViews() {
-
 //        Setting RefreshLayout -----------------
         refreshLayout.setRefreshHeader(new CustomFragmentHeader(mContext));
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
-                shopCategoryPresenter.getListSubCategory(token, categoryId, 0 , 8);
-                shopCategoryPresenter.getListProductByCategory(token, categoryId, 0, 15);
+                onRefreshing();
                 ;
             }
         });
@@ -176,13 +181,22 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
 
     }
 
+    private void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
+        shopCategoryPresenter.getListSubCategory(token, categoryId, 0 , 8);
+    }
+
 
     @Override
     public void showListProductByCategory(List<Product> productListResult) {
+        isErrorData = false;
         productList.clear();
         productList.addAll(productListResult);
         shopHomeRowAdapter.notifyDataSetChanged();
         shopHomeGridAdapter.notifyDataSetChanged();
+        skeletonScreen.hide();
 
     }
 
@@ -191,11 +205,18 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
         subCategoryList.clear();
         subCategoryList.addAll(subCategoryListResult);
         shopSubCategoryAdapter.notifyDataSetChanged();
+        shopCategoryPresenter.getListProductByCategory(token, categoryId, 0, 15);
     }
 
     @Override
     public void showError() {
-
+        isErrorData = true;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showErrorScreen(rootView);
+            }
+        }, 500);
     }
 
     @Override
@@ -206,5 +227,14 @@ public class ShopCategoryFragment extends BaseFragment implements ShopCategoryCo
     @Override
     public void onItemRvClick(View view, Product item, int adapterPosition) {
 
+    }
+
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
     }
 }

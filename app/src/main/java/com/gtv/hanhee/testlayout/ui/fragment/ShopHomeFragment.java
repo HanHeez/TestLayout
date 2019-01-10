@@ -2,6 +2,7 @@ package com.gtv.hanhee.testlayout.ui.fragment;
 
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
@@ -53,9 +55,12 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     RecyclerView rvShopHome;
     @BindView(R.id.imgStyleRv)
     ImageView imgStyleRv;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
 
     private ShopHomeRowAdapter shopHomeRowAdapter;
     private ShopHomeGridAdapter shopHomeGridAdapter;
+    private Handler handler = new Handler();
 
     private List<Product> productList;
     @Inject
@@ -78,6 +83,7 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     @Override
     public void onDestroy() {
         super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
         if (shopHomePresenter != null) {
             shopHomePresenter.detachView();
         }
@@ -85,8 +91,8 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
 
     @Override
     public void initDatas() {
-        shopHomePresenter.getShopBanner(token, 0, 5);
-        shopHomePresenter.getListProductNewest(token, 0, 15);
+        showLoadingScreen(rootView);
+        onRefreshing();
     }
 
     @Override
@@ -99,8 +105,7 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshLayout.finishRefresh(1000/*,false*/);
-                shopHomePresenter.getShopBanner(token, 0, 5);
-                shopHomePresenter.getListProductNewest(token, 0, 15);
+                onRefreshing();
                 ;
             }
         });
@@ -149,6 +154,13 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
 //        Setting Banner -------------------
     }
 
+    private void onRefreshing() {
+        if (isErrorData) {
+            showLoadingScreen(rootView);
+        }
+        shopHomePresenter.getShopBanner(token, 0, 5);
+    }
+
     private boolean isRow = true;
     @OnClick(R.id.btnStyleRv)
     public void changeStyleRv() {
@@ -185,6 +197,7 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
 //            intent.putExtra("type", "multi");
 //            mContext.startActivity(intent);
         });
+        shopHomePresenter.getListProductNewest(token, 0, 15);
     }
 
     @Override
@@ -193,12 +206,20 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
         productList.addAll(productListResult);
         shopHomeRowAdapter.notifyDataSetChanged();
         shopHomeGridAdapter.notifyDataSetChanged();
+        isErrorData = false;
+        skeletonScreen.hide();
     }
 
 
     @Override
     public void showError() {
-
+        isErrorData = true;
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showErrorScreen(rootView);
+            }
+        }, 500);
     }
 
     @Override
@@ -209,5 +230,14 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
     @Override
     public void onItemRvClick(View view, Product item, int adapterPosition) {
 
+    }
+
+    @Override
+    public void onSkeletonViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.page_tip_eventview:
+                onRefreshing();
+                break;
+        }
     }
 }

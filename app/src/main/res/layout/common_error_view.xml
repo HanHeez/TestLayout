@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="#ffeeeeee"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/length_50">
+
+        <ImageView
+            android:id="@+id/page_tip_img"
+            android:layout_width="@dimen/length_80"
+            android:layout_height="@dimen/length_80"
+            android:background="@drawable/tip_net_error" />
+
+        <TextView
+            android:id="@+id/page_tip_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/length_15"
+            android:text="Lỗi mạng, vui lòng thử lại"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_15" />
+
+        <Button
+            android:layout_marginTop="@dimen/length_10"
+            android:id="@+id/page_tip_eventview"
+            android:layout_width="@dimen/length_144"
+            android:layout_height="@dimen/length_34"
+            android:background="@drawable/tip_btn_selector"
+            android:gravity="center"
+            android:text="Thử lại"
+            android:textAllCaps="false"
+            android:textColor="#ffff4978"
+            android:textSize="@dimen/length_15" />
+    </LinearLayout>
+</RelativeLayout>

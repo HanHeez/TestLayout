@@ -20,6 +20,8 @@ import com.gtv.hanhee.testlayout.dagger2.component.ActivityComponent;
 import com.gtv.hanhee.testlayout.dagger2.component.DaggerActivityComponent;
 import com.gtv.hanhee.testlayout.dagger2.module.ActivityModule;
 import com.gtv.hanhee.testlayout.ui.customview.LoadingDialog;
+import com.gtv.hanhee.testlayout.ui.customview.skeleton.Skeleton;
+import com.gtv.hanhee.testlayout.ui.customview.skeleton.SkeletonScreen;
 import com.gtv.hanhee.testlayout.utils.StatusBarMainUtil;
 
 import butterknife.ButterKnife;
@@ -27,16 +29,17 @@ import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements OnSkeletonViewClickListener {
 
     protected View parentView;
     protected FragmentActivity activity;
     protected LayoutInflater inflater;
     protected Context mContext;
     private Unbinder unbinder;
-    private LoadingDialog dialog;
     protected String token;
     protected CompositeDisposable mDisposable;
+    protected SkeletonScreen skeletonScreen;
+    protected boolean isErrorData = false;
 
     public abstract @LayoutRes
     int getLayoutResId();
@@ -134,58 +137,25 @@ public abstract class BaseFragment extends Fragment {
                 .getApplicationContext()) : this.activity.getApplicationContext();
     }
 
-    protected View getParentView() {
-        return parentView;
-    }
-
-    public LoadingDialog getDialog() {
-        if (dialog == null) {
-            dialog = LoadingDialog.instance(getActivity());
-            dialog.setCancelable(false);
+    public void showLoadingScreen(View rootView) {
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
         }
-        return dialog;
+        skeletonScreen = Skeleton.bind(rootView)
+                .load(R.layout.common_loading_view)
+                .duration(1500)
+                .color(R.color.shimmer_color_for_image)
+                .show();
     }
 
-    public void hideDialog() {
-        if (dialog != null)
-            dialog.hide();
-    }
-
-    public void showDialog() {
-        getDialog().show();
-    }
-
-    public void dismissDialog() {
-        if (dialog != null) {
-            dialog.dismiss();
-            dialog = null;
+    public void showErrorScreen(View rootView) {
+        if (skeletonScreen!=null) {
+            skeletonScreen.hide();
         }
+        skeletonScreen = Skeleton.bind(rootView)
+                .load(R.layout.common_empty_view, this)
+                .duration(0)
+                .color(R.color.shimmer_color_for_image)
+                .show();
     }
-
-    //view action
-    protected void gone(final View... views) {
-        if (views != null && views.length > 0) {
-            for (View view : views) {
-                if (view != null) {
-                    view.setVisibility(View.GONE);
-                }
-            }
-        }
-    }
-
-    protected void visible(final View... views) {
-        if (views != null && views.length > 0) {
-            for (View view : views) {
-                if (view != null) {
-                    view.setVisibility(View.VISIBLE);
-                }
-            }
-        }
-    }
-
-    protected boolean isVisible(View view) {
-        return view.getVisibility() == View.VISIBLE;
-    }
-
-
 }
