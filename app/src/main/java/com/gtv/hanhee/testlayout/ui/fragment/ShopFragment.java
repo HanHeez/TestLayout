@@ -34,129 +34,129 @@ import butterknife.OnClick;
 
 public class ShopFragment extends BaseFragment implements ShopContract.View {
 
-    @BindView(R.id.tabLayout)
+@BindView(R.id.tabLayout)
     SmartTabLayout tabLayout;
-    @BindView(R.id.viewPager)
+@BindView(R.id.viewPager)
     ViewPager viewPager;
-    @BindView(R.id.txtAmountCart)
+@BindView(R.id.txtAmountCart)
     TextView txtAmountCart;
-    @BindView(R.id.rootView)
+@BindView(R.id.rootView)
     LinearLayout rootView;
 
-    private CommunityFlycoTabLayoutAdapter communityFlycoTabLayoutAdapter;
-    private List<String> mTitles = new ArrayList<>();
-    private List<Fragment> mFragments = new ArrayList<>();
-    @Inject
+private CommunityFlycoTabLayoutAdapter communityFlycoTabLayoutAdapter;
+private List<String> mTitles = new ArrayList<>();
+private List<Fragment> mFragments = new ArrayList<>();
+@Inject
     ShopPresenter mPresenter;
-    private int amountProductCart = 0;
+private int amountProductCart = 0;
 
-    @Override
-    public int getLayoutResId() {
+@Override
+public int getLayoutResId() {
         return R.layout.fragment_shop;
-    }
+        }
 
-    @OnClick(R.id.rlSearch)
-    public void onSearch() {
+@OnClick(R.id.rlSearch)
+public void onSearch() {
         Intent intent = new Intent(activity, ShopSearchActivity.class);
         startActivity(intent);
-    }
+        }
 
-    @OnClick(R.id.btnMessage)
-    public void goToUser() {
+@OnClick(R.id.btnMessage)
+public void goToUser() {
         Intent intent = new Intent(activity, ProfileUserActivity.class);
         startActivity(intent);
-    }
+        }
 
-    @Override
-    public void attachView() {
+@Override
+public void attachView() {
         activityComponent().inject(this);
         mPresenter.attachView(this);
 
-    }
+        }
 
-    @Override
-    public void onDestroy() {
+@Override
+public void onDestroy() {
         super.onDestroy();
         if (mPresenter !=null) {
-            mPresenter.detachView();
+        mPresenter.detachView();
         }
-    }
+        }
 
 //    show loading screen ---------
-    @Override
-    public void initDatas() {
+@Override
+public void initDatas() {
         showLoadingScreen(rootView);
         onRefreshing();
-    }
+        }
 
 //    onRefreshing data ------------
-    private void onRefreshing() {
+private void onRefreshing() {
         if (isErrorData) {
-            showLoadingScreen(rootView);
+        showLoadingScreen(rootView);
         }
         mPresenter.getListCategory(token);
-    }
+        }
 
-    //    show error screen -------------
-    @Override
-    public void showError() {
+//    show error screen -------------
+@Override
+public void showError() {
         isErrorData = true;
         showErrorScreen(rootView);
 
-    }
-    //    click loading screen -----------
-    @Override
-    public void onSkeletonViewClick(View view) {
+        }
+//    click loading screen -----------
+@Override
+public void onSkeletonViewClick(View view) {
         switch (view.getId()) {
-            case R.id.page_tip_eventview:
-                onRefreshing();
-                break;
+        case R.id.page_tip_eventview:
+        onRefreshing();
+        break;
         }
-    }
+        }
 
-    @Override
-    public void configViews() {
-    }
+@Override
+public void configViews() {
+        }
 
-    public void settingAmountCart() {
+public void settingAmountCart() {
         if (amountProductCart == 0) {
-            txtAmountCart.setVisibility(View.GONE);
+        txtAmountCart.setVisibility(View.GONE);
         } else {
-            txtAmountCart.setVisibility(View.VISIBLE);
-            if(amountProductCart>99) {
-                txtAmountCart.setText("99+");
-            } else txtAmountCart.setText(amountProductCart+"");
+        txtAmountCart.setVisibility(View.VISIBLE);
+        if(amountProductCart>99) {
+        txtAmountCart.setText("99+");
+        } else txtAmountCart.setText(amountProductCart+"");
         }
-    }
+        }
 
-    @Override
-    public void onResume() {
+@Override
+public void onResume() {
         super.onResume();
         amountProductCart = SharedPreferencesUtil.getInstance().getInt("amountCart", 0);
         settingAmountCart();
-    }
+        }
 
-    @OnClick(R.id.btnCart)
-    public void goToCart() {
+@OnClick(R.id.btnCart)
+public void goToCart() {
         Intent intent = new Intent(activity, CartActivity.class);
         startActivity(intent);
-    }
+        }
 
-    @OnClick(R.id.imgCart)
-    public void goToImgCart() {
+@OnClick(R.id.imgCart)
+public void goToImgCart() {
         Intent intent = new Intent(activity, CartActivity.class);
         startActivity(intent);
-    }
+        }
 
 
 
-    @Override
-    public void complete() {
+@Override
+public void complete() {
 
-    }
+        }
 
-    @Override
-    public void showListCategory(List<Category> categoryListResult) {
+@Override
+public void showListCategory(List<Category> categoryListResult) {
 
         mFragments.clear();
         mTitles.clear();
@@ -164,8 +164,8 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
         mFragments.add(new ShopHomeFragment());
 
         for (int i = 0; i < categoryListResult.size()-1; i++) {
-            mTitles.add(categoryListResult.get(i).getName());
-            mFragments.add(ShopCategoryFragment.newInstance(categoryListResult.get(i).getId()));
+        mTitles.add(categoryListResult.get(i).getName());
+        mFragments.add(ShopCategoryFragment.newInstance(categoryListResult.get(i).getId()));
         }
 
         communityFlycoTabLayoutAdapter = new CommunityFlycoTabLayoutAdapter(getChildFragmentManager(), mFragments, mTitles.toArray(new String[mTitles.size()]) );
@@ -177,10 +177,10 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
 
         isErrorData = false;
         if (skeletonScreen!=null) {
-            skeletonScreen.hide();
+        skeletonScreen.hide();
         }
 
-    }
+        }
 
-}
+        }
 

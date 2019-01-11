@@ -1,34 +1,39 @@
 package com.gtv.hanhee.testlayout.ui.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseFragment;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.GroupDetails;
+import com.gtv.hanhee.testlayout.model.Order;
+import com.gtv.hanhee.testlayout.model.OrderSection;
 import com.gtv.hanhee.testlayout.model.Product;
-import com.gtv.hanhee.testlayout.model.SubCategory;
+import com.gtv.hanhee.testlayout.model.ProductSection;
 import com.gtv.hanhee.testlayout.model.User;
+import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
+import com.gtv.hanhee.testlayout.ui.adapter.CartAdapter;
+import com.gtv.hanhee.testlayout.ui.adapter.OrderListAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ProfileUserJoinGroupAdapter;
-import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeGridAdapter;
-import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeRowAdapter;
-import com.gtv.hanhee.testlayout.ui.adapter.ShopSubCategoryAdapter;
+import com.gtv.hanhee.testlayout.ui.contract.OrderListContract;
 import com.gtv.hanhee.testlayout.ui.contract.ProfileUserInfoContract;
 import com.gtv.hanhee.testlayout.ui.customview.CustomFragmentHeader;
+import com.gtv.hanhee.testlayout.ui.presenter.OrderListPresenter;
 import com.gtv.hanhee.testlayout.ui.presenter.ProfileUserInfoPresenter;
-import com.gtv.hanhee.testlayout.ui.presenter.ProfileUserPresenter;
-import com.gtv.hanhee.testlayout.ui.presenter.ShopCategoryPresenter;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -43,36 +48,32 @@ import butterknife.OnClick;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileUserInfoFragment extends BaseFragment implements ProfileUserInfoContract.View, OnItemRvClickListener<Product> {
+public class OrderListFragment extends BaseFragment implements OrderListContract.View, OnItemRvClickListener<Product> {
 
-
+    @BindView(R.id.refreshLayout)
+    RefreshLayout refreshLayout;
     @BindView(R.id.rootView)
     LinearLayout rootView;
-    @BindView(R.id.txtCity)
-    TextView txtCity;
-    @BindView(R.id.txtAsterism)
-    TextView txtAsterism;
-    @BindView(R.id.txtEmail)
-    TextView txtEmail;
-    @BindView(R.id.txtJoinGroupNoData)
-    TextView txtJoinGroupNoData;
-    @BindView(R.id.rvJoinGroup)
-    RecyclerView rvJoinGroup;
+    @BindView(R.id.rvOrder)
+    RecyclerView rvOrder;
+    @BindView(R.id.rvRecommend)
+    RecyclerView rvRecommend;
 
-    private ProfileUserJoinGroupAdapter mAdapter;
+    private OrderListAdapter mAdapter;
 
-    private List<GroupDetails> groupDetailsList;
+    private List<Order> orderList;
+    private List<OrderSection> orderSectionList;
 
     @Inject
-    ProfileUserInfoPresenter mPresenter;
+    OrderListPresenter mPresenter;
 
-    private String userId;
-    private static final String USER_ID = "userID";
+    private String getType;
+    private static final String GET_TYPE = "getType";
 
-    public static Fragment newInstance(String userID) {
+    public static Fragment newInstance(String getType) {
         Bundle bundle = new Bundle();
-        bundle.putSerializable(USER_ID, userID);
-        Fragment fragment = new ProfileUserInfoFragment();
+        bundle.putSerializable(GET_TYPE, getType);
+        Fragment fragment = new OrderListFragment();
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -81,15 +82,15 @@ public class ProfileUserInfoFragment extends BaseFragment implements ProfileUser
     protected void initDataGetFromArgument(Bundle savedInstanceState) {
         super.initDataGetFromArgument(savedInstanceState);
         if (savedInstanceState != null) {
-            userId = savedInstanceState.getString(USER_ID);
+            getType = savedInstanceState.getString(GET_TYPE);
         } else {
-            userId = getArguments().getString(USER_ID);
+            getType = getArguments().getString(GET_TYPE);
         }
     }
 
     @Override
     public int getLayoutResId() {
-        return R.layout.fragment_profile_user_info;
+        return R.layout.fragment_order_list;
     }
 
     @Override
@@ -137,25 +138,34 @@ public class ProfileUserInfoFragment extends BaseFragment implements ProfileUser
         if (isErrorData) {
             showLoadingScreen(rootView);
         }
-        mPresenter.getUserInfoById(token, userId);
+
     }
 
     @Override
     public void configViews() {
-
+//        Setting RefreshLayout -----------------
+        refreshLayout.setRefreshHeader(new CustomFragmentHeader(mContext));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshLayout.finishRefresh(1000/*,false*/);
+                onRefreshing();
+                ;
+            }
+        });
 //        Setting RecyclerView ----------------
-        groupDetailsList = new ArrayList<>();
-
-        mAdapter = new ProfileUserJoinGroupAdapter(activity, groupDetailsList, this);
-        rvJoinGroup.setNestedScrollingEnabled(false);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        rvJoinGroup.setLayoutManager(linearLayoutManager);
-        rvJoinGroup.setAdapter(mAdapter);
-
+        orderList = new ArrayList<>();
+        orderSectionList = new ArrayList<>();
+        mAdapter = new OrderListAdapter(getActivity(), orderSectionList, this);
+        LinearLayoutManager layoutManagerNews = new LinearLayoutManager(getActivity());
+        rvOrder.setHasFixedSize(true);
+        rvOrder.setNestedScrollingEnabled(false);
+        rvOrder.setLayoutManager(layoutManagerNews);
+        rvOrder.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
 
         });
+
 
 
     }
@@ -169,24 +179,7 @@ public class ProfileUserInfoFragment extends BaseFragment implements ProfileUser
     public void onItemRvClick(View view, Product item, int adapterPosition) {
 
     }
-
-    @Override
-    public void showUserInfoByid(User userResult) {
-
-
-//        get data more  --------------------------
-
-        //        Close loading screen  ------------------
-        isErrorData = false;
-        if (skeletonScreen != null) {
-            skeletonScreen.hide();
-        }
-
-    }
-
-    @Override
-    public void showUserInfoMom(User userResult) {
-
-    }
 }
+
+
 

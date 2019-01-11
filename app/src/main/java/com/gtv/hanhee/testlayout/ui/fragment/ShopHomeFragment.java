@@ -22,6 +22,7 @@ import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
 import com.gtv.hanhee.testlayout.ui.activity.MainActivity;
+import com.gtv.hanhee.testlayout.ui.activity.OrderListActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeGridAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopHomeRowAdapter;
@@ -192,10 +193,8 @@ public class ShopHomeFragment extends BaseFragment implements ShopHomeContract.V
         banner.isAutoPlay(true);
         banner.start();
         banner.setOnBannerListener(position -> {
-//            Intent intent = new Intent(mContext, ImageReviewActivity.class);
-//            intent.putStringArrayListExtra("images", (ArrayList<String>) postDetails.getImages());
-//            intent.putExtra("type", "multi");
-//            mContext.startActivity(intent);
+            Intent intent = new Intent(getActivity(), OrderListActivity.class);
+            startActivity(intent);
         });
         shopHomePresenter.getListProductNewest(token, 0, 15);
     }

@@ -1,0 +1,33 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlToolbar"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:elevation="@dimen/length_0"
+    android:layout_height="@dimen/toolbar_height">
+
+    <ImageView
+        android:clickable="true"
+        android:background="@drawable/bg_press_item"
+        android:id="@+id/btnBack"
+        android:layout_width="@dimen/nav_back_width"
+        android:layout_height="match_parent"
+        android:padding="@dimen/length_10"
+        android:src="@drawable/nav_btn_back_black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textSize="@dimen/length_15"
+        android:text="Đơn hàng của tôi"
+        android:textColor="@color/text_main" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/length_1"
+        android:layout_alignParentBottom="true"
+        android:background="@color/grey300" />
+</RelativeLayout>

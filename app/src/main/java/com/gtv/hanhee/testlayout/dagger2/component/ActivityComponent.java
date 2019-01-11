@@ -5,11 +5,13 @@ import com.gtv.hanhee.testlayout.dagger2.PerActivity;
 import com.gtv.hanhee.testlayout.dagger2.module.ActivityModule;
 import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
 import com.gtv.hanhee.testlayout.ui.activity.OrderActivity;
+import com.gtv.hanhee.testlayout.ui.activity.OrderListActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProductDetailActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProfileUserActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ShopDetailActivity;
 import com.gtv.hanhee.testlayout.ui.activity.UserInfoAddActivity;
 import com.gtv.hanhee.testlayout.ui.activity.UserInfoChooseActivity;
+import com.gtv.hanhee.testlayout.ui.fragment.OrderListFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ProfileUserInfoFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopCategoryFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopFragment;
@@ -25,6 +27,7 @@ public interface ActivityComponent {
     ShopCategoryFragment inject(ShopCategoryFragment shopCategoryFragment);
     ShopFragment inject(ShopFragment shopFragment);
     ProfileUserInfoFragment inject(ProfileUserInfoFragment profileUserInfoFragment);
+    OrderListFragment inject(OrderListFragment orderListFragment);
 
     CartActivity inject(CartActivity cartActivity);
     ProductDetailActivity inject(ProductDetailActivity productDetailActivity);
@@ -33,4 +36,5 @@ public interface ActivityComponent {
     ProfileUserActivity inject(ProfileUserActivity profileUserActivity);
     UserInfoChooseActivity inject(UserInfoChooseActivity userInfoChooseActivity);
     UserInfoAddActivity inject(UserInfoAddActivity userInfoAddActivity);
+    OrderListActivity inject(OrderListActivity orderListActivity);
 }
