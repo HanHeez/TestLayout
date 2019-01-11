@@ -12,6 +12,7 @@ import com.gtv.hanhee.testlayout.base.BaseFragment;
 import com.gtv.hanhee.testlayout.base.OnSkeletonViewClickListener;
 import com.gtv.hanhee.testlayout.model.Category;
 import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
+import com.gtv.hanhee.testlayout.ui.activity.HomeRemindActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ProfileUserActivity;
 import com.gtv.hanhee.testlayout.ui.activity.ShopSearchActivity;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
@@ -63,7 +64,7 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
 
     @OnClick(R.id.btnMessage)
     public void goToUser() {
-        Intent intent = new Intent(activity, ProfileUserActivity.class);
+        Intent intent = new Intent(activity, HomeRemindActivity.class);
         startActivity(intent);
     }
 
@@ -162,6 +163,8 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
         mTitles.clear();
         mTitles.add("Trang chủ");
         mFragments.add(new ShopHomeFragment());
+        mTitles.add("Tài khoản");
+        mFragments.add(UserFragment.newInstance("12345"));
 
         for (int i = 0; i < categoryListResult.size()-1; i++) {
             mTitles.add(categoryListResult.get(i).getName());

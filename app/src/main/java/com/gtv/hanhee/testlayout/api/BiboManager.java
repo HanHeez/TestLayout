@@ -1,14 +1,18 @@
 package com.gtv.hanhee.testlayout.api;
 
+import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.dagger2.PreferencesHelper;
 import com.gtv.hanhee.testlayout.model.AddressInfo;
 import com.gtv.hanhee.testlayout.model.Category;
+import com.gtv.hanhee.testlayout.model.CategoryService;
 import com.gtv.hanhee.testlayout.model.Message;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.model.ShopBanner;
 import com.gtv.hanhee.testlayout.model.SubCategory;
 import com.gtv.hanhee.testlayout.model.User;
+import com.gtv.hanhee.testlayout.model.UserSetting;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -104,6 +108,28 @@ public class BiboManager {
 
     public Observable<User> getInfoUserMom(String accessToken) {
         return service.getInfoUserMom(accessToken);
+    }
+
+    public Observable<List<CategoryService>> getUserServiceList(String accessToken) {
+        List<CategoryService> userSettingList = new ArrayList<>();
+        userSettingList.add(new CategoryService("Bác sĩ",R.drawable.tools_img_doctor));
+        userSettingList.add(new CategoryService("Tắm cho bé",R.drawable.home_icon_window_girl));
+
+        return Observable.just(userSettingList);
+    }
+
+    public Observable<List<UserSetting>> getUserSettingList(String accessToken) {
+        List<UserSetting> userSettingList = new ArrayList<>();
+        userSettingList.add(new UserSetting("Khóa biểu",R.drawable.home_ic_record));
+        userSettingList.add(new UserSetting("Đơn hàng",R.drawable.me_icon_dingdan));
+        userSettingList.add(new UserSetting("Chú ý",R.drawable.me_icon_care));
+        userSettingList.add(new UserSetting("Thảo luận",R.drawable.me_icon_topic));
+        userSettingList.add(new UserSetting("Sưu tập",R.drawable.me_icon_collect));
+        userSettingList.add(new UserSetting("Nhật ký",R.drawable.me_icon_diary));
+        userSettingList.add(new UserSetting("Thông báo",R.drawable.me_icon_remind));
+        userSettingList.add(new UserSetting("Phản hồi",R.drawable.me_icon_feedback));
+        userSettingList.add(new UserSetting("Cài đặt",R.drawable.me_icon_set));
+        return Observable.just(userSettingList);
     }
 
 //    Order ----------------------
