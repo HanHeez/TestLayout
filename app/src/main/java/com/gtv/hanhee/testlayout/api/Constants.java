@@ -13,7 +13,11 @@ public static final String API_ENDPOINT = "http://dev.sieuloinhuan.net/api/";
     public static final  String API_ENDPOINT2 = "http://dev.sieuloinhuan.net";
 
     public static final  String API_UPLOAD = "https://storage.sieuloinhuan.net/api/";
+<<<<<<< HEAD
     public static final  String TOKEN_ID = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmUyNWQ1MjczMTdmMjVhMjY0ZDVlNGEiLCJuYW1lIjoiTG9uZyBOZ3V54buFbiIsInBob25lIjoiIiwiYXZhdGFyIjoiaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMjQ4ODE2MTYyMTIwODg2NC9waWN0dXJlIiwiaXNVcGRhdGUiOnRydWUsIndlZWtOdW1iZXIiOjM4LCJkYXlOdW1iZXIiOjQsInByb3ZpZGVyIjoiZmFjZWJvb2siLCJyb2xlIjoidXNlciIsImRldmljZVRva2VuIjpudWxsLCJzY29yZSI6MTAwMSwiaWF0IjoxNTQ3MTE1NTE5LCJleHAiOjE1NDc3MjAzMTl9.IL3ZBY_q_GuGKgWIpcfLon_b_DKVv8aWMf8i4XRA1Uc";
+=======
+    public static final  String TOKEN_ID = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YmUyNWQ1MjczMTdmMjVhMjY0ZDVlNGEiLCJuYW1lIjoiTG9uZyBOZ3V54buFbiIsInBob25lIjoiIiwiYXZhdGFyIjoiaHR0cHM6Ly9ncmFwaC5mYWNlYm9vay5jb20vMjQ4ODE2MTYyMTIwODg2NC9waWN0dXJlIiwiaXNVcGRhdGUiOnRydWUsIndlZWtOdW1iZXIiOjM4LCJkYXlOdW1iZXIiOjUsInByb3ZpZGVyIjoiZmFjZWJvb2siLCJyb2xlIjoidXNlciIsImRldmljZVRva2VuIjoiY2xRQTU3N2YyUWs6QVBBOTFiRXlNT3pDRDRZVFp1ODRzWWM1V05ZaW5lNkpkWnJTZjVINk1sSkJkR3lFZW44NW4wVklsS0daQkZhTHlwbXFuMnUxaUJPTDBFZFhuQllCNHdmbUI0cy1ib0pVNnRZSS0xU3JndUlwMm94V241cEtENTdVNzZ2b2J6U0d6SEh3M1JlRUwyQVMiLCJzY29yZSI6MTA1NCwiaWF0IjoxNTQ3MjAxNTU1LCJleHAiOjE1NDc4MDYzNTV9.b66xiGFTnoeujxfCegCK66C0NQXMtVXPDwbyMk9Gs6g";
+>>>>>>> 7fa0cc1c64ac34c699c73a4a1dc240ae813d0cdf
 
     public static final int[] tagColors = new int[]{
             Color.parseColor("#90C5F0"),

@@ -83,14 +83,14 @@ public class ShopFragment extends BaseFragment implements ShopContract.View {
         }
     }
 
-//    show loading screen ---------
+    //    show loading screen ---------
     @Override
     public void initDatas() {
         showLoadingScreen(rootView);
         onRefreshing();
     }
 
-//    onRefreshing data ------------
+    //    onRefreshing data ------------
     private void onRefreshing() {
         if (isErrorData) {
             showLoadingScreen(rootView);

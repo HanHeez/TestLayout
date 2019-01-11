@@ -5,24 +5,29 @@ import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.flyco.tablayout.SlidingTabLayout;
-import com.flyco.tablayout.listener.CustomTabEntity;
 import com.gtv.hanhee.testlayout.R;
 import com.gtv.hanhee.testlayout.base.BaseActivity;
+import com.gtv.hanhee.testlayout.base.BaseFragment;
 import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.Category;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopAdapter;
+import com.gtv.hanhee.testlayout.ui.contract.OrderListContract;
 import com.gtv.hanhee.testlayout.ui.contract.ShopContract;
+import com.gtv.hanhee.testlayout.ui.fragment.OrderListFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopCategoryFragment;
 import com.gtv.hanhee.testlayout.ui.fragment.ShopHomeFragment;
 import com.gtv.hanhee.testlayout.ui.presenter.ShopPresenter;
-
+import com.gtv.hanhee.testlayout.utils.SharedPreferencesUtil;
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,30 +35,27 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
-public class ShopDetailActivity extends BaseActivity implements ShopContract.View, OnItemRvClickListener<Object> {
+public class OrderListActivity extends BaseActivity {
 
     @BindView(R.id.tabLayout)
-    SlidingTabLayout tabLayout;
+    SmartTabLayout tabLayout;
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.rootView)
-    CoordinatorLayout rootView;
+    LinearLayout rootView;
 
-    @Inject
-    ShopPresenter mPresenter;
-    private ShopAdapter shopAdapter;
-    private List<Product> shopProductList;
     private static final String SHOP_ID = "shopId";
     private String shopId;
 
     CommunityFlycoTabLayoutAdapter communityFlycoTabLayoutAdapter;
-    String[] mTitles;  
+    String[] mTitles;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_shop_detail;
+        return R.layout.activity_order_list;
     }
 
     public static void startActivity(Context context, String shopId) {
@@ -77,13 +79,18 @@ public class ShopDetailActivity extends BaseActivity implements ShopContract.Vie
     public void initToolBar() {
 
     }
+
+
+    @OnClick(R.id.btnBack)
+    public void onBack() {
+        onBackPressed();
+    }
     //    show loading screen ---------
     @Override
     public void initDatas() {
         activityComponent().inject(this);
-        mPresenter.attachView(this);
-        showLoadingScreen(rootView);
-        onRefreshing();
+//        showLoadingScreen(rootView);
+//        onRefreshing();
     }
 
     //    onRefreshing data ------------
@@ -94,14 +101,6 @@ public class ShopDetailActivity extends BaseActivity implements ShopContract.Vie
             showLoadingScreen(rootView);
         }
 //            mPresenter.getProduct(token, productId);
-
-    }
-
-    //    show error screen -------------
-    @Override
-    public void showError() {
-        isErrorData = true;
-        showErrorScreen(rootView);
 
     }
 
@@ -118,66 +117,24 @@ public class ShopDetailActivity extends BaseActivity implements ShopContract.Vie
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.detachView();
-        }
     }
 
     @Override
     public void configViews() {
-//        Setting RefreshLayout -----------------
-//        refreshLayout.setRefreshHeader(new CustomFragmentHeader(mContext));
-//        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-//            @Override
-//            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-//                refreshLayout.finishRefresh(1000/*,false*/);
-//                ;
-//            }
-//        });
 
 //        Setting tablayout ----------------------
 
-        mTitles = mContext.getResources().getStringArray(R.array.shop_detail_tab);
+        mTitles = mContext.getResources().getStringArray(R.array.order_list_tab);
         mFragments.clear();
-        mFragments.add(new ShopHomeFragment());
-        mFragments.add(new ShopCategoryFragment());
-        mFragments.add(new ShopCategoryFragment());
+        mFragments.add(OrderListFragment.newInstance("all"));
+        mFragments.add(OrderListFragment.newInstance("pending"));
+        mFragments.add(OrderListFragment.newInstance("success"));
+        mFragments.add(OrderListFragment.newInstance("fail"));
         communityFlycoTabLayoutAdapter = new CommunityFlycoTabLayoutAdapter(getSupportFragmentManager(), mFragments, mTitles);
-        viewPager.setOffscreenPageLimit(2);
+        viewPager.setOffscreenPageLimit(4);
         viewPager.setAdapter(communityFlycoTabLayoutAdapter);
         tabLayout.setViewPager(viewPager);
-
-//        mTabLayout.setTabData(mTabEntities, this, R.id.fl_change, mFragments);
-
-//        Setting Recycler View ---------------
-        shopProductList = new ArrayList<>();
-//        shopAdapter = new ShopAdapter(this, shopProductList, this);
-//        rvCart.setHasFixedSize(true);
-//        rvCart.setNestedScrollingEnabled(false);
-//        LinearLayoutManager layoutManagerNews = new LinearLayoutManager(mContext);
-//        rvCart.setLayoutManager(layoutManagerNews);
-//        rvCart.setAdapter(cartAdapter);
-//        cartAdapter.setOnItemClickListener((adapter, view, position) -> {
-//            if (cartProductSectionList.get(position).isHeader) {
-//
-//            } else {
-//                ProductDetailActivity.startActivity(mContext, cartProductSectionList.get(position).t.getId());
-//            }
-//        });
     }
 
 
-
-    @Override
-    public void onItemRvClick(View view, Object item, int adapterPosition) {
-
-    }
-    @Override
-    public void complete() {
-    }
-
-    @Override
-    public void showListCategory(List<Category> categoryListResult) {
-
-    }
 }

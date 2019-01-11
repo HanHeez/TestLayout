@@ -59,7 +59,11 @@
             android:name=".ui.activity.UserInfoAddActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
+<<<<<<< HEAD
         <activity android:name=".ui.activity.HomeRemindActivity"></activity>
+=======
+        <activity android:name=".ui.activity.OrderListActivity"></activity>
+>>>>>>> 7fa0cc1c64ac34c699c73a4a1dc240ae813d0cdf
     </application>
 
 </manifest>
