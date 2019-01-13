@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <com.gtv.hanhee.testlayout.ui.customview.fadetoolbar.ObservableScrollView
+        android:id="@+id/obsScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/rootView"
+            android:layout_width="match_parent"
+            android:layout_height="2000dp"
+            android:orientation="vertical">
+
+            <!--Cover -->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dp">
+
+                <ImageView
+                    android:id="@+id/imgCover"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/diary_bg3" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_60"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/home_diary_gradient" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/length_40"
+                    android:layout_alignParentTop="true"
+                    android:rotation="180"
+                    android:src="@drawable/home_diary_gradient" />
+
+                <!--Top tab bar -->
+                <View
+                    android:id="@+id/dvdFollow"
+                    android:layout_width="1dp"
+                    android:layout_height="@dimen/length_15"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="22dp"
+                    android:background="@color/white" />
+
+
+                <!--Picture-->
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/length_5"
+                    android:layout_toLeftOf="@id/dvdFollow"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ảnh: "
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/length_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="30"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/length_14" />
+                </LinearLayout>
+                <!--Note-->
+                <LinearLayout
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="@dimen/length_5"
+                    android:layout_toRightOf="@id/dvdFollow"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ghi chú: "
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/length_14" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="25"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/length_14" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!--Bottom Content -->
+            <LinearLayout
+                android:layout_marginTop="-10dp"
+                android:paddingTop="10dp"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/length_10"
+                android:paddingRight="@dimen/length_10"
+                android:background="@drawable/bg_round_white_diary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="2000dp"
+                    android:text="abc" />
+                <!--Rv diary-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rvRecommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.gtv.hanhee.testlayout.ui.customview.fadetoolbar.ObservableScrollView>
+
+    <!--Custom Toolbar-->
+    <RelativeLayout
+        android:id="@+id/rlToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:background="@color/transparent"
+        android:elevation="@dimen/length_0">
+
+        <ImageView
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/nav_back_width"
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:padding="@dimen/length_10"
+            android:src="@drawable/baby_icon_back" />
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="Nhật ký"
+            android:textColor="@color/white"
+            android:textSize="@dimen/length_15" />
+
+        <ImageView
+            android:id="@+id/btnAddDiary"
+            android:layout_width="@dimen/length_45"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/length_10"
+            android:src="@drawable/nav_btn_post" />
+
+        <TextView
+            android:id="@+id/btnFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:paddingLeft="@dimen/length_15"
+            android:paddingRight="@dimen/length_15"
+            android:text="Hoàn thành"
+            android:textColor="@color/text_main"
+            android:textSize="@dimen/length_15"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/divider_1px" />
+    </RelativeLayout>
+    <!--End Custom Toolbar-->
+</android.support.design.widget.CoordinatorLayout>

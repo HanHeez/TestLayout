@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!--Home-->
+    <color name="bg_home_diary_pink_circle">#FF82C0</color>
     <color name="bg_home_week_color">#F07BB5</color>
     <color name="bg_home_week_color_shadow">#F2F2F2</color>
     <color name="bg_home_week_back_color">#F9CAE1</color>
@@ -41,6 +42,11 @@
     <color name="bg_user_gradient_center_color">#FD787D</color>
     <color name="bg_user_gradient_end_color">#FC6A7F</color>
 
+    <!--Gradient-->
+    <color name="bg_gradient_diary_start_color">#00AAAAAA</color>
+    <color name="bg_gradient_diary_center_color">#22000000</color>
+    <color name="bg_gradient_diary_end_color">#55000000</color>
+
     <color name="colorPrimaryDark">#0a4bac</color>
     <color name="colorPrimary">#3c84f1</color>
 
@@ -52,6 +58,18 @@
     <color name="transparent">#00000000</color>
     <color name="transparent_50">#50000000</color>
 
+    <!--Diary -->
+    <color name="text_diary_yellow">#FF8A2B</color>
+    <color name="bg_diary_yellow">#fff8da</color>
+    <color name="text_diary_blue">#4EA0F9</color>
+    <color name="bg_diary_blue">#bdddff</color>
+    <color name="text_diary_purple">#998BFC</color>
+    <color name="bg_diary_purple">#ddd6ff</color>
+    <color name="text_diary_pink">#FF82C0</color>
+    <color name="bg_diary_pink">#fadbea</color>
+    <color name="text_diary_green">#33B54E</color>
+    <color name="bg_diary_green">#cfffd9</color>
+
     <!--//Text Color-->
     <color name="text_main">#343434</color>
     <color name="text_btn">#383838</color>
@@ -59,6 +77,7 @@
     <color name="text_sub">#7c7c7c</color>
     <color name="text_member">#f44a9e</color>
     <color name="bg_press_color">#E5E5E5</color>
+
 
 
     <color name="detail_1">#FD686A</color>

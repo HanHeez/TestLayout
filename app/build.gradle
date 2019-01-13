@@ -107,4 +107,7 @@ dependencies {
 
 //    ShimmerLayout
     implementation 'io.supercharge:shimmerlayout:2.1.0'
+
+//    TimeLine
+    implementation 'com.github.baoyachi:StepView:1.9'
 }

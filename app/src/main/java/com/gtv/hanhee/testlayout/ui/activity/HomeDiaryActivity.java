@@ -2,12 +2,11 @@ package com.gtv.hanhee.testlayout.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,18 +17,13 @@ import com.gtv.hanhee.testlayout.base.OnItemRvClickListener;
 import com.gtv.hanhee.testlayout.model.Product;
 import com.gtv.hanhee.testlayout.ui.adapter.CommunityFlycoTabLayoutAdapter;
 import com.gtv.hanhee.testlayout.ui.adapter.ShopAdapter;
-import com.gtv.hanhee.testlayout.ui.contract.HomeRemindContract;
-import com.gtv.hanhee.testlayout.ui.contract.ShopContract;
+import com.gtv.hanhee.testlayout.ui.contract.HomeDiaryContract;
 import com.gtv.hanhee.testlayout.ui.customview.fadetoolbar.ObservableScrollView;
 import com.gtv.hanhee.testlayout.ui.customview.fadetoolbar.ObservableScrollViewCallbacks;
 import com.gtv.hanhee.testlayout.ui.customview.fadetoolbar.ScrollState;
 import com.gtv.hanhee.testlayout.ui.customview.fadetoolbar.ScrollUtils;
-import com.gtv.hanhee.testlayout.ui.customview.fadetoolbar.ViewHelper;
-import com.gtv.hanhee.testlayout.ui.fragment.ShopCategoryFragment;
-import com.gtv.hanhee.testlayout.ui.fragment.ShopHomeFragment;
+import com.gtv.hanhee.testlayout.ui.presenter.HomeDiaryPresenter;
 import com.gtv.hanhee.testlayout.ui.presenter.HomeRemindPresenter;
-import com.gtv.hanhee.testlayout.ui.presenter.ShopPresenter;
-import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,11 +31,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
-public class HomeRemindActivity extends BaseActivity implements HomeRemindContract.View, OnItemRvClickListener<Object>, ObservableScrollViewCallbacks {
-
-
+public class HomeDiaryActivity extends BaseActivity implements HomeDiaryContract.View, OnItemRvClickListener<Object>, ObservableScrollViewCallbacks {
 
     @BindView(R.id.rootView)
     LinearLayout rootView;
@@ -49,14 +40,18 @@ public class HomeRemindActivity extends BaseActivity implements HomeRemindContra
     RelativeLayout rlToolbar;
     @BindView(R.id.obsScrollView)
     ObservableScrollView obsScrollView;
-    @BindView(R.id.txtImage)
-    TextView txtImage;
+
     @BindView(R.id.txtTitle)
     TextView txtTitle;
-
+    @BindView(R.id.btnBack)
+    ImageView btnBack;
+    @BindView(R.id.btnAddDiary)
+    ImageView btnAddDiary;
+    @BindView(R.id.divider)
+    View divider;
 
     @Inject
-    HomeRemindPresenter mPresenter;
+    HomeDiaryPresenter mPresenter;
     private ShopAdapter shopAdapter;
     private List<Product> shopProductList;
     private static final String SHOP_ID = "shopId";
@@ -65,14 +60,16 @@ public class HomeRemindActivity extends BaseActivity implements HomeRemindContra
     CommunityFlycoTabLayoutAdapter communityFlycoTabLayoutAdapter;
     String[] mTitles;
 
+    private int mParallaxEndFadeHeight;
+    private int mParallaxStartFadeHeight;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_home_remind;
+        return R.layout.activity_home_diary;
     }
 
     public static void startActivity(Context context, String shopId) {
-        Intent intent = new Intent(context, HomeRemindActivity.class);
+        Intent intent = new Intent(context, HomeDiaryActivity.class);
         intent.putExtra(SHOP_ID, shopId);
         context.startActivity(intent);
     }
@@ -103,6 +100,8 @@ public class HomeRemindActivity extends BaseActivity implements HomeRemindContra
         activityComponent().inject(this);
         mPresenter.attachView(this);
 //        showLoadingScreen(rootView);
+        mParallaxEndFadeHeight = 250;
+        mParallaxStartFadeHeight = 150;
         onRefreshing();
     }
 
@@ -147,13 +146,26 @@ public class HomeRemindActivity extends BaseActivity implements HomeRemindContra
     @Override
     public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
         int baseColor = getResources().getColor(R.color.white);
-        float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight);
-        if (scrollY > 150) {
+        if (scrollY > mParallaxStartFadeHeight) {
+            float alpha = Math.min(1, (float) (scrollY-mParallaxStartFadeHeight) / (mParallaxEndFadeHeight-mParallaxStartFadeHeight));
+            rlToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
             txtTitle.setTextColor(getResources().getColor(R.color.black));
+            btnAddDiary.setImageDrawable(getResources().getDrawable(R.drawable.nav_btn_post_black));
+            btnBack.setImageDrawable(getResources().getDrawable(R.drawable.baby_icon_nav_back));
         } else {
             txtTitle.setTextColor(getResources().getColor(R.color.white));
+            rlToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.white)));
+            btnAddDiary.setImageDrawable(getResources().getDrawable(R.drawable.nav_btn_post));
+            btnBack.setImageDrawable(getResources().getDrawable(R.drawable.baby_icon_back));
+
         }
-        rlToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(alpha, baseColor));
+
+        if (scrollY >= mParallaxEndFadeHeight) {
+            divider.setVisibility(View.VISIBLE);
+        } else {
+            divider.setVisibility(View.GONE);
+        }
+
 //        ViewHelper.setTranslationY(txtImage, -scrollY / 2);
 
 //        // Translate list background
@@ -161,12 +173,13 @@ public class HomeRemindActivity extends BaseActivity implements HomeRemindContra
     }
 
 
-    private int mParallaxImageHeight;
+
     @Override
     public void configViews() {
         obsScrollView.setScrollViewCallbacks(this);
+        divider.setVisibility(View.GONE);
         rlToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(0, getResources().getColor(R.color.white)));
-        mParallaxImageHeight = 250;
+
 //        Setting RefreshLayout -----------------
 //        refreshLayout.setRefreshHeader(new CustomFragmentHeader(mContext));
 //        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -223,6 +236,7 @@ public class HomeRemindActivity extends BaseActivity implements HomeRemindContra
 
     }
 }
+
 
 
 

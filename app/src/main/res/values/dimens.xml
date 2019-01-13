@@ -1,6 +1,8 @@
 <resources>
 
     <!--Custom-->
+    <dimen name="height_fade_toolbar_end">250dp</dimen>
+    <dimen name="height_fade_toolbar_start">150dp</dimen>
     <dimen name="txt_tag">10dp</dimen>
     <dimen name="txt_product_name_detail">18dp</dimen>
     <dimen name="txt_shop_name_detail">15dp</dimen>

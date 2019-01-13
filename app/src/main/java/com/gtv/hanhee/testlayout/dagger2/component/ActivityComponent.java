@@ -4,6 +4,7 @@ package com.gtv.hanhee.testlayout.dagger2.component;
 import com.gtv.hanhee.testlayout.dagger2.PerActivity;
 import com.gtv.hanhee.testlayout.dagger2.module.ActivityModule;
 import com.gtv.hanhee.testlayout.ui.activity.CartActivity;
+import com.gtv.hanhee.testlayout.ui.activity.HomeDiaryActivity;
 import com.gtv.hanhee.testlayout.ui.activity.HomeRemindActivity;
 import com.gtv.hanhee.testlayout.ui.activity.OrderActivity;
 import com.gtv.hanhee.testlayout.ui.activity.OrderListActivity;
@@ -29,13 +30,12 @@ public interface ActivityComponent {
     ShopCategoryFragment inject(ShopCategoryFragment shopCategoryFragment);
     ShopFragment inject(ShopFragment shopFragment);
     ProfileUserInfoFragment inject(ProfileUserInfoFragment profileUserInfoFragment);
-<<<<<<< HEAD
     UserFragment inject(UserFragment userFragment);
-=======
     OrderListFragment inject(OrderListFragment orderListFragment);
->>>>>>> 7fa0cc1c64ac34c699c73a4a1dc240ae813d0cdf
+
 
     HomeRemindActivity inject(HomeRemindActivity cartActivity);
+    HomeDiaryActivity inject(HomeDiaryActivity homeDiaryActivity);
     CartActivity inject(CartActivity cartActivity);
     ProductDetailActivity inject(ProductDetailActivity productDetailActivity);
     ShopDetailActivity inject(ShopDetailActivity shopDetailActivity);
@@ -43,9 +43,6 @@ public interface ActivityComponent {
     ProfileUserActivity inject(ProfileUserActivity profileUserActivity);
     UserInfoChooseActivity inject(UserInfoChooseActivity userInfoChooseActivity);
     UserInfoAddActivity inject(UserInfoAddActivity userInfoAddActivity);
-<<<<<<< HEAD
-
-=======
     OrderListActivity inject(OrderListActivity orderListActivity);
->>>>>>> 7fa0cc1c64ac34c699c73a4a1dc240ae813d0cdf
+
 }

@@ -1,4 +1,10 @@
 <resources>
+  <dimen name="height_fade_toolbar_end">
+    555.56dp
+  </dimen>
+  <dimen name="height_fade_toolbar_start">
+    333.33dp
+  </dimen>
   <dimen name="txt_tag">
     22.22dp
   </dimen>

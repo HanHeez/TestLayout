@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--Left Line-->
+    <LinearLayout
+        android:id="@+id/lnLeftLine"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/length_10"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="@dimen/length_2"
+            android:layout_height="@dimen/length_17"
+            android:background="@color/bg_home_search_color" />
+
+        <ImageView
+            android:layout_width="@dimen/length_5"
+            android:layout_height="@dimen/length_5"
+            android:background="@drawable/bg_round_circle_pink" />
+
+        <View
+
+            android:layout_width="@dimen/length_2"
+            android:layout_height="match_parent"
+            android:background="@color/bg_home_search_color" />
+    </LinearLayout>
+
+    <!--Main diary-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/length_10"
+        android:layout_marginTop="@dimen/length_10"
+        android:layout_toRightOf="@id/lnLeftLine"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_marginBottom="@dimen/length_5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_marginLeft="@dimen/length_2"
+                android:id="@+id/txtDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Ngày 4 - 12 - 2018"
+                android:textColor="@color/text_main"
+                android:textSize="@dimen/length_15" />
+
+            <TextView
+                android:id="@+id/txtDateAgo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/length_8"
+                android:gravity="center"
+                android:text="1 tháng 8 ngày trước"
+                android:textColor="@color/text_sub"
+                android:textSize="@dimen/length_10" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/bg_border_cart_increase_decrease_item"
+            android:padding="@dimen/length_2"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!--Tag-->
+            <LinearLayout
+                android:layout_marginRight="@dimen/length_5"
+                android:layout_marginLeft="@dimen/length_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/length_10"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="-16dp"
+                        android:layout_toRightOf="@id/imgEmoticon"
+                        android:background="@drawable/bg_round_diary_tag_yellow"
+                        android:gravity="center"
+                        android:paddingLeft="22dp"
+                        android:paddingTop="@dimen/length_2"
+                        android:paddingRight="@dimen/length_7"
+                        android:paddingBottom="@dimen/length_2"
+                        android:text="Quần áo"
+                        android:textColor="@color/text_diary_yellow"
+                        android:textSize="@dimen/length_13" />
+
+                    <ImageView
+                        android:id="@+id/imgEmoticon"
+                        android:layout_width="@dimen/length_25"
+                        android:layout_height="@dimen/length_25"
+                        android:gravity="center"
+                        android:src="@drawable/photo_icon_things_chuanyi"
+                        android:textColor="@color/text_main" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/txtTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/length_10"
+                    android:text="Mua quần áo cho bé"
+                    android:textColor="@color/text_main"
+                    android:textSize="@dimen/length_14" />
+            </LinearLayout>
+
+            <ImageView
+
+                android:id="@+id/imgDiary"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/length_250"
+                android:layout_marginTop="@dimen/length_10"
+                android:scaleType="centerCrop"
+                android:src="@drawable/hot_girl2" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
