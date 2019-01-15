@@ -20,7 +20,7 @@
         android:src="@drawable/nav_btn_back" />
 
     <ImageView
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/btnSetting"
         android:layout_width="@dimen/length_23"
         android:layout_height="@dimen/length_23"
